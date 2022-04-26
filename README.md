@@ -1,0 +1,1 @@
+This is a catalog application that manages higher education degrees and programs in Django. 
