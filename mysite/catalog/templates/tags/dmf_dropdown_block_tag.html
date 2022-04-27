@@ -1,0 +1,31 @@
+<div id="dmfDropdowns">
+    <div id="majors" class="tab-pane fade show active" role="tabpanel"> 
+        <div id="dmf-online" class="d-flex flex-row p-1">
+            <a title="Online College Majors" class="p-1 col-4 col-md-3" href="/programs/online/all?f=adult-online-degrees&amp;p=transfer" tabindex="0" aria-label="Browse all online programs">
+                <h1>Online:</h1>
+            </a>
+            <div class="p-1 w-100">
+                <select onchange="window.dmf_block_IOS_detect_send('change')" onclick="window.dmf_block_IOS_detect_send('click')" onfocus="this.size=4;" onblur="this.size=1;" aria-disabled="true" size="1">
+                <option value="" selected="">Degree Programs</option>
+                {% for i,v in online.items %}
+                <option onmousedown="window.dmf_block_IOS_detect_send('mousedown',this.value)" ontouchstart="window.dmf_block_IOS_detect_send('touchstart',this.value)" data="0" value="/programs/online/{{ v.urlparam }}?f=adult-online-degrees&amp;c=online-plus&amp;p=transfer">{{ v.name }}</option>
+                {% endfor %}
+            </select>
+            </div>
+        </div>
+        <div id="dmf-classroom" class="d-flex flex-row p-1">
+            <a title="Classroom College Majors" class="p-1 col-4 col-md-3" href="/programs/campus/all?f=main-campus-degrees&amp;c=online-plus&amp;p=visit" tabindex="0" aria-label="Browse all classroom programs">
+                <h1>Campus:</h1>
+            </a>
+            <div class="p-1 w-100">
+                <select onchange="window.dmf_block_IOS_detect_send('change')" onclick="window.dmf_block_IOS_detect_send('click')" onfocus="this.size=4;" onblur="this.size=1;" aria-disabled="true">
+                <option value="" selected="">Degree Programs</option>
+                {% for i,v in campus.items %}
+                <option onmousedown="window.dmf_block_IOS_detect_send('mousedown',this.value)" ontouchstart="window.dmf_block_IOS_detect_send('touchstart',this.value)" data="0" value="/programs/campus/{{ v.urlparam }}?f=main-campus-degrees&amp;c=online-plus&amp;p=visit">{{ v.name }}</option>
+                {% endfor %}    
+            </select>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="chevron"></div>

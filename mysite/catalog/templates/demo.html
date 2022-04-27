@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load catalog_tags %}
+{% block content %}
+<!-- templtes/demo.html -->
+{% if demo %}
+<div>{{ demo }}</div>
+{% endif %}
+
+{% dmf_dropdown_block %}
+
+{% endblock %}
+
