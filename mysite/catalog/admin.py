@@ -10,7 +10,7 @@ class Admin_DPC_terms(admin.ModelAdmin):
 admin.site.register(DPC_TaxonomyTerm,Admin_DPC_terms)
 
 class Admin_DPC_academicpages(admin.ModelAdmin):
-    fields = ('title','body_a','body_b','parent_code','unique_program_code','program_type','degree_type','field_of_study','class_format','faculty_department')
+    fields = ('title','degree_type','field_of_study','program_type','class_format','faculty_department','body_a','body_b','unique_program_code','parent_code')
     list_display = ('title','degree_type','program_type','unique_program_code','parent_code')
     filter_horizontal = ('field_of_study','class_format','faculty_department')
 admin.site.register(DPC_AcademicPage,Admin_DPC_academicpages)
