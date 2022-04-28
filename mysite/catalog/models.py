@@ -36,10 +36,10 @@ class DPC_TaxonomyTerm(StatusModel):
         ])
     name = models.CharField(max_length=100,unique=True)
     urlparam = models.CharField(
-        max_length=30,
+        max_length=40,
         unique=True,
         validators=[
-        RegexValidator('^[a-z0-9\-]{3,30}$',
+        RegexValidator('^[a-z0-9\-]{3,40}$',
             message='Code must be at least 3 and max 30 Alpha-Numeric, LOWERCase with Optional Hyphens Only: EX: ABC-ABC')
         ])
     desc = models.CharField(max_length=255,blank=True,default='')
@@ -59,10 +59,56 @@ class DPC_AcademicPage(StatusModel):
         max_length=255,
         unique=True,
         validators=[
-            RegexValidator('^[a-zA-Z0-9,.\(\)\-]{5,150}$',
+            RegexValidator('^[a-zA-Z0-9,.\(\)\- ]{5,150}$',
             message='Title must be at least 5 and max 150 Alpha-Numeric Characters, may the following punctionation characters: ,.()-_'),
         ]
     )
+    body_a = models.TextField(
+        help_text="HTML in the top portion of the page.  Not HTML validated, Do not edit here, be careful.",
+        verbose_name='Body A HTML')
+    body_b = models.TextField(
+        help_text="HTML in the bottom portion of the page.  Not HTML validated, Do not edit here, be careful.",
+        verbose_name='Body B HTML')
+    program_type = models.ForeignKey(
+        DPC_TaxonomyTerm,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        limit_choices_to=Q(library__name='Program Type'),
+        related_name='academicpage_programtype',
+        verbose_name='Program Type'
+    )
+    degree_type = models.ForeignKey(
+        DPC_TaxonomyTerm,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        limit_choices_to=Q(library__name='Degree Type'),
+        related_name='academicpage_degreetype',
+        verbose_name='Degree Type'
+    )
+    faculty_department = models.ManyToManyField(
+        DPC_TaxonomyTerm,
+        blank=True,
+        limit_choices_to=Q(library__name='Faculty Department'),
+        related_name='academicpage_facultydepartment',
+        verbose_name='Faculty Department'
+    )
+    field_of_study = models.ManyToManyField(
+        DPC_TaxonomyTerm,
+        blank=True,
+        limit_choices_to=Q(library__name='Field of Study'),
+        related_name='academicpage_fieldofstudy',
+        verbose_name='Field of Study'
+    )
+    class_format = models.ManyToManyField(
+        DPC_TaxonomyTerm,
+        blank=True,
+        limit_choices_to=Q(library__name='Class Format'),
+        related_name='academicpage_classformat',
+        verbose_name='Class Format'
+    )
+    STATUS = Choices('published','removed')
     unique_program_code = models.CharField(
         max_length=30,
         unique=True,
@@ -71,38 +117,19 @@ class DPC_AcademicPage(StatusModel):
             RegexValidator('^[a-zA-Z0-9_\-]{6,30}$',
             message='Code must be unique.  Code must be at least 6 and max 30 Alpha-Numeric Characters, may include underscores and dashes')
         ])
-    body_a = models.TextField(help_text="HTML in the top portion of the page")
-    body_b = models.TextField(help_text="HTML in the bottom portion of the page")
     parent_code = models.ForeignKey(
         'self',
         to_field='unique_program_code',
+        help_text="This will unite this program with another program in a relationship such as Major/Concentration.",
         on_delete=models.SET_DEFAULT, 
-        blank=True,default='',
-        limit_choices_to={'STATUS':'published'}
-    )
-    taxonomy_term = models.ManyToManyField(
-        DPC_TaxonomyTerm,
-        blank=True,
-        limit_choices_to=~Q(library__name='Program Type') | ~Q(library__name='Faculty Department'),
-        related_name='academicpage_taxonomyterms'
-    )
-    department = models.ManyToManyField(
-        DPC_TaxonomyTerm,
-        blank=True,
-        limit_choices_to=Q(library__name='Faculty Deparment'),
-        related_name='academicpage_departments'
-    )
-    program_type = models.ForeignKey(
-        DPC_TaxonomyTerm,
-        on_delete=models.SET_NULL,
         blank=True,
         null=True,
-        limit_choices_to=Q(library__name='Program Type'),
-        related_name='academicpage_programtype'
+        default='',
+        limit_choices_to={'status':'published'},
+        verbose_name='Parent Code'
     )
-    STATUS = Choices('published','removed')
     def __str__(self):
-        return self.pk + '|' + self.title
+        return ("{} | {}").format(self.pk,self.title)
     class Meta:
         verbose_name = 'Academic Degree Page'
         verbose_name_plural = 'Academic Degree Pages'
