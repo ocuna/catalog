@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.core.validators import RegexValidator
 from django.db import models
 from django.db.models import Q
+from django.utils.html import format_html
 
 # https://django-model-utils.readthedocs.io/en/latest
 from model_utils.models import StatusModel
@@ -71,13 +72,15 @@ class DPC_AcademicPage(StatusModel):
         related_name='academicpage_degreetype',
         verbose_name='Degree Type'
     )
+
     field_of_study = models.ManyToManyField(
         DPC_TaxonomyTerm,
         blank=True,
         limit_choices_to=Q(library__name='Field of Study'),
         related_name='academicpage_fieldofstudy',
-        verbose_name='Field of Study'
+        verbose_name='Field of Study',
     )
+
     program_type = models.ForeignKey(
         DPC_TaxonomyTerm,
         on_delete=models.SET_NULL,
@@ -87,6 +90,7 @@ class DPC_AcademicPage(StatusModel):
         related_name='academicpage_programtype',
         verbose_name='Program Type'
     )
+
     class_format = models.ManyToManyField(
         DPC_TaxonomyTerm,
         blank=True,
@@ -94,6 +98,7 @@ class DPC_AcademicPage(StatusModel):
         related_name='academicpage_classformat',
         verbose_name='Class Format'
     )
+
     faculty_department = models.ManyToManyField(
         DPC_TaxonomyTerm,
         blank=True,
@@ -101,16 +106,19 @@ class DPC_AcademicPage(StatusModel):
         related_name='academicpage_facultydepartment',
         verbose_name='Faculty Department'
     )
+
     body_a = models.TextField(
         help_text="HTML in the top portion of the page.  Not HTML validated, Do not edit here, be careful.",
         verbose_name='Body A HTML',
         blank=True,
         default='')
+
     body_b = models.TextField(
         help_text="HTML in the bottom portion of the page.  Not HTML validated, Do not edit here, be careful.",
         verbose_name='Body B HTML',
         blank=True,
         default='')
+
     unique_program_code = models.CharField(
         max_length=30,
         unique=True,
@@ -119,6 +127,7 @@ class DPC_AcademicPage(StatusModel):
             RegexValidator('^[a-zA-Z0-9_\-]{6,30}$',
             message='Code must be unique.  Code must be at least 6 and max 30 Alpha-Numeric Characters, may include underscores and dashes')
         ])
+        
     parent_code = models.ForeignKey(
         'self',
         to_field='unique_program_code',
@@ -127,12 +136,13 @@ class DPC_AcademicPage(StatusModel):
         blank=True,
         null=True,
         default='',
-        limit_choices_to={'status':'published'},
+        limit_choices_to=Q(program_type_id='PT_DEGR'),
         verbose_name='Parent Code'
     )
+
     STATUS = Choices('published','removed')
     def __str__(self):
-        return ("{} | {}, {}").format(self.title, self.degree_type, self.program_type)
+        return ("{} . . . {}").format(self.title, self.degree_type)
     class Meta:
         verbose_name = 'Academic Degree Page'
         verbose_name_plural = 'Academic Degree Pages'
