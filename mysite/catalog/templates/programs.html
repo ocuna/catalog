@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load catalog_tags static %}
+{% block content %}
+<!-- templtes/programs.html -->
+{% if headline %}
+<div>{{ program_headline }}</div>
+{% endif %}
+
+{% if firstparam %}
+<div>{{ firstparam }}</div>
+{% endif %}
+
+{% if secondparam %}
+<div>{{ secondparam }}</div>
+{% endif %}
+
+
+{% dmf_fp_dropdown_block %}
+<hr>
+{% dmf_page_dropdown_block %}
+
+{% endblock %}
+

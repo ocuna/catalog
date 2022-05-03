@@ -1,17 +1,18 @@
+{% load catalog_tags %}
 <form class="" action="#" method="get" id="" role="application">
-    <div id="dmf_study-wrapper" class="dmf-wrapper">
-        <label for="dmf_study">Field of Study</label>
+    <div id="dmf_field_of_study-wrapper" class="dmf-wrapper">
+        <label for="dmf_field_of_study">Field of Study</label>
         <div class="form-item form-type-select form-group">
-            <select class="form-control form-select dmf-dropdown" id="dmf_study" name="dmf_study">
-                print _convert_object_array_to_html_option_list(_get_codes_array_from_JSON($dmf_object),'dmf_study',true,$url_args,$url_params);
+            <select class="form-control form-select dmf-dropdown" id="dmf_field_of_study" name="dmf_field_of_study">
+                {{ html_field_of_study|safe }}
             </select>
         </div>
     </div>
-    <div id="dmf_format-wrapper" class="dmf-wrapper">
-        <label for="dmf_format">Class Type</label>
-        <div class="form-item form-type-select form-item-dmf_format form-group">
-            <select class="form-control form-select dmf-dropdown" id="dmf_format" name="dmf_format">
-                print _convert_object_array_to_html_option_list(_get_codes_array_from_JSON($dmf_object),'dmf_format',true,$url_args,$url_params);
+    <div id="dmf_class_type-wrapper" class="dmf-wrapper">
+        <label for="dmf_class_type">Class Type</label>
+        <div class="form-item form-type-select form-item-dmf_class_type form-group">
+            <select class="form-control form-select dmf-dropdown" id="dmf_class_type" name="dmf_class_type">
+                {{ html_class_type|safe }}
             </select>
         </div>
     </div>
@@ -19,7 +20,7 @@
         <label for="dmf_degree_type">Degree Type</label>
         <div class="form-item form-type-select form-item-dmf_degree_type form-group">
             <select class="form-control form-select dmf-dropdown" id="dmf_degree_type" name="dmf_degree_type">
-                print _convert_object_array_to_html_option_list(_get_codes_array_from_JSON($dmf_object),'dmf_degree_type',true,$url_args,$url_params);
+                {{ html_degree_type|safe }}
             </select>
         </div>
     </div>
@@ -27,7 +28,7 @@
         <label for="dmf_program_type">Program Type</label>
         <div class="form-item form-type-select form-item-dmf_program_type form-group">
             <select class="form-control form-select dmf-dropdown" id="dmf_program_type" name="dmf_program_type">
-                print _convert_object_array_to_html_option_list(_get_codes_array_from_JSON($dmf_object),'dmf_program_type',true,$url_args,$url_params);
+                {{ html_program_type|safe }}
             </select>
         </div>
     </div>
