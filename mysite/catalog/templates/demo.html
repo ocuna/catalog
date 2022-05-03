@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
-{% load catalog_tags %}
+{% load catalog_tags static %}
 {% block content %}
 <!-- templtes/demo.html -->
+<script src="{% static 'dmf.json' %}" ></script>
 {% if demo %}
 <div>{{ demo }}</div>
 {% endif %}
 
-{% dmf_dropdown_block %}
+{% dmf_fp_dropdown_block %}
+<hr>
+{% dmf_page_dropdown_block %}
 
 {% endblock %}
 
