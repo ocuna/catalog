@@ -6,18 +6,10 @@
 <div>{{ program_headline }}</div>
 {% endif %}
 
-{% if firstparam %}
-<div>{{ firstparam }}</div>
-{% endif %}
-
-{% if secondparam %}
-<div>{{ secondparam }}</div>
-{% endif %}
-
-
 {% dmf_fp_dropdown_block %}
 <hr>
-{% dmf_page_dropdown_block %}
-
+{% dmf_page_dropdown_block firstparam secondparam %}
+<hr>
+<ul>{% dmf_program_block firstparam secondparam %}</ul>
 {% endblock %}
 

@@ -4,7 +4,7 @@ from django.views.generic.base import TemplateView
 from catalog.models import DPC_TaxLibrary,DPC_TaxonomyTerm,DPC_AcademicPage
 from datetime import datetime
 from catalog.queries import get_taxonomy_libraries, get_codes, get_programs
-from catalog.functions import _convert_object_array_to_html_option_list
+from catalog.functions import _taxonomyTerm_objects_to_html_option_list
 
 # for JSON output
 import json

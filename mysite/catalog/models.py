@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.core.validators import RegexValidator
+from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator
 from django.db import models
 from django.db.models import Q
 from django.utils.html import format_html
@@ -44,6 +44,10 @@ class DPC_TaxonomyTerm(StatusModel):
             message='Code must be at least 3 and max 30 Alpha-Numeric, LOWERCase with Optional Hyphens Only: EX: ABC-ABC')
         ])
     desc = models.CharField(max_length=255,blank=True,default='')
+    weight = models.IntegerField(default=99,validators=[
+        MinValueValidator(1),
+        MaxValueValidator(99)
+    ])
     STATUS = Choices('published','removed')
     library = models.ForeignKey(DPC_TaxLibrary, on_delete=models.CASCADE)
     def __str__(self):
@@ -70,16 +74,14 @@ class DPC_AcademicPage(StatusModel):
         null=True,
         limit_choices_to=Q(library__name='Degree Type'),
         related_name='academicpage_degreetype',
-        verbose_name='Degree Type'
-    )
+        verbose_name='Degree Type')
 
     field_of_study = models.ManyToManyField(
         DPC_TaxonomyTerm,
         blank=True,
         limit_choices_to=Q(library__name='Field of Study'),
         related_name='academicpage_fieldofstudy',
-        verbose_name='Field of Study',
-    )
+        verbose_name='Field of Study',)
 
     program_type = models.ForeignKey(
         DPC_TaxonomyTerm,
@@ -88,24 +90,21 @@ class DPC_AcademicPage(StatusModel):
         null=True,
         limit_choices_to=Q(library__name='Program Type'),
         related_name='academicpage_programtype',
-        verbose_name='Program Type'
-    )
+        verbose_name='Program Type')
 
     class_format = models.ManyToManyField(
         DPC_TaxonomyTerm,
         blank=True,
         limit_choices_to=Q(library__name='Class Format'),
         related_name='academicpage_classformat',
-        verbose_name='Class Format'
-    )
+        verbose_name='Class Format')
 
     faculty_department = models.ManyToManyField(
         DPC_TaxonomyTerm,
         blank=True,
         limit_choices_to=(Q(library__name='Faculty Department') | Q(library__name='University Department')),
         related_name='academicpage_facultydepartment',
-        verbose_name='Faculty Department'
-    )
+        verbose_name='Faculty Department')
 
     body_a = models.TextField(
         help_text="HTML in the top portion of the page.  Not HTML validated, Do not edit here, be careful.",
@@ -137,8 +136,7 @@ class DPC_AcademicPage(StatusModel):
         null=True,
         default='',
         limit_choices_to=Q(program_type_id='PT_DEGR'),
-        verbose_name='Parent Code'
-    )
+        verbose_name='Parent Code')
 
     STATUS = Choices('published','removed')
     def __str__(self):
