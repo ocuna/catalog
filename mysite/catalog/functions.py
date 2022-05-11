@@ -1,4 +1,5 @@
-from django.db.models import Q,F
+from django.db.models import Q,F,Value,Subquery
+from django.db.models.functions import Concat
 from catalog.models import DPC_TaxLibrary, DPC_TaxonomyTerm, DPC_AcademicPage
 
 # calls the DB for all taxonomy terms matching the tax term
@@ -42,32 +43,29 @@ def _taxonomyTerm_objects_to_html_option_list(tax_term='',url_args=None):
     return html
 
 
-# calls the DB for all programs
-# always sorts them in a specific way: Masters BA, BS, AA, AS, Minor, Certificate
-# kwargs must checkout as a Table Field pair for additional filtering
+# calls the DB for all programs that match the args
+# always sorts them in a specific way: Masters,BA,BS,AA,AS,Minor,Certificate
+# collects parent programs with their child programs
+# complex filtering and parent/child checks sometimes produce LONG sql queries
+# there is room for optimization of queries, but may require mulitple queries
+# or a refactoring of the database stucture.
+# unfortunaltey child_search parameter needed be hard-set to account for
+# instances where one of these parameteres was searched for creating the need
+# to union parents appropriately with searched-for child programs. 
 def _academicPage_objects_to_html_dmf_list(args):
     filter_q1 = Q() # empty Q object will be filled later
     filter_q2 = Q() # empty Q object will be filled later
-
-    # if any of these values are in the searches a very different query will be performed
-    # it is possible the user has requested one of these in the arguments.
-    child_searches = ('concentration','license','endorsement')
+    unique_program_codes = set()
     enumerate_args = {}
-    pages = {}
+    Parents = {}
+    Children = {}
     html = ''
 
-    # Collect all children by checking if the parent code is NOT null
-    # collect only the objects that HAVE parent code = children
-    Children = (DPC_AcademicPage
-        .objects
-        .filter(status='published')
-        .filter(parent_code__isnull=False) # Parent Code must exist (IS A CHILD)
-        .exclude(Q(program_type__name='Degree') | Q(program_type__name='Minor')) # Program Type can't be a Degree or Minor
-        .order_by('degree_type__weight',
-            'program_type__weight',
-            'class_format__weight',
-            'title')
-        .distinct()) # Order Weight by lightest to heaviest then by Title
+    # Did the user request one of these search parameters?  They only will ever
+    # belog to childen of degrees.  When this is the case these values are in
+    # the searches a very different query and assemply of parent degrees of
+    # these child parameters.  This exception creates very large queries
+    child_searches = ('concentration','license','endorsement')
 
     # if arguments are passed into this function, we need to search the db
     # and simply go through each field that could potentially contain the arg
@@ -110,53 +108,121 @@ def _academicPage_objects_to_html_dmf_list(args):
         # this is likely doing someting very very horrendous - the 
         if set(args) & set(child_searches):
             Pages_qs2 = Pages_qs1
+
             for i,page in enumerate(Pages_qs1):
-                # does this page have a parent?
+
+                # does this page have a parent?  Add it, but don't dubplicate
                 if page.parent_code is not None:
-                    filter_q2 |= Q(unique_program_code=page.parent_code.unique_program_code)
+                    # this can generate a massive amount of codes,
+                    # force to uniques only
+                    unique_program_codes.add(page.parent_code.unique_program_code)
 
-            # get the Parents that may exist via children into a QS 
-            print(filter_q2) # FIX THIS... it has LOTS of duplicates
-            Parents_of_children = DPC_AcademicPage.objects.filter(filter_q2).distinct()
+            # now, build the filter we will later use, but only if there are
+            # unique_program_codes.  If no codes, then it's an empty search
+            if unique_program_codes:
+                for i,v in enumerate(unique_program_codes):
+                    filter_q2 |= Q(unique_program_code=v)
 
-            # then sort them by their specific ascending weight
-            # Unite the parents of children and the pages
-            Pages = Pages_qs1.union(Pages_qs1,Parents_of_children)
 
-            # PLEASENOTE!!!
-            # this is likely doing something completely horrendous by not
-            # simply hitting the DB, and then cycling the results to hit
-            # the database again.  I'm not going to performance test this
-            # however because the likelyhood that this is going to be utilized
-            # often is very low.  People will almost never search for children 
-            # such as concentrations, endorsements or license...and expect to
-            # get parents ... they will search parent degree programs first.
-            print(Pages.query)
+                Parents_of_children = DPC_AcademicPage.objects.filter(filter_q2).distinct()
+                # then sort them by their specific ascending weight
+                # Unite the parents of children and the pages
+                Pages = Pages_qs1.union(Pages_qs1,Parents_of_children)
+
+                # PLEASENOTE!!!
+                # this is likely doing something completely horrendous by not
+                # simply hitting the DB, and then cycling the results to hit
+                # the database again.  I'm not going to performance test this
+                # however because the likelyhood that this is going to be utilized
+                # often is very low.  People will almost never search for children 
+                # such as concentrations, endorsements or license...and expect to
+                # get parents ... they will search parent degree programs first.
+                # print(Pages.query)
+            else: 
+                #print('Empty Query')
+                html = "<p>Sorry, no programs that fit the search parameters: {}</p>".format(args)
         
         # if the args and child_searches do not intersect, we can order by the
         # pages as expected because there is no complex union required
         else:
-            Pages = (Pages_qs1.order_by(F('degree_type__weight').asc(nulls_last=True),
+            Parents = (Pages_qs1.order_by(F('degree_type__weight').asc(nulls_last=True),
                 F('program_type__weight').asc(nulls_last=True),
                 F('class_format__weight').asc(nulls_last=True),
                 'title').distinct())
+   
+    # If there are Academic Degree Pages to show, loop through all pages
+    # looking for children of these parents.
+    if Parents:
+        # Collect all children by checking if the parent code is NOT null
+        # collect only the objects that HAVE parent code = children
+        Children = (DPC_AcademicPage
+            .objects
+            .filter(status='published')
+            .filter(parent_code__isnull=False) # Parent Code must exist (IS A CHILD)
+            .exclude(Q(program_type__name='Degree') | Q(program_type__name='Minor')) # Program Type can't be a Degree or Minor
+            .order_by('degree_type__weight',
+                'program_type__weight',
+                'class_format__weight',
+                'title')
+            .distinct()) # Order Weight by lightest to heaviest then by Title
+        
+        for pi,pv in enumerate(Parents):
+            # it's possible there is a child page in this loop, skip it because
+            # you can't do a .distinct() after the union:
+            # Pages = Pages_qs1.union(Pages_qs1,Parents_of_children)|2
+            if pv.parent_code is not None:
+                continue
+            #start the HTML with an open tag
+            html += '<li>' + pv.title
+            # loop through each child degree, does the parent page match?
+            for ci,cv in enumerate(Children):
+                if pv == cv.parent_code: 
+                    html += '<br>' + cv.title
+            #close the loop
+            html += '</li>'
+
+    return { 'Parents':Parents, 'children':Children, 'html':html }
 
 
+def _academicPage_objects_to_html_dmf_list_complete(args):
+    Parents =  (DPC_AcademicPage.objects.all()
+        .prefetch_related(
+            Prefetch('field_of_study'),
+            Prefetch('class_format'),
+            Prefetch('faculty_department'))
+        .annotate(
+            degree_type__code=F('degree_type__code'),
+            program_type__code=F('program_type__code'))
+        .filter(Q(program_type__name='Concentration')))
     
-    # loop through all pages looking for children
-    for pi,pv in enumerate(Pages):
-        # it's possible there is a child page in this loop, skip it because
-        # you can't do a .distinct() after the union above.
-        # create a condition, does this item have a parent?
-        if pv.parent_code is not None:
-            continue
+    Parents_And_Kids = (DPC_AcademicPage.objects.all()
+        .filter(parent_code__isnull=True)
+        .select_related('parent_code')
+        .prefetch_related('parent_code__parent_code')[1]
+        .dpc_academicpage_set
+        .values('title'))
 
-        #start the HTML with an open tag
-        html += '<li>' + pv.title
-        # loop through each child degree, does the parent page match?
-        for ci,cv in enumerate(Children):
-            if pv == cv.parent_code: 
-                html += '<br>' + cv.title
-        html += '</li>'
 
-    return html
+    # wanna get the codes?
+    # P.objects.all().filter(parent_code__isnull=True)
+    #   .select_related('parent_code')
+    #   .prefetch_related('parent_code__parent_code')[1]
+    #   .dpc_academicpage_set
+    #   .values_list('faculty_department__code')
+
+    # WOW - MEGA LIST THIS??
+    # this = set(P.objects.all().filter(parent_code__isnull=True).select_related('parent_code').prefetch_related('parent_code__parent_code')[1].dpc_academicpage_set.values_list('faculty_department__code')) | set(P.objects.all().filter(parent_code__isnull=True).select_related('parent_code').prefetch_related('parent_code__parent_code')[1].dpc_academicpage_set.values_list('class_format__code')) | set(P.objects.all().filter(parent_code__isnull=True).select_related('parent_code').prefetch_related('parent_code__parent_code')[1].dpc_academicpage_set.values_list('field_of_study__code'))
+
+    # this is better, it just needs refeind by SET()
+    # this = set(P.objects.all().filter(parent_code__isnull=True).select_related('parent_code').prefetch_related('parent_code__parent_code')[1].dpc_academicpage_set.values_list('faculty_department__code','class_format__code','field_of_study__code','program_type__code','degree_type__code'))
+
+    # print(P.objects.all().prefetch_related(Prefetch('field_of_study'),Prefetch('class_format'),Prefetch('faculty_department')).annotate(degree_type__code=F('degree_type__code'),program_type__code=F('program_type__code')).filter(Q(program_type__name='Concentration')).query)
+    # print(P.objects.all().prefetch_related(Prefetch('field_of_study'),Prefetch('class_format'),Prefetch('faculty_department')).annotate(degree_type__code=F('degree_type__code'),program_type__code=F('program_type__code')).filter(Q(program_type__name='Concentration'))[3].parent_code.unique_program_code)
+
+    # print(P.objects.all().annotate(child_record=Subquery(P.objects.filter(parent_code__isnull=False),filter())))
+    # doesn't actually work ... this will look in the database for a single code of the child that is related and associate that single code with annotate(child_record) 
+    # print(P.objects.all().annotate(child_record=Subquery(P.objects.all().filter(parent_code__isnull=False).filter(parent_code=OuterRef('unique_program_code')).filter().values_list('unique_program_code')))[1].child_record)
+
+    # GOT IT!
+
+    # P.objects.all().filter(parent_code__isnull=True).select_related('parent_code').prefetch_related('parent_code__parent_code')[1].dpc_academicpage_set.values('title')

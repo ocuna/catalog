@@ -1,6 +1,4 @@
 {% load catalog_tags %}
-<li>{{ vars }}</li>
-{{ html|safe }}
 <div class="dmf-results">
     <div class="dmf-results-key">
         <div>Online</div>
@@ -8,7 +6,11 @@
         <div>OnlinePlus</div>
     </div>
     <div>
-        {% dmf_program_parent %}
+        {% for thisParent in dict.Parents %}
+            {% dmf_program_parent parent=thisParent children=dict.children %}
+            {% empty %}
+            {{ dict.html|safe }}
+        {% endfor %}
     </div>
     <div id="dmf-fixed-button-container" onclick="" class="dmf-visiblity" data-toggle="DMF-Fixed-Button" style="top: 540px; width: 1147.5px;">
         <div id="dmf-fixed-button">Reset All<div id="dmf-fixed-triangle"></div>

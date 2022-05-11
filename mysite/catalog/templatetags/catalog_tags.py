@@ -27,13 +27,15 @@ def dmf_page_dropdown_block(*args):
 def dmf_program_block(*args):
     return {
         'vars':args,
-        'html':_academicPage_objects_to_html_dmf_list(args),
+        'dict':_academicPage_objects_to_html_dmf_list(args),
     }
 
 @register.inclusion_tag('tags/dmf_program_parent.html')
-def dmf_program_parent(**kwargs):
+def dmf_program_parent(*args,**kwargs):
+    print(dir(kwargs['parent'].field_of_study))
     return {
-        'parent':'idk',
+        'parent':kwargs['parent'],
+        'children': kwargs['children']
     }
 
 @register.inclusion_tag('tags/dmf_program_child.html')
