@@ -2,7 +2,7 @@ from catalog.models import DPC_TaxonomyTerm
 
 class dmf_url_options:
     # will either match the regex or fail with 404 Response
-    regex = 'discover|online|campus'
+    regex = 'discover|online|campus|onlineplus'
 
     # simply passes it through
     def to_python(self, value):

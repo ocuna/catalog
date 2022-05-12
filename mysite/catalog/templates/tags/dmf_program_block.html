@@ -6,10 +6,10 @@
         <div>OnlinePlus</div>
     </div>
     <div>
-        {% for thisParent in dict.Parents %}
-            {% dmf_program_parent parent=thisParent children=dict.children %}
+        {% for thisParent in output.Parents %}
+            {% dmf_program_parent Parent=thisParent Children=output.Children %}
             {% empty %}
-            {{ dict.html|safe }}
+            {{ output.html|safe }}
         {% endfor %}
     </div>
     <div id="dmf-fixed-button-container" onclick="" class="dmf-visiblity" data-toggle="DMF-Fixed-Button" style="top: 540px; width: 1147.5px;">

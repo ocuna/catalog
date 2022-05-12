@@ -1,17 +1,31 @@
 {% load catalog_tags %}
-<div id="{{ parent.unique_program_code }}" style="order: 70; height: auto;" class="dmf-program-list-item dmf-parent collapse show" data-toggle="DMF-EZ-collapse" data-codes="A_24UP|DT_MAST|FS_BUSI|FS_HEAL|FS_HU-RS|FS_LEMA|F_ONLI|PT_CONC|PT_DEGR">
+<div id="{{ Parent.unique_program_code }}" style="order: 70; height: auto;" class="dmf-program-list-item dmf-parent collapse show" data-toggle="DMF-EZ-collapse" data-codes="{{ Parent.parentCodeString }}">
     <div class="dmf-prog-list-top-row">
         <div class="dmf-icon-group">
-        <div class="dmf_degree_type-tag {{ parent.degree_type }}">
-            <div class="dmf_degree_type-tag"><span data-code="dmf_degree_type-{{ parent.something }}">{{ parent.something }}</span></div>
+        <div class="dmf_degree_type-tag {{ Parent.parentDegreeTypeURL }}">
+            <div class="dmf_degree_type-tag"><span data-code="dmf_degree_type-{{ Parent.parentDegreeTypeCode }}">{{ Parent.parentDegreeTypeString }}</span></div>
         </div>
-        </div><a class="dmf-title" aria-label="{{ parent.title }} - {{ parent.degree_type }} - Online - Concentration - Degree" href="/school-of-business/ma-in-leadership" tabindex="0"><span>{{ parent.title }}</span></a>
+        </div><a class="dmf-title" aria-label="{{ Parent.title }} - {{ Parent.degree_type }} - Online - Concentration - Degree" href="/school-of-business/ma-in-leadership" tabindex="0"><span>{{ Parent.title }}</span></a>
         <div class="dmf-format-icon-group">
-        <div class="dmf_program_format-icon online"><span data-code="dmf_format-F_ONLI" class="dmf_online_icon dmf-format-bg-icon"></span></div>
-        <div class="dmf_program_format-icon campus"><span></span></div>
-        <div class="dmf_program_format-icon virtual"><span></span></div>
+        <div class="dmf_program_format-icon online"><span{% if Parent.parentOnline %} data-code="dmf_format-F_ONLI" class="dmf_online_icon dmf-format-bg-icon"{% endif %}></span></div>
+        <div class="dmf_program_format-icon campus"><span{% if Parent.parentCampus %} data-code="dmf_format-F_CAMP" class="dmf_campus_icon dmf-format-bg-icon"{% endif %}></span></div>
+        <div class="dmf_program_format-icon virtual"><span{% if Parent.parentOnlinePlus %} data-code="dmf_format-F_VIRT" class="dmf_virtual_icon dmf-format-bg-icon"{% endif %}></span></div>
         </div>
     </div>
-    {% dmf_program_child %}
+    {% if Children|length >= 1 %}    
+      {% for thisChild in Children %}
+        {% if forloop.first %}
+        <div class="dmf-prog-list-bottom-row">
+            <div class="dmf-child-top-spacer dmf-child" data-toggle="DMF-EZ-collapse">Concentrations:</div>
+            {% endif %}
+            {% if Parent.unique_program_code == thisChild.parent_code.unique_program_code %}
+                    {% dmf_program_child Child=thisChild %}
+            {% endif %}
+            {% if forloop.last %}
+            <div class="dmf-child-bottom-spacer dmf-child" data-toggle="DMF-EZ-collapse">&nbsp;</div>
+            </div>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
 </div>
   
