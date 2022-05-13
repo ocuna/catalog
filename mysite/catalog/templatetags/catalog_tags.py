@@ -2,7 +2,6 @@ from django import template
 from catalog.models import DPC_TaxonomyTerm, DPC_AcademicPage
 from catalog.functions import _taxonomyTerm_objects_to_html_option_list
 from catalog.functions import _academicPage_objects_to_html_dmf_list
-from catalog.functions import _academicPage_objects_to_html_dmf_list_complete
 register = template.Library()
 
 # https://docs.djangoproject.com/en/4.0/howto/custom-template-tags/
@@ -28,15 +27,13 @@ def dmf_page_dropdown_block(*args):
 def dmf_program_block(*args):
     return {
         'vars':args,
-        'output':_academicPage_objects_to_html_dmf_list_complete(args),
-        #'dict':_academicPage_objects_to_html_dmf_list(args),
+        'output':_academicPage_objects_to_html_dmf_list(args),
     }
 
 @register.inclusion_tag('tags/dmf_program_parent.html')
-def dmf_program_parent(*args,**kwargs):
+def dmf_program_parent(**kwargs):
     return {
-        'Parent':kwargs['Parent'],
-        'Children': kwargs['Children']
+        'Parent':kwargs['Parent']
     }
 
 @register.inclusion_tag('tags/dmf_program_child.html')

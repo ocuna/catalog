@@ -2,8 +2,8 @@
 <div id="{{ Parent.unique_program_code }}" style="order: 70; height: auto;" class="dmf-program-list-item dmf-parent collapse show" data-toggle="DMF-EZ-collapse" data-codes="{{ Parent.parentCodeString }}">
     <div class="dmf-prog-list-top-row">
         <div class="dmf-icon-group">
-        <div class="dmf_degree_type-tag {{ Parent.parentDegreeTypeURL }}">
-            <div class="dmf_degree_type-tag"><span data-code="dmf_degree_type-{{ Parent.parentDegreeTypeCode }}">{{ Parent.parentDegreeTypeString }}</span></div>
+        <div class="dmf_{{ Parent.parentDegreeTypeCSSTag }}_type-tag {{ Parent.parentDegreeTypeURL }}">
+            <div class="dmf_type-tag"><span data-code="dmf_{{ Parent.parentDegreeTypeCSSTag }}_type-{{ Parent.parentDegreeTypeCode }}">{{ Parent.parentDegreeTypeString }}</span></div>
         </div>
         </div><a class="dmf-title" aria-label="{{ Parent.title }} - {{ Parent.degree_type }} - Online - Concentration - Degree" href="/school-of-business/ma-in-leadership" tabindex="0"><span>{{ Parent.title }}</span></a>
         <div class="dmf-format-icon-group">
@@ -12,20 +12,16 @@
         <div class="dmf_program_format-icon virtual"><span{% if Parent.parentOnlinePlus %} data-code="dmf_format-F_VIRT" class="dmf_virtual_icon dmf-format-bg-icon"{% endif %}></span></div>
         </div>
     </div>
-    {% if Children|length >= 1 %}    
-      {% for thisChild in Children %}
-        {% if forloop.first %}
-        <div class="dmf-prog-list-bottom-row">
-            <div class="dmf-child-top-spacer dmf-child" data-toggle="DMF-EZ-collapse">Concentrations:</div>
-            {% endif %}
-            {% if Parent.unique_program_code == thisChild.parent_code.unique_program_code %}
-                    {% dmf_program_child Child=thisChild %}
-            {% endif %}
-            {% if forloop.last %}
-            <div class="dmf-child-bottom-spacer dmf-child" data-toggle="DMF-EZ-collapse">&nbsp;</div>
-            </div>
-        {% endif %}
-      {% endfor %}
-    {% endif %}
+    {% if Parent.childrenCount > 0 %}{% for thisChild in Parent.Children %}
+      {% if forloop.first  %}
+      <div class="dmf-prog-list-bottom-row">
+        <div class="dmf-child-top-spacer dmf-child" data-toggle="DMF-EZ-collapse">Concentrations:</div>
+      {% endif %}
+          {% dmf_program_child Child=thisChild %}
+      {% if forloop.last %}
+        <div class="dmf-child-bottom-spacer dmf-child" data-toggle="DMF-EZ-collapse">&nbsp;</div>
+      </div>
+      {% endif %}
+    {% endfor %}{% endif %}
 </div>
   

@@ -7,7 +7,7 @@
     </div>
     <div>
         {% for thisParent in output.Parents %}
-            {% dmf_program_parent Parent=thisParent Children=output.Children %}
+            {% dmf_program_parent Parent=thisParent %}
             {% empty %}
             {{ output.html|safe }}
         {% endfor %}
