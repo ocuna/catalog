@@ -47,7 +47,6 @@ var readyStateCheckInterval = setInterval(function() {
     if (document.readyState === "complete") {
         clearInterval(readyStateCheckInterval);
         _DMF_CalculateDisplayOptions('--');
-        _DMF_ToggleDynamicDisplayInfoBlocks();
      }
 }, 100);
 
@@ -122,7 +121,7 @@ function _add_stripe_to_open_parents(elements){
  *  receives a dataCode which represents what was selected or what is default in the URL
  */
 function _DMF_CalculateDisplayOptions(dataCode){
-  // console.log('datacode: ' +  dataCode);
+  console.log('datacode: ' +  dataCode);
   _remove_stripe_from_parents(DMFParents);
   let selectedCodes = _DMF_ReturnSelectedCodesInArray(dataCode);
   _DMF_toggle_dynamic_DMF_department_advertisement(selectedCodes);
@@ -250,6 +249,7 @@ function _DMF_SetDefaultSelectedOptions(target,value = false){
  *  if Parent is true, this system will not test to see if it needs to disable the parent
  */
 function _DMF_ToggleIfDataCodeMatches(elements,dataCode = '',array){
+  //console.log(elements);
   collectedCodes = [];
   let childElements = [];
   let parentElements = [];
@@ -257,8 +257,10 @@ function _DMF_ToggleIfDataCodeMatches(elements,dataCode = '',array){
   //first, parents and children need to process separately with children going first.
   for(let i = 0; i < elements.length; i++){
     if(elements[i].classList.contains('dmf-parent')){
-      parentElements[i] = elements[i]; 
-    } else {
+      parentElements[i] = elements[i];
+      // console.log(elements[i]);
+    } else if (elements[i].classList.contains('dmf-child')) {
+      // console.log(elements[i]);
       childElements[i] = elements[i];
     }
   }
@@ -269,21 +271,33 @@ function _DMF_ToggleIfDataCodeMatches(elements,dataCode = '',array){
     let e = processElements[k];
     let bottomRowDiv = false;
     let excludeChildren = false;
-    let parentsChildrenArray = null;
-    let childOverride = false;
+    let parentsChildrenArray = [];
+    let childCodeArray = [];
     // complex necessity of having a child class declared which will be added up
     // to include into the parent class's height for shrink and grow purposes.
     let childClassDetected = '';
-    // first detect the second SubNodes of each Parent, this is div.class "dmf-prog-list-bottom-row" 
-    if(e.childNodes[1] !== undefined){
-      bottomRowDiv = e.childNodes[1];
+    // first detect the second SubNodes of each Parent, this is div.class "dmf-prog-list-bottom-row"
+    if(e.querySelector('.dmf-prog-list-bottom-row')){
+      bottomRowDiv = e.querySelector('.dmf-prog-list-bottom-row');
     }
+
+    // childNodes of selected element may not be actual children nodes
+    if(bottomRowDiv.childNodes !== undefined){
+      Object.keys(bottomRowDiv).forEach(function(childKey) {
+        if(bottomRowDiv[childKey].classList !== undefined){
+          if(bottomRowDiv[childKey].classList.contains('dmf-child-program')){
+            parentsChildrenArray.push(bottomRowDiv[childKey]);
+          }
+        }
+      });
+    }
+    
+    // cycle the array for code arguments from the URL or selection boxes
     if(array.length <= 0){
-      // there are NOT codes currenlty selected, so "ALL" must be selected - turn on everything
+      // there are NOT codes currenlty selected, so "ALL" must be selected - cycle and turn on everything
       e.EZCollapse.growMe();
       // if any SubNodes exist (concentration containers) these cointainers also need to growME();
-      if(bottomRowDiv.childNodes !== undefined){
-        parentsChildrenArray = bottomRowDiv.childNodes;
+      if(parentsChildrenArray.length > 0){
         Object.keys(parentsChildrenArray).forEach(function(childKey) {
           parentsChildrenArray[childKey].EZCollapse.growMe();
         });
@@ -301,16 +315,12 @@ function _DMF_ToggleIfDataCodeMatches(elements,dataCode = '',array){
         collectedCodes = collectedCodes.concat(codeArray);
 
         // only run this if the item is a parent
-        if(bottomRowDiv){
-          parentsChildrenArray = bottomRowDiv.childNodes;
-          let childrenCount = parentsChildrenArray.length;
+        if(parentsChildrenArray.length > 0){
           Object.keys(parentsChildrenArray).forEach(function(childKey) {
             let childCodeArray = [];
-            if(parentsChildrenArray[childKey].classList.contains('dmf-child-program')){
-              childCodeArray = parentsChildrenArray[childKey].dataset.codes.split("|");
-              if(arrayContainsArray(array,childCodeArray)){
-                childClassDetected = 'dmf-child';
-              }
+            childCodeArray = parentsChildrenArray[childKey].dataset.codes.split("|");
+            if(arrayContainsArray(array,childCodeArray)){
+              childClassDetected = 'dmf-child';
             }
           });
           // there were children, but none matched the codes provided... so exclude from height
@@ -462,29 +472,6 @@ function _DMF_ReturnArrayOfAllOptionCodes(programs){
   return array.unique().sort();
 }
 
-/*
- *  Reads the URL and Parameters turning blocks on and off as necessary
- *  May potentially also react someday to the dropdown blocks change... but IDK if that's a good idea
- */
-function _DMF_ToggleDynamicDisplayInfoBlocks(){
-  Object.keys(DMFDyanamicDisplayInfo).forEach(function (k) {
-    if(getAllUrlParameters('f') == DMFDyanamicDisplayInfo[k].dataset.urlparam && DMFDyanamicDisplayInfo[k].dataset.infotype == "feature"){
-      DMFDyanamicDisplayInfo[k].classList.remove('dmf-hide');
-    }
-    else if(getAllUrlParameters('c') == DMFDyanamicDisplayInfo[k].dataset.urlparam && DMFDyanamicDisplayInfo[k].dataset.infotype == "consider"){
-      DMFDyanamicDisplayInfo[k].classList.remove('dmf-hide');
-    }
-    else if(getAllUrlParameters('p') == DMFDyanamicDisplayInfo[k].dataset.urlparam && DMFDyanamicDisplayInfo[k].dataset.infotype == "promote"){
-      DMFDyanamicDisplayInfo[k].classList.remove('dmf-hide');
-    } else {
-      DMFDyanamicDisplayInfo[k].classList.add('dmf-hide'); 
-    }
-  });
-}
-
-
-
-
 // These should eventually be gobal functions instantiated at the module layer
 window.mobileCheck = function() {
   let check = false;
@@ -541,65 +528,6 @@ document.addEventListener('keyup', function (e) {
         break;
       }
 }, false);
-
-
-
-/* code for the dmfExplore tool */
-/*   needs some refactor-love   */
-
-function resizeSortSecond() {
-  console.log('resizeSortSecond() fired');
-  var divWidth = jQuery('#dmfEx_sortfirst').width();
-  var divHeight = jQuery('#dmfEx_sortfirst').height();
-  jQuery('#dmfEx_sortsecond').width(divWidth);
-  jQuery('#dmfEx_sortsecond').height(divHeight);
-}
-
-function resetSortMenuForm() {
-  console.log('resetSortMenuForm() fired');
-  jQuery('#rfi-form').collapse('toggle');
-  jQuery('#dmfEx_sortmenu').collapse('toggle');
-}
-
-function collapseSortMenu_expandRFI(RFIDefault) {
-  console.log('collapseSortMenu_expandRFI() fired');
-  jQuery('#rfi-form').collapse('toggle');
-  jQuery('#dmfEx_sortmenu').collapse('toggle');
-  jQuery("#edit-submitted-div-cod").val(RFIDefault);
-}
-
-jQuery('#dmfEx_sortfirst > button').click(function(){
-  console.log('jQuery(#dmfEx_sortfirst > button).click() fired');
-  var targetid = jQuery(this).data("target");
-  if(jQuery('#dmfEx_iwant').hasClass('in') && targetid == "#dmfEx_ima"){
-    jQuery('#dmfEx_iwant').collapse('toggle');
-  }
-  if(jQuery('#dmfEx_ima').hasClass('in') && targetid == "#dmfEx_iwant"){
-    jQuery('#dmfEx_ima').collapse('toggle');
-  }
-});
-
-
-jQuery('.collapse > div > a.btn, #dmfEx_sortsecond > div.back > a').click(function(e) {
-  var datatarget = jQuery(this).data("target");
-  if (datatarget == "q") {
-    if (jQuery('#dmfEx_sortsecond').hasClass('moved')) {
-      jQuery('#dmfEx_sortsecond').removeClass('moved');
-    } else {
-      jQuery('#dmfEx_sortsecond').addClass('moved');
-    }
-    interestClass = e.target.id
-    jQuery('.interest').each(function() {
-      var $this = jQuery(this);
-      if ($this.hasClass(interestClass)) {
-        $this.removeClass('hideinterest');
-      } else {
-        $this.addClass('hideinterest');
-      }
-    });
-    resizeSortSecond();
-  }
-});
 
 
 

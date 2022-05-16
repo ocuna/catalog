@@ -166,6 +166,7 @@
   // EZCollapse Deffinition
   // ===================
   var EZCollapse = function( element, options ) {
+    // console.dir(element);
     element = queryElement(element);
     options = options || {};
 
@@ -200,10 +201,20 @@
      *  function needs to detect if these items have a height of 0 or not... if so.. add new height to parent, if not - don't add - it will double what is there already 
      */
      function includeHeightof_DMF_GrandKidsByClass(el,grandKidClass){
-      let children = el.childNodes;
+      let children = [];
+      let childArray = Array.from(el.childNodes);
+      childArray.forEach(function(child){
+        if(child.classList !== undefined){
+          if(child.classList.contains('dmf-child-program')){
+            children.push(child); 
+          }
+        } 
+      });
       let height = 0;
       let topRowHeight = 0;
       children.forEach(function(e){
+        console.dir(e);
+        console.dir(e.children);
         let lastIndex = e.children.length - 1;
         // Only element typ;es are considered
         if(e.nodeType === 1){

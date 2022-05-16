@@ -10,18 +10,12 @@
         <div class="dmf_program_format-icon online"><span{% if Parent.parentOnline %} data-code="dmf_format-F_ONLI" class="dmf_online_icon dmf-format-bg-icon"{% endif %}></span></div>
         <div class="dmf_program_format-icon campus"><span{% if Parent.parentCampus %} data-code="dmf_format-F_CAMP" class="dmf_campus_icon dmf-format-bg-icon"{% endif %}></span></div>
         <div class="dmf_program_format-icon virtual"><span{% if Parent.parentOnlinePlus %} data-code="dmf_format-F_VIRT" class="dmf_virtual_icon dmf-format-bg-icon"{% endif %}></span></div>
-        </div>
     </div>
-    {% if Parent.childrenCount > 0 %}{% for thisChild in Parent.Children %}
-      {% if forloop.first  %}
+    </div>{% if Parent.childrenCount > 0 %}{% for thisChild in Parent.Children %}{% if forloop.first  %}
       <div class="dmf-prog-list-bottom-row">
         <div class="dmf-child-top-spacer dmf-child" data-toggle="DMF-EZ-collapse">Concentrations:</div>
-      {% endif %}
-          {% dmf_program_child Child=thisChild %}
-      {% if forloop.last %}
-        <div class="dmf-child-bottom-spacer dmf-child" data-toggle="DMF-EZ-collapse">&nbsp;</div>
-      </div>
-      {% endif %}
-    {% endfor %}{% endif %}
+          {% endif %}{% dmf_program_child Child=thisChild %}{% if forloop.last %}
+          <div class="dmf-child-bottom-spacer dmf-child" data-toggle="DMF-EZ-collapse">&nbsp;</div>
+      </div>{% endif %}{% endfor %}{% endif %}
 </div>
   
