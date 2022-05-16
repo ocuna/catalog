@@ -1,0 +1,59 @@
+[33mcommit d08986d9b650454fb3ae10b0bb3e873c656e41b9[m[33m ([m[1;36mHEAD[m[33m)[m
+Author: =Nathanael Armstrong <=narmstrong@ohiochristian.edu>
+Date:   Tue May 10 19:32:36 2022 -0400
+
+    Parent / Child tags on ~/programs/online/masters are working ok.  There are some inefficient queries going on in the background that need rooted out - but Endorsements, Concentrations, Licenses which require parent relationships are properly getting generated - however with rather poor queries by the DB abstract layer
+
+[33mcommit 3530b849365820b6f2e255236851dc7520b7138f[m
+Author: =Nathanael Armstrong <=narmstrong@ohiochristian.edu>
+Date:   Tue May 3 18:16:01 2022 -0400
+
+    added routing to the website, views now work with /programs/discover/all etc.
+
+[33mcommit 82c5af02f4f067f9a5fd6a268c072f241b082e17[m
+Author: =Nathanael Armstrong <=narmstrong@ohiochristian.edu>
+Date:   Tue May 3 10:49:08 2022 -0400
+
+    collected static.  Created JSON generator.  Found out in the original code I didn't need the JSON at all really.  The original design in drupal was not to constantly call the Drupal Database - even though I could have.  The Django DB functions much better, so instead of calling the JSON each render, I'm going to have the DB get called to construct each page.
+
+[33mcommit 7df6c209117009ef792eaced18f77e0a0b39666e[m[33m ([m[1;32mmaster[m[33m)[m
+Author: =Nathanael Armstrong <=narmstrong@ohiochristian.edu>
+Date:   Fri Apr 29 11:21:40 2022 -0400
+
+    added some sorts and filled out concentrations
+
+[33mcommit 084c4d7cbd8e6528f45ebe7f8200d97188c44f9d[m
+Author: =Nathanael Armstrong <=narmstrong@ohiochristian.edu>
+Date:   Thu Apr 28 17:53:16 2022 -0400
+
+    added all the degree programs
+
+[33mcommit aef1f9ad14a77e49eb0f24a8fdeccf5a238cd686[m
+Author: =Nathanael Armstrong <=narmstrong@ohiochristian.edu>
+Date:   Thu Apr 28 10:33:34 2022 -0400
+
+    Models Academic Degree model functions great, associated with taxonomies
+
+[33mcommit cbd406289a7660c4f5ff7dd38fa3660498039f67[m
+Author: =Nathanael Armstrong <=narmstrong@ohiochristian.edu>
+Date:   Wed Apr 27 17:55:40 2022 -0400
+
+    currenlty working through issues with admin display of new model: DPC_AcademicPage
+
+[33mcommit a00189c6b1ccf871685e50893daf7453fa59d0e1[m
+Author: =Nathanael Armstrong <=narmstrong@ohiochristian.edu>
+Date:   Wed Apr 27 09:52:09 2022 -0400
+
+    created models for TaxonomyLibraries and Terms as well as loaded both with relevent data
+
+[33mcommit bdbb4936bb9b3dab92379d04680993dd68d2385f[m[33m ([m[1;31morigin/master[m[33m)[m
+Author: =Nathanael Armstrong <=narmstrong@ohiochristian.edu>
+Date:   Tue Apr 26 12:06:43 2022 -0400
+
+    added readme
+
+[33mcommit a31d40e0a18c92515e00ab0f86ef5980afdb1f31[m
+Author: =Nathanael Armstrong <=narmstrong@ohiochristian.edu>
+Date:   Tue Apr 26 12:02:00 2022 -0400
+
+    master init

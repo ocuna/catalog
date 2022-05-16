@@ -5,7 +5,6 @@ from catalog.models import DPC_TaxLibrary, DPC_TaxonomyTerm, DPC_AcademicPage
 # calls the DB for all taxonomy terms matching the tax term
 # from: _convert_object_array_to_html_option_list()
 def _taxonomyTerm_objects_to_html_option_list(tax_term='',url_args=None):
-    # print(url_args)
     preprocesshtml = ''
     html = ''
     selected = ''
@@ -280,14 +279,13 @@ def _academicPage_objects_to_html_dmf_list(args):
             # finally the children need to group to their parents a single time
             # so the template doesn't need to cycle through every child for
             # each parent
-            if pv.childrenCount is not 0:
+            if pv.childrenCount != 0:
                 # going to nest ChildrenAssembled under Associated Parents
                 pv.Children = []
                 for ci,cv in enumerate(ChildrenAssembled):
                     # does the child's reference to the unique_parent_code
                     # match this parent's program code - then append to parent
                     if cv.parent_code.unique_program_code == pv.unique_program_code:
-                        print(cv.title)
                         pv.Children.append(cv)
 
             # add this newly assembled parent object to the container object

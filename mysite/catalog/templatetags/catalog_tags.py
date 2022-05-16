@@ -18,11 +18,12 @@ def dmf_page_dropdown_block(*args):
     # Isn't necessary that it get keyword arguments or context (**kwargs)
     return {
         'html_field_of_study':_taxonomyTerm_objects_to_html_option_list('Field of Study',args),
-        'html_class_type':_taxonomyTerm_objects_to_html_option_list('Class Type',args),
+        'html_class_format':_taxonomyTerm_objects_to_html_option_list('Class Format',args),
         'html_degree_type':_taxonomyTerm_objects_to_html_option_list('Degree Type',args),
         'html_program_type':_taxonomyTerm_objects_to_html_option_list('Program Type',args)
     }
 
+# primary DMF program listing block recieves taxonomy arguments  
 @register.inclusion_tag('tags/dmf_program_block.html')
 def dmf_program_block(*args):
     return {
