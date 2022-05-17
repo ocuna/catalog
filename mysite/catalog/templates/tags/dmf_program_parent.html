@@ -5,7 +5,7 @@
         <div class="dmf_{{ Parent.parentDegreeTypeCSSTag }}_type-tag {{ Parent.parentDegreeTypeURL }}">
             <div class="dmf_type-tag"><span data-code="dmf_{{ Parent.parentDegreeTypeCSSTag }}_type-{{ Parent.parentDegreeTypeCode }}">{{ Parent.parentDegreeTypeString }}</span></div>
         </div>
-        </div><a class="dmf-title" aria-label="{{ Parent.title }} - {{ Parent.degree_type }} - Online - Concentration - Degree" href="/school-of-business/ma-in-leadership" tabindex="0"><span>{{ Parent.title }}</span></a>
+        </div><a class="dmf-title" aria-label="{{ Parent.title }} - {{ Parent.degree_type }} - {{ Parent.parentClassFormatString }} - {{ Parent.program_type }}" href="/school-of-business/ma-in-leadership" tabindex="0"><span>{{ Parent.cleanTitle }}</span></a>
         <div class="dmf-format-icon-group">
         <div class="dmf_program_format-icon online"><span{% if Parent.parentOnline %} data-code="dmf_format-F_ONLI" class="dmf_online_icon dmf-format-bg-icon"{% endif %}></span></div>
         <div class="dmf_program_format-icon campus"><span{% if Parent.parentCampus %} data-code="dmf_format-F_CAMP" class="dmf_campus_icon dmf-format-bg-icon"{% endif %}></span></div>

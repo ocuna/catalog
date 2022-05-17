@@ -32,7 +32,6 @@ class DPC_AcademicPageView(TemplateView):
         context['latest_articles'] = AcademicPage.objects.all()[:5]
         return context
 
-
 def dmf_json(request):
     null = None
     generate_json = {

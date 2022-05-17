@@ -2,11 +2,13 @@ from django.contrib import admin
 from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator
 from django.db import models
 from django.db.models import Q
+from django.urls import reverse
 from django.utils.html import format_html
-
+from django.utils.text import slugify
 # https://django-model-utils.readthedocs.io/en/latest
 from model_utils.models import StatusModel
 from model_utils import Choices
+from catalog.utils import _clean_title
 
 ###############################################################################
 # The following are componants that share a relationship with taxonomy terms  #
@@ -60,6 +62,7 @@ class DPC_TaxonomyTerm(StatusModel):
 # Following are the "academic pages" that display degrees, certificates etc.  #
 ###############################################################################
 class DPC_AcademicPage(StatusModel):
+
     title = models.CharField(
         max_length=255,
         validators=[
@@ -67,6 +70,13 @@ class DPC_AcademicPage(StatusModel):
             message='Title must be at least 5 and max 150 Alpha-Numeric Characters, may the following punctionation characters: ,.()-_'),
         ]
     )
+
+    # https://github.com/justinmayer/django-autoslug
+    slug = models.SlugField(
+        max_length=80,
+        default = '' # we get changed on Save() to degree_type-title
+    )
+
     degree_type = models.ForeignKey(
         DPC_TaxonomyTerm,
         on_delete=models.SET_NULL,
@@ -138,11 +148,31 @@ class DPC_AcademicPage(StatusModel):
         limit_choices_to=Q(program_type_id='PT_DEGR'),
         verbose_name='Parent Code')
 
+    def get_absolute_url(self):
+        # look in urls.py to find arguments specified for generated this reverse URL response
+        return reverse("academicpage", kwargs={'dept':self.dept,'slug':self.slug,'pk':self.pk})
+
     STATUS = Choices('published','removed')
+
     def __str__(self):
         return ("{} . . . {}").format(self.title, self.degree_type)
+
     class Meta:
         verbose_name = 'Academic Degree Page'
         verbose_name_plural = 'Academic Degree Pages'
-
     
+    # https://docs.djangoproject.com/en/3.2/topics/db/models/#overriding-predefined-model-methods
+    # slugs are procedurally generated for pages
+    # this is best accomplished on "save" event upon creation
+    def save(self, *args, **kwargs):
+        url_1 = '' if self.program_type is None else self.program_type.urlparam
+        url_2 = '' if self.degree_type is None else self.degree_type.urlparam
+        #print(type(self.slug))
+        #import pdb; pdb.set_trace()
+        if self.slug == '':
+            # slugify removes the trailing hyphen
+            self.slug = slugify(url_2 + "-" + _clean_title(self.title) + '-' + url_1)
+            print('Created:' + self.slug)
+        else:
+            print('Just Fine:' + self.slug)
+        super().save(*args, **kwargs)  # Call the "real" save() method.

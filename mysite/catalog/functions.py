@@ -1,6 +1,7 @@
 from django.db.models import Q,F,Value,Subquery,Prefetch
 from django.db.models.functions import Concat
 from catalog.models import DPC_TaxLibrary, DPC_TaxonomyTerm, DPC_AcademicPage
+from catalog.utils import _clean_title
 
 # calls the DB for all taxonomy terms matching the tax term
 # from: _convert_object_array_to_html_option_list()
@@ -120,6 +121,8 @@ def _academicPage_objects_to_html_dmf_list(args):
         # This is simliar but more simple then how the parents work 
         for ci,cv in enumerate(Children):
             childCodeString = ''
+            childClassFormatString = ''
+            childClassFormatList = []
             childCodeList = []
             childCodeSet = set()
 
@@ -138,13 +141,19 @@ def _academicPage_objects_to_html_dmf_list(args):
                     if vv :
                         childCodeSet.add(vv)
 
+            for i,v in enumerate(cv.class_format.values_list('name')):
+                for ii,vv in enumerate(v):
+                    if vv :
+                        childClassFormatString += vv + " " 
+
             if cv.program_type:
                 childCodeSet.add(cv.program_type.code)
 
             if cv.degree_type:
                 childCodeSet.add(cv.degree_type.code)
 
-
+            cv.cleanTitle = _clean_title(cv.title)
+            cv.childClassFormatString = childClassFormatString.strip()
             cv.childCodeSet = childCodeSet
 
             # need to pipe-deliniate this for use in HTML
@@ -165,7 +174,7 @@ def _academicPage_objects_to_html_dmf_list(args):
             parentDegreeTypeCode = ''
             parentDegreeTypeString = ''
             parentDegreeTypeURL = ''
-            parentCampus = False
+            parentClassFormatString = ''
             parentOnline = False
             parentOnlinePlus = False
             parentCampus = False
@@ -204,6 +213,11 @@ def _academicPage_objects_to_html_dmf_list(args):
                 for ii,vv in enumerate(v):
                     if vv :
                         parentCodeSet.add(vv)
+            for i,v in enumerate(pv.class_format.values_list('name')):
+                for ii,vv in enumerate(v):
+                    if vv :
+                        parentClassFormatString += vv + " "
+
             for i,v in enumerate(pv.class_format.values_list('code')):
                 for ii,vv in enumerate(v):
                     if vv :
@@ -267,6 +281,8 @@ def _academicPage_objects_to_html_dmf_list(args):
             pv.parentDegreeTypeString = parentDegreeTypeString
             pv.parentDegreeTypeCSSTag = parentDegreeTypeCSSTag
             pv.parentDegreeTypeURL = parentDegreeTypeURL
+            pv.parentClassFormatString = parentClassFormatString.strip()
+            pv.cleanTitle = _clean_title(pv.title)
 
             
             # need to pipe-deliniate this for use in HTML
