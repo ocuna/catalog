@@ -1,10 +1,12 @@
 {% load catalog_tags %}
 <div class="dmf-results">
+    {% if not sidebar %}
     <div class="dmf-results-key">
         <div>Online</div>
         <div>Campus</div>
         <div>OnlinePlus</div>
     </div>
+    {% endif %}
     <div>
         {% for thisParent in output.Parents %}
             {% dmf_program_parent Parent=thisParent %}
@@ -12,9 +14,11 @@
             {{ output.html|safe }}
         {% endfor %}
     </div>
+    {% if not sidebar %}
     <div id="dmf-fixed-button-container" onclick="" class="dmf-visiblity" data-toggle="DMF-Fixed-Button" style="top: 540px; width: 1147.5px;">
         <div id="dmf-fixed-button">Reset All<div id="dmf-fixed-triangle"></div>
         </div>
     </div>
+    {% endif %}
 </div>
   

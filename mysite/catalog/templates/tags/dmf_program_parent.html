@@ -1,21 +1,21 @@
 {% load catalog_tags %}
 <div id="{{ Parent.unique_program_code }}" style="order: 70; height: auto;" class="dmf-program-list-item dmf-parent collapse show" data-toggle="DMF-EZ-collapse" data-codes="{{ Parent.parentCodeString }}">
     <div class="dmf-prog-list-top-row">
-        <div class="dmf-icon-group">
+      <div class="dmf-icon-group">
         <div class="dmf_{{ Parent.parentDegreeTypeCSSTag }}_type-tag {{ Parent.parentDegreeTypeURL }}">
             <div class="dmf_type-tag"><span data-code="dmf_{{ Parent.parentDegreeTypeCSSTag }}_type-{{ Parent.parentDegreeTypeCode }}">{{ Parent.parentDegreeTypeString }}</span></div>
         </div>
-        </div><a class="dmf-title" aria-label="{{ Parent.title }} - {{ Parent.degree_type }} - {{ Parent.parentClassFormatString }} - {{ Parent.program_type }}" href="/school-of-business/ma-in-leadership" tabindex="0"><span>{{ Parent.cleanTitle }}</span></a>
-        <div class="dmf-format-icon-group">
+      </div><a class="dmf-title" aria-label="{{ Parent.title }} - {{ Parent.degree_type }} - {{ Parent.parentClassFormatString }} - {{ Parent.program_type }}" href="{{ Parent.get_absolute_url }}" tabindex="0"><span>{{ Parent.cleanTitle }}</span></a>
+      <div class="dmf-format-icon-group">
         <div class="dmf_program_format-icon online"><span{% if Parent.parentOnline %} data-code="dmf_format-F_ONLI" class="dmf_online_icon dmf-format-bg-icon"{% endif %}></span></div>
         <div class="dmf_program_format-icon campus"><span{% if Parent.parentCampus %} data-code="dmf_format-F_CAMP" class="dmf_campus_icon dmf-format-bg-icon"{% endif %}></span></div>
         <div class="dmf_program_format-icon virtual"><span{% if Parent.parentOnlinePlus %} data-code="dmf_format-F_VIRT" class="dmf_virtual_icon dmf-format-bg-icon"{% endif %}></span></div>
-    </div>
+      </div>
     </div>{% if Parent.childrenCount > 0 %}{% for thisChild in Parent.Children %}{% if forloop.first  %}
       <div class="dmf-prog-list-bottom-row">
         <div class="dmf-child-top-spacer dmf-child" data-toggle="DMF-EZ-collapse">Concentrations:</div>
           {% endif %}{% dmf_program_child Child=thisChild %}{% if forloop.last %}
-          <div class="dmf-child-bottom-spacer dmf-child" data-toggle="DMF-EZ-collapse">&nbsp;</div>
+        <div class="dmf-child-bottom-spacer dmf-child" data-toggle="DMF-EZ-collapse">&nbsp;</div>
       </div>{% endif %}{% endfor %}{% endif %}
 </div>
   

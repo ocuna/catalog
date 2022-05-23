@@ -1,5 +1,6 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, get_object_or_404
 from django.conf import settings
+from django.views.generic import DetailView
 from django.views.generic.base import TemplateView
 from catalog.models import DPC_TaxLibrary,DPC_TaxonomyTerm,DPC_AcademicPage
 from datetime import datetime
@@ -18,19 +19,68 @@ def demo(request):
     return render(request, 'demo.html',{'demo':demo,})
 
 # we need to pass this request
-def programs(request,firstparam,secondparam):
+def DMF_AcademicProgramList(request,firstparam,secondparam):
     program_headline = '<h1>Program Page</h1>'
     # context variables in the {} are accessible on home within {{}}
     return render(request, 'programs.html',{'headline':program_headline,'firstparam':firstparam,'secondparam':secondparam})
 
+# this class inherits DetailView and mothods in DetailView are overridden
+# to produce the content sent to the template this works 'automatically or
+# abstractly' instead of the manual way to return a render(request) or
+# HttpResopnse.
+# https://docs.djangoproject.com/en/3.2/ref/class-based-views/generic-display/
+# DetailView 
+class DPC_AcademicPageDetailView(DetailView):
+    template_name = 'AcademicPage.html'
+    context_object_name = 'Page'
 
-class DPC_AcademicPageView(TemplateView):
+    def get_queryset(self):
+        #print(self.kwargs)
+        self.Page = get_object_or_404(DPC_AcademicPage, pk = self.kwargs['pk'])
+        # additional filtering can be done here
+        return DPC_AcademicPage.objects.filter(pk=self.Page.pk)
+
+    # here we can add additional context that may need modifications based on
+    # what is provided in kwargs (keyword dict. which is assembled from the
+    # url parameters identified in urls.py
+    def get_context_data(self, **kwargs):
+        class_format_list = DPC_AcademicPage.objects.filter(pk=self.Page.pk).values_list('class_format__urlparam')
+        field_of_study = DPC_AcademicPage.objects.filter(pk=self.Page.pk).values_list('field_of_study__urlparam')
+        field_of_study_list_arg = []
+        taxonomy_args = ''    
+ 
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        for i in class_format_list:
+            if i[0] == 'campus':
+                context['Campus'] = True
+            if i[0] == 'online':
+                context['Online'] = True
+            if i[0] == 'onlineplus':
+                context['OnlinePlus'] = True
+
+        for i in field_of_study:
+            field_of_study_list_arg.append(i[0])
+
+        # add in whatever variables are necessary into the context
+        context['pk'] = self.kwargs['pk']
+        context['slug'] = self.kwargs['slug']
+        context['dept'] = self.kwargs['dept']
+        context['field_of_study_list_arg'] = field_of_study_list_arg[0]
+        return context
+
+'''
+
+class DPC_AcademicPageView(TemplateView,**kwargs):
+    print('DPC_AcademicPageView fired')
     template_name = "AcademicPage.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['latest_articles'] = AcademicPage.objects.all()[:5]
         return context
+'''
+
 
 def dmf_json(request):
     null = None

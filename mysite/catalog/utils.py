@@ -9,7 +9,8 @@ removed_title_strings = [
     " Certificate",
     " Concentration",
     " License",
-    " Endorsement"
+    " Endorsement",
+    " Specialization"
 ]
 
 # loops the Title strings list and removes any found word from the sentence

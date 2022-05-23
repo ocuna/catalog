@@ -1,7 +1,14 @@
+import ast
 from django.db.models import Q,F,Value,Subquery,Prefetch
 from django.db.models.functions import Concat
 from catalog.models import DPC_TaxLibrary, DPC_TaxonomyTerm, DPC_AcademicPage
 from catalog.utils import _clean_title
+
+# calls the DB for all child programs that match this parentCode
+def _academicPage_parentcode_to_html_dpc_child_display(parentCode):
+    children = DPC_AcademicPage.objects.filter(parent_code=parentCode)
+    count = int(children.count())
+    return {'children':children,'count':count}
 
 # calls the DB for all taxonomy terms matching the tax term
 # from: _convert_object_array_to_html_option_list()
@@ -49,16 +56,36 @@ def _taxonomyTerm_objects_to_html_option_list(tax_term='',url_args=None):
 # vars specifically sent to the templates dmf_program_block, dmf_program_parent
 # and dmf_program_child.  Some vars are designed to create class styles instead
 # of heavily loading logic into the templates themselves
-def _academicPage_objects_to_html_dmf_list(args):
+def _academicPage_objects_to_html_dmf_list(*args,**kwargs):
     html = ''
     # these lists are formed after for loops process the contents and then 
     # attach specific data that is formatted for the templates downstreamm 
     ParentsAssembled = []
     ChildrenAssembled = []
 
+    # if the sidebar is engage, some filters work differently.
+    sidebar = ''
+    if kwargs:
+        if kwargs['sidebar']:
+            sidebar='sidebar'
+
+
     # there will always be args because urls_converter.py shoud catch it ...
     # but just in case...
     if args:
+        # it's possible this function was sent a space-delim string instead
+        # of a list
+        
+        if isinstance(args[0],str):
+            string = "('" + args[0].replace(" ","','") + "')"
+            print("if isinstance(args[0],str):")
+            print(string)
+            args = ast.literal_eval(string)
+
+        # it is possible it was a list sent in.
+        if isinstance(args[0],list):
+            args = args[0]
+
         # this is a complex query that needs to request multiple related tables
         # Prefetch calls the tables in advance so they don't get hit each time
         # a record is request.  this is also doing to the child relationship as
@@ -68,7 +95,7 @@ def _academicPage_objects_to_html_dmf_list(args):
         # below because they need looped and placed on a different tempate and it 
         # is simply easier to loop that separately if the code matches then to 
         # pre-load all the necessary information into a parent object that could
-        # hold it. 
+        # hold it.
         Parents_PreFetch_Kids = (DPC_AcademicPage.objects.all()
             .filter(parent_code__isnull=True)
             .filter(status='published')
@@ -98,17 +125,36 @@ def _academicPage_objects_to_html_dmf_list(args):
                 'title')  # Order Weight by lightest to heaviest then by Title
             .distinct())  # make sure we don't get doubles for any reason
 
-        for i,arg in enumerate(args):
-            if(arg != 'discover' and arg != 'all'):
-                # each time a term is iterated from the prior arguments
-                # filter each term by each possible field using 'OR' opperator
-                # set up the Parents_PreFetch_Kids 
-                Parents_PreFetch_Kids = Parents_PreFetch_Kids.filter(
+
+        # if there is no sidebar, simply look for all parents that match either
+        # argument and add them together
+        if sidebar is 'sidebar':
+            print("sidebar is not 'sidebar'")
+            Add_All_Parents = DPC_AcademicPage.objects.none()
+            for i,arg in enumerate(args):
+                Add_All_Parents.union(Parents_PreFetch_Kids.filter(
                     Q(degree_type__urlparam=arg) |
                     Q(field_of_study__urlparam=arg) |
                     Q(program_type__urlparam=arg) |
                     Q(faculty_department__urlparam=arg) |
-                    Q(class_format__urlparam=arg))
+                    Q(class_format__urlparam=arg)))
+            Parents_PreFetch_Kids = Add_All_Parents
+        
+        # if there is a sidebar, continue filter by each argument
+        else:
+            for i,arg in enumerate(args[0]):
+                print("i,arg in enumerate(args):")
+                print(arg)
+                if(arg != 'discover' and arg != 'all'):
+                # each time a term is iterated from the prior arguments
+                # filter each term by each possible field using 'OR' opperator
+                # set up the Parents_PreFetch_Kids
+                    Parents_PreFetch_Kids = Parents_PreFetch_Kids.filter(
+                        Q(degree_type__urlparam=arg) |
+                        Q(field_of_study__urlparam=arg) |
+                        Q(program_type__urlparam=arg) |
+                        Q(faculty_department__urlparam=arg) |
+                        Q(class_format__urlparam=arg))
 
         Parents = (Parents_PreFetch_Kids
             .order_by(F('degree_type__weight').asc(nulls_last=True),
@@ -312,7 +358,7 @@ def _academicPage_objects_to_html_dmf_list(args):
         # or the urls_converter.py should produce a 404 fail.
         pass
 
-    return { 'Parents':ParentsAssembled, 'html':html }
+    return { 'Parents':ParentsAssembled, 'html':html, 'sidebar':sidebar }
     # GOT IT!
 
     # P.objects.all().filter(parent_code__isnull=True).select_related('parent_code').prefetch_related('parent_code__parent_code')[1].dpc_academicpage_set.values('title')
@@ -346,4 +392,4 @@ html += '</li>'
     # print(P.objects.all().prefetch_related(Prefetch('field_of_study'),Prefetch('class_format'),Prefetch('faculty_department')).annotate(degree_type__code=F('degree_type__code'),program_type__code=F('program_type__code')).filter(Q(program_type__name='Concentration')).query)
     # print(P.objects.all().prefetch_related(Prefetch('field_of_study'),Prefetch('class_format'),Prefetch('faculty_department')).annotate(degree_type__code=F('degree_type__code'),program_type__code=F('program_type__code')).filter(Q(program_type__name='Concentration'))[3].parent_code.unique_program_code)
 
-
+    

@@ -62,7 +62,6 @@ class DPC_TaxonomyTerm(StatusModel):
 # Following are the "academic pages" that display degrees, certificates etc.  #
 ###############################################################################
 class DPC_AcademicPage(StatusModel):
-
     title = models.CharField(
         max_length=255,
         validators=[
@@ -111,7 +110,7 @@ class DPC_AcademicPage(StatusModel):
 
     faculty_department = models.ManyToManyField(
         DPC_TaxonomyTerm,
-        blank=True,
+        blank=False,
         limit_choices_to=(Q(library__name='Faculty Department') | Q(library__name='University Department')),
         related_name='academicpage_facultydepartment',
         verbose_name='Faculty Department')
@@ -149,8 +148,18 @@ class DPC_AcademicPage(StatusModel):
         verbose_name='Parent Code')
 
     def get_absolute_url(self):
-        # look in urls.py to find arguments specified for generated this reverse URL response
-        return reverse("academicpage", kwargs={'dept':self.dept,'slug':self.slug,'pk':self.pk})
+        # look in urls.py to find arguments for this reverse URL response
+        # this code identifies the name="" found by the URL for the reverse 
+        # lookup, then it assigns each parameter a value via the self mechanism
+        # this gets very abstract as some fields have various relationships
+        # I have to orer the weight of the faculty_department so a single item
+        # is chosen...and the one chosen has the lighter weight
+        #
+        # Troubleshooting:
+        # import pdb; pdb.set_trace()
+        # print(self.title)
+        # print(str(self.faculty_department.values('urlparam').order_by('weight')[0]['urlparam']))
+        return reverse("academicpage", kwargs={'dept':str(self.faculty_department.values('urlparam').order_by('weight')[0]['urlparam']),'slug':self.slug,'pk':self.pk})
 
     STATUS = Choices('published','removed')
 
@@ -163,16 +172,16 @@ class DPC_AcademicPage(StatusModel):
     
     # https://docs.djangoproject.com/en/3.2/topics/db/models/#overriding-predefined-model-methods
     # slugs are procedurally generated for pages
-    # this is best accomplished on "save" event upon creation
+    # this is best accomplished on "save" event upon creation (vs. signals)
     def save(self, *args, **kwargs):
         url_1 = '' if self.program_type is None else self.program_type.urlparam
         url_2 = '' if self.degree_type is None else self.degree_type.urlparam
-        #print(type(self.slug))
-        #import pdb; pdb.set_trace()
         if self.slug == '':
             # slugify removes the trailing hyphen
             self.slug = slugify(url_2 + "-" + _clean_title(self.title) + '-' + url_1)
             print('Created:' + self.slug)
         else:
-            print('Just Fine:' + self.slug)
-        super().save(*args, **kwargs)  # Call the "real" save() method.
+            #import pdb; pdb.set_trace()
+            #print('Didn\'t change:' + self.slug)
+            pass
+        super().save(*args, **kwargs) # Call the "real" save() method.
