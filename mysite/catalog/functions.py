@@ -65,10 +65,11 @@ def _academicPage_objects_to_html_dmf_list(*args,**kwargs):
 
     # if the sidebar is engage, some filters work differently.
     sidebar = ''
+    print(args)
+    print(kwargs)
     if kwargs:
         if kwargs['sidebar']:
-            sidebar='sidebar'
-
+            sidebar=kwargs['sidebar']
 
     # there will always be args because urls_converter.py shoud catch it ...
     # but just in case...
@@ -78,8 +79,6 @@ def _academicPage_objects_to_html_dmf_list(*args,**kwargs):
         
         if isinstance(args[0],str):
             string = "('" + args[0].replace(" ","','") + "')"
-            print("if isinstance(args[0],str):")
-            print(string)
             args = ast.literal_eval(string)
 
         # it is possible it was a list sent in.
@@ -127,24 +126,40 @@ def _academicPage_objects_to_html_dmf_list(*args,**kwargs):
 
 
         # if there is no sidebar, simply look for all parents that match either
-        # argument and add them together
-        if sidebar is 'sidebar':
-            print("sidebar is not 'sidebar'")
+        # argument and add them together, BUT don't include any minors or 
+        # certificates in this group
+        if sidebar == 'sidebar':
             Add_All_Parents = DPC_AcademicPage.objects.none()
-            for i,arg in enumerate(args):
-                Add_All_Parents.union(Parents_PreFetch_Kids.filter(
-                    Q(degree_type__urlparam=arg) |
-                    Q(field_of_study__urlparam=arg) |
-                    Q(program_type__urlparam=arg) |
-                    Q(faculty_department__urlparam=arg) |
-                    Q(class_format__urlparam=arg)))
+            # the *args are passed through two layers of catalog_tags by this
+            # point which means it is nested within args
+            for i,arg in enumerate(args[0][0]):
+                print(arg)
+                if i < 1:
+                    Add_All_Parents = Parents_PreFetch_Kids.filter(
+                        Q(degree_type__urlparam=arg) |
+                        Q(field_of_study__urlparam=arg) |
+                        Q(program_type__urlparam=arg) |
+                        Q(faculty_department__urlparam=arg) |
+                        Q(class_format__urlparam=arg)
+                        ).exclude(
+                        Q(program_type__urlparam='minor') | 
+                        Q(program_type__urlparam='certificate'))
+                else:
+                    Add_All_Parents.union(Parents_PreFetch_Kids.filter(
+                        Q(degree_type__urlparam=arg) |
+                        Q(field_of_study__urlparam=arg) |
+                        Q(program_type__urlparam=arg) |
+                        Q(faculty_department__urlparam=arg) |
+                        Q(class_format__urlparam=arg)
+                        ).exclude(
+                        Q(program_type__urlparam='minor') | 
+                        Q(program_type__urlparam='certificate')))
+            print(Add_All_Parents)
             Parents_PreFetch_Kids = Add_All_Parents
         
         # if there is a sidebar, continue filter by each argument
         else:
             for i,arg in enumerate(args[0]):
-                print("i,arg in enumerate(args):")
-                print(arg)
                 if(arg != 'discover' and arg != 'all'):
                 # each time a term is iterated from the prior arguments
                 # filter each term by each possible field using 'OR' opperator

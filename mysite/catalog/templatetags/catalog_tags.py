@@ -27,9 +27,13 @@ def dmf_page_dropdown_block(*args):
 # primary DMF program listing block recieves taxonomy arguments  
 @register.inclusion_tag('tags/dmf_program_block.html')
 def dmf_program_block(*args,**kwargs):
+    sidebar = {}
+    if kwargs:
+        if kwargs['sidebar']:
+            sidebar = kwargs['sidebar']
     return {
         'vars':args,
-        'output':_academicPage_objects_to_html_dmf_list(args,kwargs),
+        'output':_academicPage_objects_to_html_dmf_list(args,sidebar=sidebar),
     }
 
 @register.inclusion_tag('tags/dmf_program_parent.html')
