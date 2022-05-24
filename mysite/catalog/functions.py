@@ -56,34 +56,63 @@ def _taxonomyTerm_objects_to_html_option_list(tax_term='',url_args=None):
 # vars specifically sent to the templates dmf_program_block, dmf_program_parent
 # and dmf_program_child.  Some vars are designed to create class styles instead
 # of heavily loading logic into the templates themselves
-def _academicPage_objects_to_html_dmf_list(*args,**kwargs):
+# args contains URL parameters that mostly describe taxonomy terms to filter
+# in some cases like all,discover these are non-taxonomy urls the sepecify an 
+# inclusive filter style.  Also, transforming the output can also be modified
+# by including 'union' into the function which will create a different sort
+def _academicPage_objects_to_html_dmf_list(*args):
     html = ''
+    # the arguments passed won't necessarilly be used in the function, some are
+    # interspersed with triggers
+    cleanargs = []
+    # function uses trigger words: deliminted and union
+    delimited = False
+    union = False
+
     # these lists are formed after for loops process the contents and then 
     # attach specific data that is formatted for the templates downstreamm 
     ParentsAssembled = []
     ChildrenAssembled = []
 
-    # if the sidebar is engage, some filters work differently.
-    sidebar = ''
-    print(args)
-    print(kwargs)
-    if kwargs:
-        if kwargs['sidebar']:
-            sidebar=kwargs['sidebar']
-
     # there will always be args because urls_converter.py shoud catch it ...
     # but just in case...
     if args:
-        # it's possible this function was sent a space-delim string instead
-        # of a list
-        
-        if isinstance(args[0],str):
-            string = "('" + args[0].replace(" ","','") + "')"
-            args = ast.literal_eval(string)
+        # if this trigger 'delimited_string' is detected in the args, it will
+        # remake the args by transforming the 2nd argument (which should be a
+        # space delimited string) into an tuple replacing args
+        print(args)
+        if args[0][0] == 'delimited_string':
+            delimited = True
+            # maybe the second arg has no delimiter:
+            if " " in args[0][1]:
+                string = "('" + args[0][1].replace(" ","','") + "')"
+                args = [ast.literal_eval(string)]
+            else:
+                # need to reassemble the nested args structure
+                args = tuple([[args[0][1]]])
 
-        # it is possible it was a list sent in.
-        if isinstance(args[0],list):
-            args = args[0]
+
+        # check if certain arguments that ARE NOT url parameters matching
+        # taxonomy codes are passed in, we want 'sidebar' out of this list
+        for i,arg in enumerate(args[0]):
+            if arg == 'union':
+                union = True
+ 
+        # delimited changes the structure
+        # in any case we need to remove union
+        if not delimited:
+            for i,arg in enumerate(args[0]):
+                print('NOT DELIMITED')
+                print(arg)
+                cleanargs.append(arg)
+        elif delimited:
+            for i,arg in enumerate(args[0]):
+                print('DELIMITED')
+                print(arg)
+                cleanargs.append(arg)
+
+        print('CLEANARGS:')
+        print(cleanargs)
 
         # this is a complex query that needs to request multiple related tables
         # Prefetch calls the tables in advance so they don't get hit each time
@@ -125,41 +154,38 @@ def _academicPage_objects_to_html_dmf_list(*args,**kwargs):
             .distinct())  # make sure we don't get doubles for any reason
 
 
-        # if there is no sidebar, simply look for all parents that match either
-        # argument and add them together, BUT don't include any minors or 
-        # certificates in this group
-        if sidebar == 'sidebar':
+        # if union, simply look for all parents that match either
+        # argument and add them together
+        if union:
             Add_All_Parents = DPC_AcademicPage.objects.none()
             # the *args are passed through two layers of catalog_tags by this
             # point which means it is nested within args
-            for i,arg in enumerate(args[0][0]):
-                print(arg)
+            for i,arg in enumerate(cleanargs):
                 if i < 1:
                     Add_All_Parents = Parents_PreFetch_Kids.filter(
                         Q(degree_type__urlparam=arg) |
                         Q(field_of_study__urlparam=arg) |
                         Q(program_type__urlparam=arg) |
                         Q(faculty_department__urlparam=arg) |
-                        Q(class_format__urlparam=arg)
-                        ).exclude(
-                        Q(program_type__urlparam='minor') | 
-                        Q(program_type__urlparam='certificate'))
+                        Q(class_format__urlparam=arg))
+                    print(Add_All_Parents)
                 else:
-                    Add_All_Parents.union(Parents_PreFetch_Kids.filter(
+                    print(i)
+                    print(arg)
+                    Add_All_Parents = Add_All_Parents | Parents_PreFetch_Kids.filter(
                         Q(degree_type__urlparam=arg) |
                         Q(field_of_study__urlparam=arg) |
                         Q(program_type__urlparam=arg) |
                         Q(faculty_department__urlparam=arg) |
-                        Q(class_format__urlparam=arg)
-                        ).exclude(
-                        Q(program_type__urlparam='minor') | 
-                        Q(program_type__urlparam='certificate')))
+                        Q(class_format__urlparam=arg))
+                    print(Add_All_Parents)
+            print('Add_All_Parents')
             print(Add_All_Parents)
-            Parents_PreFetch_Kids = Add_All_Parents
+            Parents_PreFetch_Kids = Add_All_Parents.distinct()
         
         # if there is a sidebar, continue filter by each argument
         else:
-            for i,arg in enumerate(args[0]):
+            for i,arg in enumerate(cleanargs):
                 if(arg != 'discover' and arg != 'all'):
                 # each time a term is iterated from the prior arguments
                 # filter each term by each possible field using 'OR' opperator
@@ -373,7 +399,7 @@ def _academicPage_objects_to_html_dmf_list(*args,**kwargs):
         # or the urls_converter.py should produce a 404 fail.
         pass
 
-    return { 'Parents':ParentsAssembled, 'html':html, 'sidebar':sidebar }
+    return { 'Parents':ParentsAssembled, 'html':html}
     # GOT IT!
 
     # P.objects.all().filter(parent_code__isnull=True).select_related('parent_code').prefetch_related('parent_code__parent_code')[1].dpc_academicpage_set.values('title')

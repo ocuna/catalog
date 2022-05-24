@@ -25,15 +25,31 @@ def dmf_page_dropdown_block(*args):
     }
 
 # primary DMF program listing block recieves taxonomy arguments  
+# Works with multiple arguments as filters by default
+#              {% dmf_program_block 'delimited_string' 'criminal-justice' %}
+#              {% dmf_program_block 'delimited_string' 'criminal-justice degree' %}
+
+# Works with multiple arguments and Unions
+#              {% dmf_program_block 'delimited_string' 'criminal-justice degree union' %}
+
+# Carries the current arguments to the same function for re-use
+#              {% dmf_program_block field_of_study_list_arg %}
+
+# -- DOESN'T WORK ... Maybe it should?  What would I use it for?
+# Carries the current arguments to the same function for re-use
+#               {% dmf_program_block field_of_study_list_arg 'degree' %}
 @register.inclusion_tag('tags/dmf_program_block.html')
-def dmf_program_block(*args,**kwargs):
-    sidebar = {}
-    if kwargs:
-        if kwargs['sidebar']:
-            sidebar = kwargs['sidebar']
+def dmf_program_block(*args):
+    # if the *args have been compiled twice because of tag-nesting, reduce.
+    print(args)
+    if isinstance(args[0],tuple):
+        args = args[0]
+
     return {
         'vars':args,
-        'output':_academicPage_objects_to_html_dmf_list(args,sidebar=sidebar),
+        # very complex function receives args and processes them...
+        # see notes in functions.py
+        'output':_academicPage_objects_to_html_dmf_list(args),
     }
 
 @register.inclusion_tag('tags/dmf_program_parent.html')

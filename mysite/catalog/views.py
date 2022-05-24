@@ -66,7 +66,7 @@ class DPC_AcademicPageDetailView(DetailView):
         context['pk'] = self.kwargs['pk']
         context['slug'] = self.kwargs['slug']
         context['dept'] = self.kwargs['dept']
-        context['field_of_study_list_arg'] = field_of_study_list_arg
+        context['field_of_study_list_arg'] = tuple(field_of_study_list_arg)
         return context
 
 '''
