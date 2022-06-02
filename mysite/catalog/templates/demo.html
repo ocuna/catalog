@@ -2,14 +2,26 @@
 {% load catalog_tags static %}
 {% block content %}
 <!-- templtes/demo.html -->
-<script src="{% static 'dmf.json' %}" ></script>
+
 {% if demo %}
 <div>{{ demo }}</div>
 {% endif %}
 
 {% dmf_fp_dropdown_block %}
 <hr>
-{% dmf_page_dropdown_block %}
+<h1>School of Business Degrees</h1>
+{% dmf_program_parent_expanding_block 'school-of-business' 'degree' %}
+
+
+<h1>Theology and Ministry Degrees</h1>
+{% dmf_program_parent_expanding_block 'theology-and-ministry' 'degree' %}
+
+<h1>Psychology Degrees</h1>
+{% dmf_program_parent_expanding_block 'psychology' 'degree' %}
+
+
+<h1>School of Arts and Sciences</h1>
+{% dmf_program_parent_expanding_block 'school-arts-sciences' 'degree' 'exclude:theology-and-ministry' %}
 
 {% endblock %}
 

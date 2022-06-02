@@ -60,17 +60,23 @@ def _taxonomyTerm_objects_to_html_option_list(tax_term='',url_args=None):
 # in some cases like all,discover these are non-taxonomy urls the sepecify an 
 # inclusive filter style.  Also, transforming the output can also be modified
 # by including 'union' into the function which will create a different sort
+# Additinal paraemters passed into args control html formating such as
+# 'programkey' and 'resetbutton' 
 def _academicPage_objects_to_html_dmf_list(*args):
-    html = ''
+    print('_academicPage_objects_to_html_dmf_list():')
     # the arguments passed won't necessarilly be used in the function, some are
     # interspersed with triggers
     cleanargs = []
     # function uses trigger words: deliminted and union
     delimited = False
     union = False
+    exclude = False
+    resetbutton = False
+    programkey = False
+    exclusions = []
 
     # these lists are formed after for loops process the contents and then 
-    # attach specific data that is formatted for the templates downstreamm 
+    # attach specific data that is formatted for the templates downstreamm
     ParentsAssembled = []
     ChildrenAssembled = []
 
@@ -80,7 +86,6 @@ def _academicPage_objects_to_html_dmf_list(*args):
         # if this trigger 'delimited_string' is detected in the args, it will
         # remake the args by transforming the 2nd argument (which should be a
         # space delimited string) into an tuple replacing args
-        print(args)
         if args[0][0] == 'delimited_string':
             delimited = True
             # maybe the second arg has no delimiter:
@@ -91,28 +96,37 @@ def _academicPage_objects_to_html_dmf_list(*args):
                 # need to reassemble the nested args structure
                 args = tuple([[args[0][1]]])
 
+        # detect exclusions
+        for i,arg in enumerate(args[0]):
+            if 'exclude:' in arg:
+                exclude = True
+                exclusions.append(arg.replace('exclude:',''))
 
-        # check if certain arguments that ARE NOT url parameters matching
-        # taxonomy codes are passed in, we want 'sidebar' out of this list
+        # check if union apears.
         for i,arg in enumerate(args[0]):
             if arg == 'union':
                 union = True
  
+        # check if resetbutton apears.
+        for i,arg in enumerate(args[0]):
+            if arg == 'resetbutton':
+                args[0].remove(arg)
+                resetbutton = True
+
+        # check if programkey apears.
+        for i,arg in enumerate(args[0]):
+            if arg == 'programkey':
+                args[0].remove(arg)
+                programkey = True
+
         # delimited changes the structure
         # in any case we need to remove union
         if not delimited:
             for i,arg in enumerate(args[0]):
-                print('NOT DELIMITED')
-                print(arg)
                 cleanargs.append(arg)
         elif delimited:
             for i,arg in enumerate(args[0]):
-                print('DELIMITED')
-                print(arg)
                 cleanargs.append(arg)
-
-        print('CLEANARGS:')
-        print(cleanargs)
 
         # this is a complex query that needs to request multiple related tables
         # Prefetch calls the tables in advance so they don't get hit each time
@@ -168,34 +182,40 @@ def _academicPage_objects_to_html_dmf_list(*args):
                         Q(program_type__urlparam=arg) |
                         Q(faculty_department__urlparam=arg) |
                         Q(class_format__urlparam=arg))
-                    print(Add_All_Parents)
                 else:
-                    print(i)
-                    print(arg)
                     Add_All_Parents = Add_All_Parents | Parents_PreFetch_Kids.filter(
                         Q(degree_type__urlparam=arg) |
                         Q(field_of_study__urlparam=arg) |
                         Q(program_type__urlparam=arg) |
                         Q(faculty_department__urlparam=arg) |
                         Q(class_format__urlparam=arg))
-                    print(Add_All_Parents)
-            print('Add_All_Parents')
-            print(Add_All_Parents)
             Parents_PreFetch_Kids = Add_All_Parents.distinct()
         
         # if there is a sidebar, continue filter by each argument
         else:
             for i,arg in enumerate(cleanargs):
-                if(arg != 'discover' and arg != 'all'):
-                # each time a term is iterated from the prior arguments
-                # filter each term by each possible field using 'OR' opperator
-                # set up the Parents_PreFetch_Kids
-                    Parents_PreFetch_Kids = Parents_PreFetch_Kids.filter(
-                        Q(degree_type__urlparam=arg) |
-                        Q(field_of_study__urlparam=arg) |
-                        Q(program_type__urlparam=arg) |
-                        Q(faculty_department__urlparam=arg) |
-                        Q(class_format__urlparam=arg))
+                if ('exclude:' not in arg and
+                    'union' not in arg):
+                    if(arg != 'discover' and arg != 'all'):
+                    # each time a term is iterated from the prior arguments
+                    # filter each term by each possible field using 'OR' opperator
+                    # set up the Parents_PreFetch_Kids
+                        Parents_PreFetch_Kids = Parents_PreFetch_Kids.filter(
+                            Q(degree_type__urlparam=arg) |
+                            Q(field_of_study__urlparam=arg) |
+                            Q(program_type__urlparam=arg) |
+                            Q(faculty_department__urlparam=arg) |
+                            Q(class_format__urlparam=arg))
+
+        # cycles through the exclusion list to find arguments that should be
+        # excluded from this query
+        if exclude:
+            for i,arg in enumerate(exclusions):
+                Parents_PreFetch_Kids = Parents_PreFetch_Kids.exclude(
+                    Q(degree_type__urlparam=arg) |
+                    Q(program_type__urlparam=arg) |
+                    Q(faculty_department__urlparam=arg))
+
 
         Parents = (Parents_PreFetch_Kids
             .order_by(F('degree_type__weight').asc(nulls_last=True),
@@ -399,7 +419,7 @@ def _academicPage_objects_to_html_dmf_list(*args):
         # or the urls_converter.py should produce a 404 fail.
         pass
 
-    return { 'Parents':ParentsAssembled, 'html':html}
+    return { 'Parents':ParentsAssembled, 'resetbutton':resetbutton, 'programkey':programkey}
     # GOT IT!
 
     # P.objects.all().filter(parent_code__isnull=True).select_related('parent_code').prefetch_related('parent_code__parent_code')[1].dpc_academicpage_set.values('title')

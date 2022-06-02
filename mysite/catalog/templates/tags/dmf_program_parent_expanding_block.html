@@ -1,0 +1,8 @@
+{% load catalog_tags %}
+<div class="dmf-acprog-list">
+    <div class="acprog-program">
+        {% for thisParent in output.Parents %}
+            {% dmf_program_parent_expanding Parent=thisParent %}
+        {% endfor %}
+    </div>
+</div>

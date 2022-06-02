@@ -1,6 +1,6 @@
 {% load catalog_tags %}
 <div class="dmf-results">
-    {% if not sidebar %}
+    {% if output.programkey %}
     <div class="dmf-results-key">
         <div>Online</div>
         <div>Campus</div>
@@ -14,7 +14,7 @@
             {{ output.html|safe }}
         {% endfor %}
     </div>
-    {% if not sidebar %}
+    {% if output.resetbutton %}
     <div id="dmf-fixed-button-container" onclick="" class="dmf-visiblity" data-toggle="DMF-Fixed-Button" style="top: 540px; width: 1147.5px;">
         <div id="dmf-fixed-button">Reset All<div id="dmf-fixed-triangle"></div>
         </div>

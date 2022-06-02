@@ -1,0 +1,44 @@
+{% load catalog_tags %}
+<div id="{{ Parent.unique_program_code }}" class="dmf-acprog-list ">
+    <div class="acprog-heading dmf-acprog-expand-degree-list">
+        <div class="collapsed" data-toggle="collapse" data-target="#program-{{ Parent.id }}" aria-expanded="false" aria-controls="nodeblock-100045086">
+            <div class="expand-icon"><span class="fas fa-angle-down"></span></div>
+            <div onclick="return false;"><h3>{{ Parent.title }}</h3></div>
+        </div>
+    </div>
+    <div class="acprog-container dmf-dept-list collapsed collapse" id="program-{{ Parent.id }}" role="complimentary" aria-expanded="false" aria-label="{{ Parent.title }} - {{ Parent.degree_type }} - {{ Parent.parentClassFormatString }} - {{ Parent.program_type }}">
+        <div class="degree-distinctive pb-5">
+            <div class="my-2 d-sm-flex">
+                {% if Parent.parentCampus %}
+                <div class="bg-light py-2 px-3 mr-sm-2">
+                    <div class="dmf_program_format-icon font-weight-bold text-uppercase justify-content-start">
+                        <span class="mt-sm-1 pr-2 w-auto flex-grow-0">Campus</span>
+                        <span class="dmf_campus_icon dmf-format-bg-icon flex-grow-0"></span>
+                    </div>
+                </div>
+                {% endif %}
+                {% if Parent.parentOnline %}
+                <div class="bg-light py-2 px-3 mr-sm-2">
+                    <div class="dmf_program_format-icon font-weight-bold text-uppercase justify-content-start">
+                        <span class="mt-sm-1 pr-2 w-auto flex-grow-0">Online</span>
+                        <span class="dmf_online_icon dmf-format-bg-icon flex-grow-0"></span>
+                    </div>
+                </div>
+                {% endif %}
+                {% if Parent.parentOnlinePlus %}
+                <div class="bg-light py-2 px-3">
+                    <div class="dmf_program_format-icon font-weight-bold text-uppercase justify-content-start">
+                        <span class="mt-sm-1 pr-2 w-auto flex-grow-0">OnlinePlus</span>
+                        <span class="dmf_virtual_icon dmf-format-bg-icon flex-grow-0"></span>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            {{ Parent.body_a|safe }}
+            <a href="{{ Parent.get_absolute_url }}" class="btn btn-primary" target="_blank"><span class="fas fa-arrow-circle-right"></span>Course Specifics and Credit Hours</a>
+        </div>
+    </div>
+</div>
+
+
+

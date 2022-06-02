@@ -1,12 +1,7 @@
 {% extends 'base.html' %}
 {% load catalog_tags %}
 {% block content %}
-<h1>Academic Page Template - nothing really so far</h1>
-<p>dept: {{ dept }}</p>
-<p>slug: {{ slug }}</p>
-<p>pk: {{ pk }}</p>
-<p>(from context:) Page: {{ Page.id }}</p>
-
+<h1>Academic Page</h1>
 <div id="content" class="container d-flex page_type-dmf-academic-program">
   <div id="contentcontainer" class="d-flex flex-row">
     <div class="row">
@@ -15,35 +10,34 @@
         <div class="region region-dmf-acprog-topbar">
           <div id="dmf-acprog-topbar" class="row p-xxs-3 p-xs-3 p-sm-3 pb-3 my-3 card flex-row">
             <div class="col-12 mb-1 p-3"><strong>This degree program is available in the following format:</strong></div>
-              {% if Online  %}
-              <div class="col-12 col-md-4">
-                <div class="DMF-degree-program-format-indicator">
-                  <div class="focus-outliner"><a class="btn btn-primary dmf-icon-btn" href="/online-college/ags-degree-programs"><span>Online</span><div class="dmf-btn-icon-container"><span data-code="dmf_format-F_ONLI" class="dmf_online_icon dmf-format-bg-icon"></span></div></a></div>
-                  <p>100% Online courses in a 5-week as-you-go flexible format for busy adults featuring forum discussions and weekly assignment deadlines.  Serves both undergraduate and graduate students.</p>
-                </div>
+            {% if Online  %}
+            <div class="col-12 col-md-4">
+              <div class="DMF-degree-program-format-indicator">
+                <div class="focus-outliner"><a class="btn btn-primary dmf-icon-btn" href="/online-college/ags-degree-programs"><span>Online</span><div class="dmf-btn-icon-container"><span data-code="dmf_format-F_ONLI" class="dmf_online_icon dmf-format-bg-icon"></span></div></a></div>
+                <p>100% Online courses in a 5-week as-you-go flexible format for busy adults featuring forum discussions and weekly assignment deadlines.  Serves both undergraduate and graduate students.</p>
               </div>
-              {% endif %}
-              {% if OnlinePlus  %}
-              <div class="col-12 col-md-4">
-                <div class="DMF-degree-program-format-indicator">
-                  <div class="focus-outliner"><a class="btn btn-primary dmf-icon-btn" href="/campus-degrees/campus-degree-programs"><span>Campus</span><div class="dmf-btn-icon-container"><span data-code="dmf_format-F_CAMP" class="dmf_campus_icon dmf-format-bg-icon"></span></div></a></div>
-                  <p>Explore the full enrichment of the traditional collegiate experience and make new friends on our lively campus in Circleville Ohio.  Serves 17-24 year-old undergraduate students.</p>
-                </div>
-              </div>
-              {% endif %}
-              {% if Campus  %}
-              <div class="col-12 col-md-4">
-                <div class="DMF-degree-program-format-indicator">
-                  <div class="focus-outliner"><a class="btn btn-primary dmf-icon-btn" href="/online-plus-degree-programs"><span>OnlinePlus</span><div class="dmf-btn-icon-container"><span data-code="dmf_format-F_VIRT" class="dmf_virtual_icon dmf-format-bg-icon"></span></div></a></div>
-                  <p>100% Online 8-week courses similar to campus classes with scheduled lectures, discussions and optional live-experiences.  Serves 17-24 year-old undergraduate students.</p>
-                </div>
-              </div>
-              {% endif %}
             </div>
+            {% endif %}
+            {% if OnlinePlus  %}
+            <div class="col-12 col-md-4">
+              <div class="DMF-degree-program-format-indicator">
+                <div class="focus-outliner"><a class="btn btn-primary dmf-icon-btn" href="/campus-degrees/campus-degree-programs"><span>Campus</span><div class="dmf-btn-icon-container"><span data-code="dmf_format-F_CAMP" class="dmf_campus_icon dmf-format-bg-icon"></span></div></a></div>
+                <p>Explore the full enrichment of the traditional collegiate experience and make new friends on our lively campus in Circleville Ohio.  Serves 17-24 year-old undergraduate students.</p>
+              </div>
+            </div>
+            {% endif %}
+            {% if Campus  %}
+            <div class="col-12 col-md-4">
+              <div class="DMF-degree-program-format-indicator">
+                <div class="focus-outliner"><a class="btn btn-primary dmf-icon-btn" href="/online-plus-degree-programs"><span>OnlinePlus</span><div class="dmf-btn-icon-container"><span data-code="dmf_format-F_VIRT" class="dmf_virtual_icon dmf-format-bg-icon"></span></div></a></div>
+                <p>100% Online 8-week courses similar to campus classes with scheduled lectures, discussions and optional live-experiences.  Serves 17-24 year-old undergraduate students.</p>
+              </div>
+            </div>
+            {% endif %}
           </div>
         </div>
         {{ Page.body_b|safe }}
-        {% dpc_child_display Page.unique_program_code %}
+        {% dmf_child_display Page.unique_program_code %}
       </div> <!-- end of column -->
       <div class="col-12 col-xl-5 col-xxl-4">
         <div class="dmf-right-sidebar mt-5 mt-xl-0 mt-xxl-0">
@@ -57,9 +51,8 @@
 <span style="padding:10px; margin:10px; background-color:red; color:white; font-size:1em; display:inline-block;">||| OCU SLATE FORMS |||</span>
 
               </div>
-
-              {% dmf_program_block field_of_study_list_arg %}
-
+              <h4 class="block__title">Related Degrees & Programs</h4>
+              {% dmf_program_block field_of_study_list_arg 'exclude:certificate' 'exclude:minor' %}
             </div>
           </div>
         </div>
