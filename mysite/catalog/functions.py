@@ -63,7 +63,6 @@ def _taxonomyTerm_objects_to_html_option_list(tax_term='',url_args=None):
 # Additinal paraemters passed into args control html formating such as
 # 'programkey' and 'resetbutton' 
 def _academicPage_objects_to_html_dmf_list(*args):
-    print('_academicPage_objects_to_html_dmf_list():')
     # the arguments passed won't necessarilly be used in the function, some are
     # interspersed with triggers
     cleanargs = []
@@ -423,34 +422,3 @@ def _academicPage_objects_to_html_dmf_list(*args):
     # GOT IT!
 
     # P.objects.all().filter(parent_code__isnull=True).select_related('parent_code').prefetch_related('parent_code__parent_code')[1].dpc_academicpage_set.values('title')
-
-
-'''
-html += '<li>' + pv.title + '<small> Codes:' + parentCodeString  + '</small>'
-# loop through each child degree, does the parent page match?
-for ci,cv in enumerate(ChildrenAssembled):
-    if pv == cv.parent_code: 
-        html += '<br>' + cv.title
-#close the loop
-html += '</li>'
-'''
-
-    ###  FOR CODES
-    # WOW - MEGA LIST THIS??
-    # this = set(P.objects.all().filter(parent_code__isnull=True).select_related('parent_code').prefetch_related('parent_code__parent_code')[1].dpc_academicpage_set.values_list('faculty_department__code')) | set(P.objects.all().filter(parent_code__isnull=True).select_related('parent_code').prefetch_related('parent_code__parent_code')[1].dpc_academicpage_set.values_list('class_format__code')) | set(P.objects.all().filter(parent_code__isnull=True).select_related('parent_code').prefetch_related('parent_code__parent_code')[1].dpc_academicpage_set.values_list('field_of_study__code'))
-
-    # this is better, it just needs refeind by SET()
-    # this = set(P.objects.all().filter(parent_code__isnull=True).select_related('parent_code').prefetch_related('parent_code__parent_code')[1].dpc_academicpage_set.values_list('faculty_department__code','class_format__code','field_of_study__code','program_type__code','degree_type__code'))
-
-    # print(P.objects.all().annotate(child_record=Subquery(P.objects.filter(parent_code__isnull=False),filter())))
-    # doesn't actually work ... this will look in the database for a single code of the child that is related and associate that single code with annotate(child_record) 
-    # print(P.objects.all().annotate(child_record=Subquery(P.objects.all().filter(parent_code__isnull=False).filter(parent_code=OuterRef('unique_program_code')).filter().values_list('unique_program_code')))[1].child_record)
-
-
-
-
-# DON"T NEED REALLY
-    # print(P.objects.all().prefetch_related(Prefetch('field_of_study'),Prefetch('class_format'),Prefetch('faculty_department')).annotate(degree_type__code=F('degree_type__code'),program_type__code=F('program_type__code')).filter(Q(program_type__name='Concentration')).query)
-    # print(P.objects.all().prefetch_related(Prefetch('field_of_study'),Prefetch('class_format'),Prefetch('faculty_department')).annotate(degree_type__code=F('degree_type__code'),program_type__code=F('program_type__code')).filter(Q(program_type__name='Concentration'))[3].parent_code.unique_program_code)
-
-    

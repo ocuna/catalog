@@ -71,7 +71,6 @@ def dmf_program_parent_expanding_block(*args):
                 cleanargs.append(t)
         else:
             cleanargs.append(arg)
-    print(cleanargs)
     return {
         # very complex function receives args and processes them...
         # see notes in functions.py
@@ -101,3 +100,87 @@ def dmf_child_display(parentCode):
     return {
         'childObject': _academicPage_parentcode_to_html_dpc_child_display(parentCode),
     }
+
+
+# these tags exist because templates used need manually set with custom
+# html that seems unprofitable to abstract because of exceptions required by
+# internal staff
+@register.inclusion_tag('tags/dmf_DDB_department_dropdown_block.html')
+def dmf___DDB_school_of_business_dept():
+    return{
+        'departmentParam': 'school-of-business',
+        'departmentParamB': '',
+        'departmentParamC': '',
+        'departmentTitle': 'School of Business',
+        'pre_html': '',
+        'post_html': '',
+    }
+
+@register.inclusion_tag('tags/dmf_DDB_department_dropdown_block.html')
+def dmf___DDB_school_of_education_dept():
+    return{
+        'departmentParam': 'school-of-education',
+        'departmentParamB': '',
+        'departmentParamC': '',
+        'departmentTitle': 'School of Education',
+        'pre_html': '',
+        'post_html': '',
+    }
+
+@register.inclusion_tag('tags/dmf_DDB_department_dropdown_block.html')
+def dmf___DDB_school_of_social_BS_dept():
+    return{
+        'departmentParam': 'school-of-social-and-behavioral-sciences',
+        'departmentParamB': '',
+        'departmentParamC': '',
+        'departmentTitle': 'School of Social and Behavioral Sociences',
+        'pre_html': '',
+        'post_html': '',
+    }
+
+
+@register.inclusion_tag('tags/dmf_DDB_department_dropdown_block.html')
+def dmf___DDB_school_of_social_BS_dept():
+    return{
+        'departmentParam': 'school-of-social-and-behavioral-sciences',
+        'departmentParamB': '',
+        'departmentParamC': '',
+        'departmentTitle': 'School of Social and Behavioral Sociences',
+        'pre_html': '',
+        'post_html': '',
+    }
+
+@register.inclusion_tag('tags/dmf_DDB_department_dropdown_block.html')
+def dmf___DDB_music_dept():
+    return{
+        'departmentParam': 'music-dept',
+        'departmentParamB': '',
+        'departmentParamC': '',
+        'departmentTitle': 'Music and Worship Leadership Department',
+        'pre_html': '<p><strong>School of Arts and Sciences</strong></p>',
+        'post_html': '',
+    }
+
+
+@register.inclusion_tag('tags/dmf_DDB_department_dropdown_block.html')
+def dmf___DDB_theology_ministry_dept():
+    return{
+        'departmentParam': 'theology-and-ministry',
+        'departmentParamB': '',
+        'departmentParamC': '',
+        'departmentTitle': 'Theology and Ministry Department',
+        'pre_html': '<p><strong>School of Arts and Sciences</strong></p>',
+        'post_html': '',
+    }
+
+@register.inclusion_tag('tags/dmf___english_history_ids_dept.html')
+def dmf___english_history_ids_dept():
+    pass
+
+@register.inclusion_tag('tags/dmf___school_of_social_behavioral_dept.html')
+def dmf___school_of_social_behavioral_dept():
+    pass
+
+@register.inclusion_tag('tags/dmf___theology_ministry_dept.html')
+def dmf___theology_ministry_dept():
+    pass

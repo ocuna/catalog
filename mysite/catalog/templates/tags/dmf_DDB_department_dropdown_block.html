@@ -1,0 +1,22 @@
+{% load catalog_tags %}
+<div class="dmf-acprog-list ">
+    <div class="acprog-heading dmf-acprog-expand-degree-list">
+        <div class="collapsed" data-toggle="collapse" data-target="#dmf___{{ departmentParam }}" aria-expanded="false" aria-controls="dmf___{{ departmentParam }}">
+            <div class="expand-icon"><span class="fas fa-angle-down"></span></div>
+            <div onclick="return false;"><h3>{{ departmentTitle }}</h3></div>
+        </div>
+    </div>
+    <div class="acprog-container collapsed collapse" id="dmf___{{ departmentParam }}" role="complimentary" aria-expanded="false" aria-label="{{  departmentTitle  }} Degree Programs">
+        <div class="pb-5">
+            {% if pre_html %}{{ post_html|safe }}{% endif %}
+            {% if departmentParamC %}
+                {% dmf_program_block departmentParam departmentParamB departmentParamC 'programkey' %}
+            {% elif departmentParamB %}
+                {% dmf_program_block departmentParam departmentParamB 'programkey' %}
+            {% elif departmentParam %}
+                {% dmf_program_block departmentParam 'programkey' %}
+            {% endif %}
+            {% if post_html %}{{ post_html|safe }}{% endif %}
+        </div>
+    </div>
+</div>

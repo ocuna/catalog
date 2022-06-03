@@ -1,6 +1,7 @@
 {% load catalog_tags %}
 <div class="dmf-acprog-list">
     <div class="acprog-program">
+        <p><strong class="school-of-subheading">School of Arts and Sciences</strong></p>
         {% for thisParent in output.Parents %}
             {% dmf_program_parent_expanding Parent=thisParent %}
         {% endfor %}
