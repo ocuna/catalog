@@ -27,7 +27,7 @@ class DPC_TaxLibrary(models.Model):
 
 ###############################################################################
 # The following are "taxonomy terms" associated with degree programs          #
-# Degree programs are configurd with this to  sort / organize / display       #
+# Degree programs are configured with this to sort / organize / display       #
 ###############################################################################
 class DPC_TaxonomyTerm(StatusModel):
     code = models.CharField(
