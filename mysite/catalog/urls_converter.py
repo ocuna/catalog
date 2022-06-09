@@ -1,4 +1,5 @@
 from catalog.models import DPC_TaxonomyTerm, DPC_AcademicPage
+from django.core.exceptions import ObjectDoesNotExist
 
 ###############################################################################
 # Theese converters verify parameters in urls.py to ensure they are compliant #
@@ -22,7 +23,7 @@ class DMF_url_options:
 
 # This converter assures the parameter is a Taxonomy Term and is used to bring
 # up DMF sorting functions on the DMF page
-class DMF_TaxonomyTerm:
+class DMF_url_TaxonomyTerm:
     # will check against the regex
     regex = '[a-z0-9\-]{3,40}'
 
@@ -37,7 +38,7 @@ class DMF_TaxonomyTerm:
             try:
                 DPC_TaxonomyTerm.objects.get(urlparam=str(value))
                 return str(value)
-            except DPC_TaxonomyTerm.DoesNotExist:
+            except ObjectDoesNotExist:
                 raise ValueError
 
     # simply passes it through
@@ -55,7 +56,7 @@ class AcademicPageFacultyDept:
             DPC_TaxonomyTerm.objects.filter(library__name="Faculty Department").get(urlparam=str(value))
             #print('urls_converter.AcademicPageFacultyDept found:' + value)
             return str(value)
-        except DPC_TaxonomyTerm.DoesNotExist:
+        except ObjectDoesNotExist:
             raise ValueError
 
     # simply passes it through
@@ -72,7 +73,7 @@ class AcademicPageSlug:
             DPC_AcademicPage.objects.all().filter(slug=str(value))
             #print('urls_converter.AcademicPageSlug found:' + value)
             return str(value)
-        except DPC_AcademicPage.DoesNotExist:
+        except ObjectDoesNotExist:
             raise ValueError
 
     # simply passes it through
@@ -88,7 +89,7 @@ class AcademicPagePrimaryKey:
             DPC_AcademicPage.objects.get(pk=int(value))
             #print('urls_converter.AcademicPagePrimaryKey' + value)
             return str(value)
-        except DPC_AcademicPage.DoesNotExist:
+        except ObjectDoesNotExist:
             raise ValueError
 
     # simply passes it through

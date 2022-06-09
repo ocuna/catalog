@@ -1,18 +1,19 @@
-from django.urls import path, register_converter
+from django.urls import path, register_converter, include
 from catalog.views import demo, display_json, process_json
 from catalog.views import DMF_AcademicProgramList, DPC_AcademicPageDetailView
-from catalog.urls_converter import DMF_url_options, DMF_TaxonomyTerm
+from catalog.urls_converter import DMF_url_options, DMF_url_TaxonomyTerm
 from catalog.urls_converter import AcademicPageFacultyDept, AcademicPageSlug
 from catalog.urls_converter import AcademicPagePrimaryKey
 
 register_converter(DMF_url_options, 'options')
-register_converter(DMF_TaxonomyTerm, 'TaxTerm')
+register_converter(DMF_url_TaxonomyTerm, 'TaxTerm')
 register_converter(AcademicPageFacultyDept,'FDept')
 register_converter(AcademicPageSlug,'APslug')
 register_converter(AcademicPagePrimaryKey,'APpk')
 
 urlpatterns = [
     path('', demo, name="demo"),
+    path('__debug__/', include('debug_toolbar.urls')),
     path('display_dmf/',display_json, name='display_dmf'),
     path('process_dmf/',process_json, name='process_dmf'),
     # a set of custom converters that strictly test the urls being requested

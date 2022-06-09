@@ -26,7 +26,15 @@ SECRET_KEY = 'django-insecure-19kqd$*iz9d0!^qgag5gzttod+^66wjt&h7dvm_f7typ&ra8$#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    '127.0.0.2'
+]
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+    '127.0.0.2'
+]
 
 
 # Application definition
@@ -39,10 +47,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'catalog',
-    'import_export'
+    'import_export',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -70,7 +80,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'mysite.wsgi.application'
+WSGI_APPLICATION = 'wsgi.application'
 
 
 # Database
