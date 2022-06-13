@@ -222,57 +222,189 @@ def _academicPage_objects_to_html_dmf_list(*args):
                 F('class_format__weight').asc(nulls_last=True),
                 'title')
             .distinct())
+
+        # 8 quries at this point
+        # Prior to this I was retaining the Parents and Children as DB Objects
+        # this would re-run the queries during enumerate() loops originally
+        #Parents = list(Parents.values(id,status,title,slug,degree_type_id,program_type_id,body_a,body_b,unique_program_code,parent_code_id))
+        #Children = list(Children.values(id,status,title,slug,degree_type_id,program_type_id,body_a,body_b,unique_program_code,parent_code_id))
+
         
-        # this loops through the Children and assembles their taxonomy codes
-        # This is simliar but more simple then how the parents work 
-        for ci,cv in enumerate(Children):
+
+        Parents = list(Parents.values('id','status','title','slug','degree_type_id','program_type_id','unique_program_code','parent_code_id','dpc_academicpage'))
+        Children = list(Children.values('id','status','title','slug','degree_type_id','program_type_id','unique_program_code','parent_code_id'))
+        FK_degree_type = list(DPC_AcademicPage.objects.values('id','degree_type','degree_type__urlparam'))
+        FK_program_type = list(DPC_AcademicPage.objects.values('id','program_type','program_type__urlparam'))
+        M2M_field_of_study = list(DPC_AcademicPage.objects.values('id','field_of_study','field_of_study__urlparam'))
+        M2M_faculty_department = list(DPC_AcademicPage.objects.values('id','faculty_department','faculty_department__urlparam'))
+        M2M_class_format = list(DPC_AcademicPage.objects.values('id','class_format','class_format__name','class_format__urlparam'))
+
+        for cv in Children:
             childCodeString = ''
             childClassFormatString = ''
             childClassFormatList = []
             childCodeList = []
             childCodeSet = set()
+            for v in M2M_field_of_study:
+                if v['id'] == cv['id']:
+                    if v['field_of_study']:
+                        childCodeSet.add(v['field_of_study'])
 
-            for i,v in enumerate(cv.field_of_study.values_list('code')):
-                for ii,vv in enumerate(v):
-                    if vv :
-                        childCodeSet.add(vv)
+            for v in M2M_faculty_department:
+                if v['id'] == cv['id']:
+                    if v['faculty_department']:
+                        childCodeSet.add(v['faculty_department'])
 
-            for i,v in enumerate(cv.faculty_department.values_list('code')):
-                for ii,vv in enumerate(v):
-                    if vv :
-                        childCodeSet.add(vv)
+            for v in M2M_class_format:
+                if v['id'] == cv['id']:
+                    childCodeSet.add(v['class_format'])
+                    if v['class_format__name']:
+                        childClassFormatString += str(v['class_format__name']) + " " 
+ 
+            if cv['degree_type_id']:
+                childCodeSet.add(cv['degree_type_id'])
 
-            for i,v in enumerate(cv.class_format.values_list('code')):
-                for ii,vv in enumerate(v):
-                    if vv :
-                        childCodeSet.add(vv)
+            if cv['program_type_id']:
+                childCodeSet.add(cv['program_type_id'])
 
-            for i,v in enumerate(cv.class_format.values_list('name')):
-                for ii,vv in enumerate(v):
-                    if vv :
-                        childClassFormatString += vv + " " 
-
-            if cv.program_type:
-                childCodeSet.add(cv.program_type.code)
-
-            if cv.degree_type:
-                childCodeSet.add(cv.degree_type.code)
-
-            cv.cleanTitle = _clean_title(cv.title)
-            cv.childClassFormatString = childClassFormatString.strip()
-            cv.childCodeSet = childCodeSet
-
+            cv['childCodeSet'] = childCodeSet
             # need to pipe-deliniate this for use in HTML
-            for i,v in enumerate(cv.childCodeSet):
-                childCodeString += v + '|'
+            for i,v in enumerate(childCodeSet):
+                if v:
+                    childCodeString += str(v) + '|'
 
             # remove the last charcter "|" and attach the string to the parent
-            cv.childCodeString = childCodeString.rstrip(childCodeString[-1])
+            cv['childCodeString'] = childCodeString.rstrip(childCodeString[-1])
             ChildrenAssembled.append(cv)
 
+        for pv in Parents:
+            parentCodeString = ''
+            parentCodeList = []
+            parentCodeSet = set()
+            parentDegreeTypeCode = ''
+            parentDegreeTypeString = ''
+            parentDegreeTypeURL = ''
+            parentClassFormatString = ''
+            parentOnline = False
+            parentOnlinePlus = False
+            parentCampus = False
+            parentOnline = False
+            parentOnlinePlus = False
+
+            #loop through all the children of this parent, get all codes that
+            # exist in children and add them to the parents.
+            for c in ChildrenAssembled:
+                if c['parent_code_id']:
+                    if pv['unique_program_code'] == c['parent_code_id']:
+                        for code in c['childCodeSet']:
+                            parentCodeSet.add(code)
+
+            # add the codes from the parent
+            parentCodeSet.add(pv['degree_type_id'])
+            parentCodeSet.add(pv['program_type_id'])
+
+
+            for v in M2M_class_format:
+                if v['id'] == pv['id']:
+                    childCodeSet.add(v['class_format'])
+                    if pv['id'] == 'F_CAMP':
+                        parentCampus = True
+                    if pv['id'] == 'F_ONLI':
+                        parentOnline = True
+                    if pv['id'] == 'F_VIRT':
+                        parentOnlinePlus = True
+                    if v['class_format__name']:
+                        parentClassFormatString += str(v['class_format__name']) + " "
+
+            for v in M2M_field_of_study:
+                if v['id'] == pv['id']:
+                    if v['field_of_study']:
+                        parentCodeSet.add(v['field_of_study'])
+
+            for v in M2M_faculty_department:
+                if v['id'] == pv['id']:
+                    if v['faculty_department']:
+                        parentCodeSet.add(v['faculty_department'])
+
+
+            # this is simply a case-based system designed to create classes and
+            # on the template it's passed to for proper styling based on the
+            # degree or program type below 
+            if pv['degree_type_id']:
+                parentDegreeTypeCode = pv['degree_type_id']
+                if pv['degree_type_id'] == 'DT_MAST':
+                    parentDegreeTypeString = 'M'
+                    parentDegreeTypeCSSTag = 'degree'
+                    parentDegreeTypeURL = 'masters'
+                if pv['degree_type_id'] == 'DT_BACA':  
+                    parentDegreeTypeString = 'BA'
+                    parentDegreeTypeCSSTag = 'degree'
+                    parentDegreeTypeURL = 'bachelor-of-arts'
+                if pv['degree_type_id'] == 'DT_BACS':
+                    parentDegreeTypeString = 'BS'
+                    parentDegreeTypeCSSTag = 'degree'
+                    parentDegreeTypeURL = 'bachelor-of-science'
+                if pv['degree_type_id'] == 'DT_ASSA':
+                    parentDegreeTypeString = 'AA'
+                    parentDegreeTypeCSSTag = 'degree'
+                    parentDegreeTypeURL = 'associate-of-arts'
+                if pv['degree_type_id'] == 'DT_ASSS':
+                    parentDegreeTypeString = 'AS'
+                    parentDegreeTypeCSSTag = 'degree'
+                    parentDegreeTypeURL = 'associate-of-science'
+
+
+            if pv['program_type_id']:
+                if pv['program_type_id'] == 'PT_MINO':
+                    parentDegreeTypeCode = pv['program_type_id']
+                    parentDegreeTypeString = 'MINOR'
+                    parentDegreeTypeCSSTag = 'program'
+                    parentDegreeTypeURL = 'minor'
+                if pv['program_type_id'] == 'PT_CERT':
+                    parentDegreeTypeCode = pv['program_type_id']
+                    parentDegreeTypeString = 'CERTIFICATE'
+                    parentDegreeTypeCSSTag = 'program'
+                    parentDegreeTypeURL = 'certificate'
+
+            # set all template-bound vars to the pv object 
+            pv['parentCodeSet'] = parentCodeSet
+            pv['parentCampus'] = parentCampus
+            pv['parentOnline'] = parentOnline
+            pv['parentOnlinePlus'] = parentOnlinePlus
+            pv['parentDegreeTypeCode'] = parentDegreeTypeCode
+            pv['parentDegreeTypeString'] = parentDegreeTypeString
+            pv['parentDegreeTypeCSSTag'] = parentDegreeTypeCSSTag
+            pv['parentDegreeTypeURL'] = parentDegreeTypeURL
+            pv['parentClassFormatString'] = parentClassFormatString.strip()
+            pv['cleanTitle'] = _clean_title(pv['title'])
+
+            for v in pv['parentCodeSet']:
+                if v:
+                    parentCodeString += str(v) + '|'
+
+            # remove the last charcter "|" and attach the string to the parent
+            pv['parentCodeString'] = parentCodeString.rstrip(parentCodeString[-1])
+
+
+            # finally the children need to group to their parents a single time
+            # so the template doesn't need to cycle through every child for
+            # each parent
+            for ci,cv in enumerate(ChildrenAssembled):
+                # does the child's reference to the unique_parent_code
+                # match this parent's program code - then append to parent
+                if cv['parent_code_id'] == pv['unique_program_code']:
+                    pv['Children'] = []
+                    pv['Children'].append(cv)
+
+            # add this newly assembled parent object to the container object
+            # that goes to the template
+            ParentsAssembled.append(pv)
+
+        '''
         # this loops through the Parents and assembles codes from both parents
         # and children.  The HTML templates for sorting require all codes from
         # both to show on parents as well as children
+
         for pi,pv in enumerate(Parents):
             parentCodeString = ''
             parentCodeList = []
@@ -417,8 +549,61 @@ def _academicPage_objects_to_html_dmf_list(*args):
         # there should always be arguments
         # or the urls_converter.py should produce a 404 fail.
         pass
-
+    '''
+    #ParentsAssembled = []
+    #ChildrenAssembled = []
     return { 'Parents':ParentsAssembled, 'resetbutton':resetbutton, 'programkey':programkey}
     # GOT IT!
 
     # P.objects.all().filter(parent_code__isnull=True).select_related('parent_code').prefetch_related('parent_code__parent_code')[1].dpc_academicpage_set.values('title')
+
+
+
+'''
+# this loops through the Children and assembles their taxonomy codes
+# This is simliar but more simple then how the parents work 
+for ci,cv in enumerate(Children):
+    childCodeString = ''
+    childClassFormatString = ''
+    childClassFormatList = []
+    childCodeList = []
+    childCodeSet = set()
+
+    for i,v in enumerate(cv.field_of_study.values_list('code')):
+        for ii,vv in enumerate(v):
+            if vv :
+                childCodeSet.add(vv)
+
+    for i,v in enumerate(cv.faculty_department.values_list('code')):
+        for ii,vv in enumerate(v):
+            if vv :
+                childCodeSet.add(vv)
+
+    for i,v in enumerate(cv.class_format.values_list('code')):
+        for ii,vv in enumerate(v):
+            if vv :
+                childCodeSet.add(vv)
+
+    for i,v in enumerate(cv.class_format.values_list('name')):
+        for ii,vv in enumerate(v):
+            if vv :
+                childClassFormatString += vv + " " 
+
+    if cv.program_type:
+        childCodeSet.add(cv.program_type.code)
+
+    if cv.degree_type:
+        childCodeSet.add(cv.degree_type.code)
+
+    cv.cleanTitle = _clean_title(cv.title)
+    cv.childClassFormatString = childClassFormatString.strip()
+    cv.childCodeSet = childCodeSet
+
+    # need to pipe-deliniate this for use in HTML
+    for i,v in enumerate(cv.childCodeSet):
+        childCodeString += v + '|'
+
+    # remove the last charcter "|" and attach the string to the parent
+    cv.childCodeString = childCodeString.rstrip(childCodeString[-1])
+    ChildrenAssembled.append(cv)
+'''
