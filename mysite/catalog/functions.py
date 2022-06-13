@@ -73,6 +73,7 @@ def _academicPage_objects_to_html_dmf_list(*args):
     resetbutton = False
     programkey = False
     exclusions = []
+    page_absolute_urls = {}
 
     # these lists are formed after for loops process the contents and then 
     # attach specific data that is formatted for the templates downstreamm
@@ -229,14 +230,12 @@ def _academicPage_objects_to_html_dmf_list(*args):
         #Parents = list(Parents.values(id,status,title,slug,degree_type_id,program_type_id,body_a,body_b,unique_program_code,parent_code_id))
         #Children = list(Children.values(id,status,title,slug,degree_type_id,program_type_id,body_a,body_b,unique_program_code,parent_code_id))
 
-        
-
-        Parents = list(Parents.values('id','status','title','slug','degree_type_id','program_type_id','unique_program_code','parent_code_id','dpc_academicpage'))
-        Children = list(Children.values('id','status','title','slug','degree_type_id','program_type_id','unique_program_code','parent_code_id'))
-        FK_degree_type = list(DPC_AcademicPage.objects.values('id','degree_type','degree_type__urlparam'))
-        FK_program_type = list(DPC_AcademicPage.objects.values('id','program_type','program_type__urlparam'))
-        M2M_field_of_study = list(DPC_AcademicPage.objects.values('id','field_of_study','field_of_study__urlparam'))
-        M2M_faculty_department = list(DPC_AcademicPage.objects.values('id','faculty_department','faculty_department__urlparam'))
+        Parents = list(Parents.values('id','status','title','slug','degree_type_id','program_type_id','unique_program_code','parent_code_id'))
+        Children = list(Children.values('id','status','title','slug','degree_type_id','program_type_id','unique_program_code','parent_code_id').distinct())
+        FK_degree_type = list(DPC_AcademicPage.objects.values('id','degree_type','degree_type__name','degree_type__urlparam').exclude(degree_type__isnull=True))
+        FK_program_type = list(DPC_AcademicPage.objects.values('id','program_type','program_type__name','program_type__urlparam').exclude(program_type__isnull=True))
+        M2M_field_of_study = list(DPC_AcademicPage.objects.values('id','field_of_study','field_of_study__name','field_of_study__urlparam'))
+        M2M_faculty_department = list(DPC_AcademicPage.objects.values('id','faculty_department','faculty_department__name','faculty_department__urlparam','faculty_department__weight').order_by('faculty_department__weight'))
         M2M_class_format = list(DPC_AcademicPage.objects.values('id','class_format','class_format__name','class_format__urlparam'))
 
         for cv in Children:
@@ -245,6 +244,7 @@ def _academicPage_objects_to_html_dmf_list(*args):
             childClassFormatList = []
             childCodeList = []
             childCodeSet = set()
+            childAbsoluteUrl = ''
             for v in M2M_field_of_study:
                 if v['id'] == cv['id']:
                     if v['field_of_study']:
@@ -254,6 +254,11 @@ def _academicPage_objects_to_html_dmf_list(*args):
                 if v['id'] == cv['id']:
                     if v['faculty_department']:
                         childCodeSet.add(v['faculty_department'])
+                        if childAbsoluteUrl == '':
+                            childAbsoluteUrl = ('/'
+                            + v['faculty_department__urlparam']
+                            + '/' + cv['slug']
+                            + '/' + str(cv['id'])) 
 
             for v in M2M_class_format:
                 if v['id'] == cv['id']:
@@ -263,9 +268,18 @@ def _academicPage_objects_to_html_dmf_list(*args):
  
             if cv['degree_type_id']:
                 childCodeSet.add(cv['degree_type_id'])
+                cv['degree_type'] = []
+                for v in FK_degree_type:
+                    if v['id'] == cv['id']:
+                        cv['degree_type'].append(v['degree_type__name'])
 
             if cv['program_type_id']:
                 childCodeSet.add(cv['program_type_id'])
+                cv['program_type'] = []
+                for v in FK_program_type:
+                    if v['id'] == cv['id']:
+                        cv['program_type'].append(v['program_type__name'])
+
 
             cv['childCodeSet'] = childCodeSet
             # need to pipe-deliniate this for use in HTML
@@ -275,11 +289,14 @@ def _academicPage_objects_to_html_dmf_list(*args):
 
             # remove the last charcter "|" and attach the string to the parent
             cv['childCodeString'] = childCodeString.rstrip(childCodeString[-1])
+            cv['cleanTitle'] = _clean_title(cv['title'])
+            cv['absolute_url'] = childAbsoluteUrl
             ChildrenAssembled.append(cv)
 
         for pv in Parents:
             parentCodeString = ''
             parentCodeList = []
+            children = []
             parentCodeSet = set()
             parentDegreeTypeCode = ''
             parentDegreeTypeString = ''
@@ -290,23 +307,28 @@ def _academicPage_objects_to_html_dmf_list(*args):
             parentCampus = False
             parentOnline = False
             parentOnlinePlus = False
+            childrenCount = 0
+            parentAbsoluteUrl = ''
 
             #loop through all the children of this parent, get all codes that
             # exist in children and add them to the parents.
             for c in ChildrenAssembled:
                 if c['parent_code_id']:
                     if pv['unique_program_code'] == c['parent_code_id']:
+                        childrenCount += 1
+                        children.append(c)
                         for code in c['childCodeSet']:
                             parentCodeSet.add(code)
 
             # add the codes from the parent
-            parentCodeSet.add(pv['degree_type_id'])
-            parentCodeSet.add(pv['program_type_id'])
-
+            if pv['degree_type_id']:
+                parentCodeSet.add(pv['degree_type_id'])
+            if pv['program_type_id']:
+                parentCodeSet.add(pv['program_type_id'])
 
             for v in M2M_class_format:
                 if v['id'] == pv['id']:
-                    childCodeSet.add(v['class_format'])
+                    parentCodeSet.add(v['class_format'])
                     if pv['id'] == 'F_CAMP':
                         parentCampus = True
                     if pv['id'] == 'F_ONLI':
@@ -325,12 +347,19 @@ def _academicPage_objects_to_html_dmf_list(*args):
                 if v['id'] == pv['id']:
                     if v['faculty_department']:
                         parentCodeSet.add(v['faculty_department'])
-
+                        if parentAbsoluteUrl == '':
+                            parentAbsoluteUrl = ('/'
+                            + v['faculty_department__urlparam']
+                            + '/' + pv['slug']
+                            + '/' + str(pv['id'])) 
 
             # this is simply a case-based system designed to create classes and
             # on the template it's passed to for proper styling based on the
-            # degree or program type below 
+            # degree or program type below
             if pv['degree_type_id']:
+                for v in FK_degree_type:
+                    if v['id'] == pv['id']:
+                        pv['degree_type'] = v['degree_type__name']
                 parentDegreeTypeCode = pv['degree_type_id']
                 if pv['degree_type_id'] == 'DT_MAST':
                     parentDegreeTypeString = 'M'
@@ -355,6 +384,9 @@ def _academicPage_objects_to_html_dmf_list(*args):
 
 
             if pv['program_type_id']:
+                for v in FK_program_type:
+                    if v['id'] == pv['id']:
+                        pv['program_type'] = v['program_type__name']
                 if pv['program_type_id'] == 'PT_MINO':
                     parentDegreeTypeCode = pv['program_type_id']
                     parentDegreeTypeString = 'MINOR'
@@ -365,6 +397,12 @@ def _academicPage_objects_to_html_dmf_list(*args):
                     parentDegreeTypeString = 'CERTIFICATE'
                     parentDegreeTypeCSSTag = 'program'
                     parentDegreeTypeURL = 'certificate'
+
+            for v in parentCodeSet:
+                if v:
+                    parentCodeString += str(v) + '|'
+            # remove the last charcter "|" and attach the string to the parent
+            pv['parentCodeString'] = parentCodeString.rstrip(parentCodeString[-1])
 
             # set all template-bound vars to the pv object 
             pv['parentCodeSet'] = parentCodeSet
@@ -377,24 +415,10 @@ def _academicPage_objects_to_html_dmf_list(*args):
             pv['parentDegreeTypeURL'] = parentDegreeTypeURL
             pv['parentClassFormatString'] = parentClassFormatString.strip()
             pv['cleanTitle'] = _clean_title(pv['title'])
+            pv['absolute_url'] = parentAbsoluteUrl
+            pv['childrenCount'] = childrenCount
+            pv['Children'] = children
 
-            for v in pv['parentCodeSet']:
-                if v:
-                    parentCodeString += str(v) + '|'
-
-            # remove the last charcter "|" and attach the string to the parent
-            pv['parentCodeString'] = parentCodeString.rstrip(parentCodeString[-1])
-
-
-            # finally the children need to group to their parents a single time
-            # so the template doesn't need to cycle through every child for
-            # each parent
-            for ci,cv in enumerate(ChildrenAssembled):
-                # does the child's reference to the unique_parent_code
-                # match this parent's program code - then append to parent
-                if cv['parent_code_id'] == pv['unique_program_code']:
-                    pv['Children'] = []
-                    pv['Children'].append(cv)
 
             # add this newly assembled parent object to the container object
             # that goes to the template

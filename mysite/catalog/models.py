@@ -157,7 +157,7 @@ class DPC_AcademicPage(StatusModel):
         #
         # Troubleshooting:
         # import pdb; pdb.set_trace()
-        # print(self.title)
+        print(self.title)
         # print(str(self.faculty_department.values('urlparam').order_by('weight')[0]['urlparam']))
         return reverse("academicpage", kwargs={'dept':str(self.faculty_department.values('urlparam').order_by('weight')[0]['urlparam']),'slug':self.slug,'pk':self.pk})
 
