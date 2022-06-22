@@ -1,0 +1,8 @@
+"id","name","desc"
+1,nothing,nothing
+2,Class Format,The classroom format for an academic program offered
+3,Degree Type,The type of degree being offered for the academic program
+4,Field of Study,The generic field of study that is helpful in marketing an academic program offered - NOT the internal organizational department
+5,Program Type,The academic program type of the academic program offered
+6,Faculty Department,"The ""schools-of"" groupings etc."
+7,University Department,"Can be faculty, but not related to ""schools-of"""

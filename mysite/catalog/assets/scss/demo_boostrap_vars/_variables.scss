@@ -1,0 +1,269 @@
+// Variables of OCU Theme
+
+// redefined from bootstrap 4.1.3/scss $grid-breakpoints
+$grid-breakpoints: (
+  xxs: 0,       // ? Watches ?
+  xs: 320px,    // micro phones
+  sm: 450px,    // phones potrait
+  md: 600px,    // phablets and tablets
+  lg: 900px,    // laptop
+  xl: 1200px,   // laptop-desktop
+  xxl: 1600px,  // desktop +
+);
+
+$container-max-widths: (
+  xxs: 0,       // ? Watches ?
+  xs: 320px,    // micro phones
+  sm: 450px,    // phones potrait
+  md: 600px,    // phablets and tablets
+  lg: 900px,    // laptop
+  xl: 1200px,   // laptop-desktop
+  xxl: 1600px,  // desktop +
+);
+
+// see _mixins.scss where this is used for .w-% and .maxw-%
+$sizing-percentages: 10,15,20,25,33,50,66,75,80,90,100;
+
+// designed for fp-parallax - see _mixins.scss and _view-fp-parallax.scss
+$parallax-width-percentages: 5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100;
+
+// designed for opacity- see _mixins.scss
+$tens: 0,1,2,3,4,5,6,7,8,9;
+
+// designed for mbm- (mix-blend-mode) see _mixins.scss
+$mix-blend-modes:normal,multiply,screen,overlay,darken,lighten,color-dodge,color-burn,hard-light,soft-light,difference,exclusion,hue,saturation,color,luminosity;
+
+
+$breakpoint-min-max-widths: (
+  xxs 0px 319px,      // ? Watches ?
+  xs 320px 449px,     // micro phones
+  sm 450px 599px,     // phones potrait
+  md 600px 899px,     // phablets and tablets
+  lg 900px 1199px,    // laptop
+  xl 1200px 1599px,   // laptop-desktop
+  xxl 1600px 5000px,  // desktop +
+);
+
+$spacer-top-margin-height: 6em;
+
+$screen-xxs: map-get($grid-breakpoints, xxs);
+$screen-xs: map-get($grid-breakpoints, xs);
+$screen-sm: map-get($grid-breakpoints, sm);
+$screen-md: map-get($grid-breakpoints, md);
+$screen-lg: map-get($grid-breakpoints, lg);
+$screen-xl: map-get($grid-breakpoints, xl);
+$screen-xxl: map-get($grid-breakpoints, xxl); 
+
+// OCU Colors
+$color-white: #FFFFFF;
+$color-black: #000000;
+
+// OCU icons - used like: .class:before{content:$var};
+$icon-campus:"\f3c5";
+$icon-evening:"\f186";
+$icon-online:"\f108";
+
+$color-campus: #aadaf1;
+$color-evening: #04284e;
+$color-onlineplus: #04284e;
+$color-online: #7c183b;
+
+$color-campus-svg: aadaf1;
+$color-evening-svg: 04284e;
+$color-online-svg: 7c183b;
+
+// OCU blue
+$color-ocu-blue: #006fb9;
+$color-ocu-primary: #006fb9;
+$color-ocu-blue-text: #006fb9;
+
+// blue variations
+$color-ocu-blue-lighter: #0097fd;
+$color-ocu-blue-light: #0087e2;
+$color-ocu-blue-dark: #0062ae;
+$color-ocu-blue-lil-darker: #00549b;
+$color-ocu-blue-darker: #064386;
+$color-ocu-blue-textdark: #112954;
+$color-ocu-blue-black: #020a09;
+$color-ocu-dark: #020a09;
+$color-ocu-navy: #112954;
+$color-ocu-baby: #aadaf1;
+
+$twitter-blue: #38A1F3;
+$facebook-blue: #4267b2;
+$linkedin-blue: #145098;
+
+// grays
+$color-ocu-gray: #c8c9c7;
+
+$color-ocu-gray-almostwhite: #f1f1f3;
+$color-ocu-gray-100: $color-ocu-gray-almostwhite;
+$color-ocu-light: #EDEDED;
+$color-ocu-gray-200: $color-ocu-light;
+$color-ocu-gray-executive: $color-ocu-gray;
+$color-ocu-gray-300: $color-ocu-gray;
+$color-ocu-gray-text: #a4a7a9;
+$color-ocu-gray-400: #a4a7a9;
+$color-ocu-secondary: #6c7677;
+$color-ocu-gray-dark: $color-ocu-secondary;
+$color-ocu-gray-500: $color-ocu-secondary;
+$color-ocu-gray-500-rgba: rgba(108,118,119,.25);
+
+$color-ocu-gray-600: #4e5a5c;
+$color-ocu-gray-700: #364748;
+$color-ocu-gray-800: #1a2b2c;
+$color-ocu-gray-900: #020a09;
+
+// oranges
+$color-ocu-orange: #ff4014;
+$color-ocu-warning: #ff4014;
+
+// reds
+$color-ocu-wine: #8c0051;
+$color-ocu-red: #ff0612;
+$color-ocu-error: #ff0612;
+$color-ocu-critical: #ff0612;
+$color-ocu-danger: #ff0612;
+
+// greens
+$color-ocu-green-light: #b4de37;
+$color-ocu-green: #579e2b;
+$color-ocu-success: #579e2b;
+
+// yellows
+$color-ocu-yellow: #f8df42;
+$color-ocu-caution: #f8df42;
+
+// teal, purple, pink
+$color-ocu-teal: #57b6a3;
+$color-ocu-info: #57b6a3;
+$color-ocu-pink: #fd85dc;
+$color-ocu-indigo: #672f6d;
+
+
+// Overide Bootstrap colors with OCU colors
+$white:    $color-white;
+$gray-100: $color-ocu-gray-100;
+$gray-200: $color-ocu-gray-200;
+$gray-300: $color-ocu-gray-300;
+$gray-400: $color-ocu-gray-400;
+$gray-500: $color-ocu-gray-500;
+$gray-600: $color-ocu-gray-600;
+$gray-700: $color-ocu-gray-700;
+$gray-800: $color-ocu-gray-800;
+$gray-900: $color-ocu-gray-900;
+$black:    $color-black;
+$blue:     $color-ocu-blue;
+$indigo:   $color-ocu-indigo;
+$purple:   $color-ocu-indigo;
+$pink:     $color-ocu-pink;
+$red:      $color-ocu-red;
+$orange:   $color-ocu-orange;
+$yellow:   $color-ocu-yellow;
+$green:    $color-ocu-green;
+$teal:     $color-ocu-teal;
+$cyan:     $color-ocu-teal;
+$primary:  $color-ocu-primary;
+$secondary:$color-ocu-secondary;
+$success:  $color-ocu-success;
+$info:     $color-ocu-info;
+$warning:  $color-ocu-warning;
+$danger:   $color-ocu-danger;
+$light:    $color-ocu-light;
+$dark:     $color-ocu-dark;
+$gray:     $color-ocu-gray;
+$campus:   $color-campus;
+$evening:  $color-evening;
+$online:   $color-online;
+
+
+
+$theme-colors: ();
+// stylelint-disable-next-line scss/dollar-variable-default
+// Include new colors with OCU theme - overrides colors in bootstrap
+$theme-colors: map-merge(
+  (
+    "blue":	$color-ocu-blue,
+    "primary":	$color-ocu-primary,
+    "gray":  $color-ocu-gray,
+    "blue-text":	$color-ocu-blue-text,
+    "blue-lighter":	$color-ocu-blue-lighter,
+    "blue-light":	$color-ocu-blue-light,
+    "blue-dark":	$color-ocu-blue-dark,
+    "blue-darker":	$color-ocu-blue-darker,
+    "blue-textdark":	$color-ocu-blue-textdark,
+    "blue-black":	$color-ocu-blue-black,
+    "dark":	$color-ocu-dark,
+    "gray-100":	$color-ocu-gray-100,
+    "light":	$color-ocu-light,
+    "gray-almostwhite":	$color-ocu-gray-almostwhite,
+    "gray-200":	$color-ocu-gray-200,
+    "gray-300":	$color-ocu-gray-300,
+    "gray-text":	$color-ocu-gray-text,
+    "gray-400":	$color-ocu-gray-400,
+    "gray-500":	$color-ocu-gray-500,
+    "gray-dark":	$color-ocu-gray-dark,
+    "secondary":	$color-ocu-secondary,
+    "gray-600":	$color-ocu-gray-600,
+    "gray-700":	$color-ocu-gray-700,
+    "gray-800":	$color-ocu-gray-800,
+    "gray-900":	$color-ocu-gray-900,
+    "orange":	$color-ocu-orange,
+    "warning":	$color-ocu-warning,
+    "red":	$color-ocu-red,
+    "error":	$color-ocu-error,
+    "critical":	$color-ocu-critical,
+    "danger":	$color-ocu-danger,
+    "green-light":	$color-ocu-green-light,
+    "green":	$color-ocu-green,
+    "success":	$color-ocu-success,
+    "yellow":	$color-ocu-yellow,
+    "caution":	$color-ocu-caution,
+    "teal":	$color-ocu-teal,
+    "info":	$color-ocu-info,
+    "pink":	$color-ocu-pink,
+    "indigo":	$color-ocu-indigo,
+    "campus": $color-campus,
+    "evening": $color-evening,
+    "online": $color-online,
+  ),
+  $theme-colors
+);
+
+
+%menuTransitions{
+	transition-property: all;
+	transition-duration: 0.5s;  
+}
+
+%menuFold{
+  height: 0px; 
+}
+
+// Fonts -- from bootstrap/scss/_variables.scss
+$font-family-sans-serif:  myriad-pro, 'Myriad Pro', MyriadPro-Regular, 'Myriad Pro Regular', MyriadPro, 'Myriad Pro', Arial, Helvetica, sans-serif;
+$font-family-sans-serif-semi-condensed: myriad-pro-semi-condensed, 'Myriad Pro Semi Condensed', Arial, Helvetica, sans-serif;
+$font-family-sans-serif-condensed:  myriad-pro-condensed, 'Myriad Pro Condensed', sans-serif, Arial, Helvetica, sans-serif;
+$font-family-base:  $font-family-sans-serif !default;
+$font-family-serif:  Georiga, "Times New Roman", Times, serif;
+
+// primarily for the front page - big box
+$chevron-lg: polygon(100% 0, 100% 90%, 50% 100%, 0% 90%, 0 0);
+$chevron-md: polygon(100% 0, 100% 93%, 50% 100%, 0% 93%, 0 0);
+$chevron-sm: polygon(100% 0, 100% 95%, 50% 100%, 0% 95%, 0 0);
+
+// primarily for the front page - dmf block
+$dmf-chevron: polygon(100% 0, 100% 25%, 50% 100%, 0% 25%, 0 0);
+
+// Links from boostrap 4.1: _reboot.scss
+$link-color: $color-ocu-blue-lil-darker;
+
+// primarily for the front page - dmf block
+$chevron-bottom: polygon(100% 0, 100% 25%, 50% 100%, 0% 25%, 0 0);
+
+// primarily for the front page - dmf block
+$chevron-bottom-85: polygon(100% 0, 100% 85%, 50% 100%, 0% 85%, 0 0);
+
+// creates a top-chevron in a block that's around 80px high
+$chevron-top-85: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%, 50% 85%);
+

@@ -1,0 +1,49 @@
+"status","status_changed","code","desc","library_id","name","urlparam","weight"
+published,"2022-04-27 12:17:44",PT_CERT,"",5,Certificate,certificate,14
+published,"2022-04-27 12:38:25",PT_CONC,"",5,Concentration,concentration,15
+published,"2022-04-27 12:38:56",PT_DEGR,"",5,Degree,degree,10
+published,"2022-04-27 12:42:11",PT_DUAM,"",5,Dual Major,dual-major,12
+published,"2022-04-27 12:42:19",PT_ENDO,"",5,Endorsement,endorsement,15
+published,"2022-04-27 12:42:50",PT_LICE,"",5,License,license,15
+published,"2022-04-27 12:43:30",PT_MAJO,"",5,Major,major,11
+published,"2022-04-27 12:43:49",PT_MINO,"",5,Minor,minor,13
+published,"2022-04-27 12:44:09",PT_SPEC,"",5,Specialization,specialization,15
+published,"2022-04-27 12:51:13",DT_ASSA,"",3,Associate of Arts,associate-of-arts,4
+published,"2022-04-27 12:51:44",DT_ASSS,"",3,Associate of Science,associate-of-science,5
+published,"2022-04-27 12:52:00",DT_BACA,"",3,Bachelor of Arts,bachelor-of-arts,2
+published,"2022-04-27 12:52:20",DT_BACS,"",3,Bachelor of Science,bachelor-of-science,3
+published,"2022-04-27 12:52:38",DT_MAST,"",3,Masters,masters,1
+published,"2022-04-27 12:54:03",FS_ART,"",4,Arts,arts,90
+published,"2022-04-27 12:54:43",FS_THEO,"",4,Theology,theology,90
+published,"2022-04-27 12:55:14",FS_SPOM,"",4,Sport Management,sport-management,90
+published,"2022-04-27 12:56:02",FS_SOCI,"",4,Social Science,social-science,90
+published,"2022-04-27 12:56:36",FS_PSYC,"",4,Psychology,psychology,90
+published,"2022-04-27 12:56:56",FS_MISS,"",4,Missions,mission,90
+published,"2022-04-27 12:57:21",FS_MINI,"",4,Ministry,ministry,90
+published,"2022-04-27 12:57:55",FS_MARK,"",4,Marketing,marketing,90
+published,"2022-04-27 12:58:09",FS_LEMA,"",4,Leadership / Management,leadership-mangement,90
+published,"2022-04-27 13:17:11",FS_INFOT,"",4,Information Technology,information-technology,90
+published,"2022-04-27 13:17:32",FS_HUSER,"",4,Human Services,human-services,90
+published,"2022-04-27 13:17:52",FS_HURS,"",4,Human Resources,human-resources,90
+published,"2022-04-27 13:18:10",FS_HEAL,"",4,Healthcare,healthcare,90
+published,"2022-04-27 13:18:29",FS_FIAC,"",4,Finance / Accounting,finance-accounting,90
+published,"2022-04-27 13:18:51",FS_EMER,"",4,Emergency Management,emergency-management,90
+published,"2022-04-27 13:19:10",FS_TEAE,"",4,Education,teacher-education,90
+published,"2022-04-27 13:19:26",FS_CJ,"",4,Criminal Justice,criminal-justice,90
+published,"2022-04-27 13:19:40",FS_BUSI,"",4,Business,business,90
+published,"2022-04-27 13:19:57",FS_BIBL,"",4,Bible,bible,90
+published,"2022-04-27 13:22:32",F_CAMP,"",2,Campus,campus,20
+published,"2022-04-27 13:23:53",F_ONLI,"",2,Online,online,20
+published,"2022-04-27 13:24:19",F_VIRT,"",2,OnlinePlus,onlineplus,20
+published,"2022-04-28 13:37:59",SO_AAS,"",6,School of Arts and Sciences,school-arts-sciences,91
+published,"2022-04-28 13:40:17",SO_BUS,"",6,School of Business,school-of-business,91
+published,"2022-04-28 13:40:45",SO_EDU,"",6,School of Education,school-of-education,91
+published,"2022-04-28 14:09:34",SO_SBS,"",6,School of Social and Behavioral Sciences,school-of-social-and-behavioral-sciences,91
+published,"2022-04-28 14:10:53",DP_THEO,"",7,Theology and Ministry,theology-and-ministry,92
+published,"2022-04-28 17:00:21",DP_ONLI,"",7,Online Department,online-dept,92
+published,"2022-04-28 17:00:47",DP_CAMP,"",7,Campus Department,campus-dept,92
+published,"2022-04-28 17:02:35",DP_VERT,"",7,OnlinePlus Department,onlineplus-dept,92
+published,"2022-04-28 18:20:29",DP_MUSC,"",7,Music Department,music-dept,92
+published,"2022-04-28 18:24:54",DP_BUSI,"",7,Business Department,business-dept,92
+published,"2022-04-28 19:40:44",DP_PSYC,"",7,Psychology Department,psychology-dept,92
+published,"2022-04-28 19:53:23",DP_TEDU,"",7,Teacher Education Department,teacher-education-dept,92

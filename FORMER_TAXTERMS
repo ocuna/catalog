@@ -1,0 +1,482 @@
+[
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-27 12:17:44",
+		"code" : "PT_CERT",
+		"desc" : "",
+		"library_id" : 5,
+		"name" : "Certificate",
+		"urlparam" : "certificate",
+		"weight" : 14
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-27 12:38:25",
+		"code" : "PT_CONC",
+		"desc" : "",
+		"library_id" : 5,
+		"name" : "Concentration",
+		"urlparam" : "concentration",
+		"weight" : 15
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-27 12:38:56",
+		"code" : "PT_DEGR",
+		"desc" : "",
+		"library_id" : 5,
+		"name" : "Degree",
+		"urlparam" : "degree",
+		"weight" : 10
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-27 12:42:11",
+		"code" : "PT_DUAM",
+		"desc" : "",
+		"library_id" : 5,
+		"name" : "Dual Major",
+		"urlparam" : "dual-major",
+		"weight" : 12
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-27 12:42:19",
+		"code" : "PT_ENDO",
+		"desc" : "",
+		"library_id" : 5,
+		"name" : "Endorsement",
+		"urlparam" : "endorsement",
+		"weight" : 15
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-27 12:42:50",
+		"code" : "PT_LICE",
+		"desc" : "",
+		"library_id" : 5,
+		"name" : "License",
+		"urlparam" : "license",
+		"weight" : 15
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-27 12:43:30",
+		"code" : "PT_MAJO",
+		"desc" : "",
+		"library_id" : 5,
+		"name" : "Major",
+		"urlparam" : "major",
+		"weight" : 11
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-27 12:43:49",
+		"code" : "PT_MINO",
+		"desc" : "",
+		"library_id" : 5,
+		"name" : "Minor",
+		"urlparam" : "minor",
+		"weight" : 13
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-27 12:44:09",
+		"code" : "PT_SPEC",
+		"desc" : "",
+		"library_id" : 5,
+		"name" : "Specialization",
+		"urlparam" : "specialization",
+		"weight" : 15
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-27 12:51:13",
+		"code" : "DT_ASSA",
+		"desc" : "",
+		"library_id" : 3,
+		"name" : "Associate of Arts",
+		"urlparam" : "associate-of-arts",
+		"weight" : 4
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-27 12:51:44",
+		"code" : "DT_ASSS",
+		"desc" : "",
+		"library_id" : 3,
+		"name" : "Associate of Science",
+		"urlparam" : "associate-of-science",
+		"weight" : 5
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-27 12:52:00",
+		"code" : "DT_BACA",
+		"desc" : "",
+		"library_id" : 3,
+		"name" : "Bachelor of Arts",
+		"urlparam" : "bachelor-of-arts",
+		"weight" : 2
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-27 12:52:20",
+		"code" : "DT_BACS",
+		"desc" : "",
+		"library_id" : 3,
+		"name" : "Bachelor of Science",
+		"urlparam" : "bachelor-of-science",
+		"weight" : 3
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-27 12:52:38",
+		"code" : "DT_MAST",
+		"desc" : "",
+		"library_id" : 3,
+		"name" : "Masters",
+		"urlparam" : "masters",
+		"weight" : 1
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-27 12:54:03",
+		"code" : "FS_ART",
+		"desc" : "",
+		"library_id" : 4,
+		"name" : "Arts",
+		"urlparam" : "arts",
+		"weight" : 90
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-27 12:54:43",
+		"code" : "FS_THEO",
+		"desc" : "",
+		"library_id" : 4,
+		"name" : "Theology",
+		"urlparam" : "theology",
+		"weight" : 90
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-27 12:55:14",
+		"code" : "FS_SPOM",
+		"desc" : "",
+		"library_id" : 4,
+		"name" : "Sport Management",
+		"urlparam" : "sport-management",
+		"weight" : 90
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-27 12:56:02",
+		"code" : "FS_SOCI",
+		"desc" : "",
+		"library_id" : 4,
+		"name" : "Social Science",
+		"urlparam" : "social-science",
+		"weight" : 90
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-27 12:56:36",
+		"code" : "FS_PSYC",
+		"desc" : "",
+		"library_id" : 4,
+		"name" : "Psychology",
+		"urlparam" : "psychology",
+		"weight" : 90
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-27 12:56:56",
+		"code" : "FS_MISS",
+		"desc" : "",
+		"library_id" : 4,
+		"name" : "Missions",
+		"urlparam" : "mission",
+		"weight" : 90
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-27 12:57:21",
+		"code" : "FS_MINI",
+		"desc" : "",
+		"library_id" : 4,
+		"name" : "Ministry",
+		"urlparam" : "ministry",
+		"weight" : 90
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-27 12:57:55",
+		"code" : "FS_MARK",
+		"desc" : "",
+		"library_id" : 4,
+		"name" : "Marketing",
+		"urlparam" : "marketing",
+		"weight" : 90
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-27 12:58:09",
+		"code" : "FS_LEMA",
+		"desc" : "",
+		"library_id" : 4,
+		"name" : "Leadership \/ Management",
+		"urlparam" : "leadership-mangement",
+		"weight" : 90
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-27 13:17:11",
+		"code" : "FS_INFOT",
+		"desc" : "",
+		"library_id" : 4,
+		"name" : "Information Technology",
+		"urlparam" : "information-technology",
+		"weight" : 90
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-27 13:17:32",
+		"code" : "FS_HUSER",
+		"desc" : "",
+		"library_id" : 4,
+		"name" : "Human Services",
+		"urlparam" : "human-services",
+		"weight" : 90
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-27 13:17:52",
+		"code" : "FS_HURS",
+		"desc" : "",
+		"library_id" : 4,
+		"name" : "Human Resources",
+		"urlparam" : "human-resources",
+		"weight" : 90
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-27 13:18:10",
+		"code" : "FS_HEAL",
+		"desc" : "",
+		"library_id" : 4,
+		"name" : "Healthcare",
+		"urlparam" : "healthcare",
+		"weight" : 90
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-27 13:18:29",
+		"code" : "FS_FIAC",
+		"desc" : "",
+		"library_id" : 4,
+		"name" : "Finance \/ Accounting",
+		"urlparam" : "finance-accounting",
+		"weight" : 90
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-27 13:18:51",
+		"code" : "FS_EMER",
+		"desc" : "",
+		"library_id" : 4,
+		"name" : "Emergency Management",
+		"urlparam" : "emergency-management",
+		"weight" : 90
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-27 13:19:10",
+		"code" : "FS_TEAE",
+		"desc" : "",
+		"library_id" : 4,
+		"name" : "Education",
+		"urlparam" : "teacher-education",
+		"weight" : 90
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-27 13:19:26",
+		"code" : "FS_CJ",
+		"desc" : "",
+		"library_id" : 4,
+		"name" : "Criminal Justice",
+		"urlparam" : "criminal-justice",
+		"weight" : 90
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-27 13:19:40",
+		"code" : "FS_BUSI",
+		"desc" : "",
+		"library_id" : 4,
+		"name" : "Business",
+		"urlparam" : "business",
+		"weight" : 90
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-27 13:19:57",
+		"code" : "FS_BIBL",
+		"desc" : "",
+		"library_id" : 4,
+		"name" : "Bible",
+		"urlparam" : "bible",
+		"weight" : 90
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-27 13:22:32",
+		"code" : "F_CAMP",
+		"desc" : "",
+		"library_id" : 2,
+		"name" : "Campus",
+		"urlparam" : "campus",
+		"weight" : 20
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-27 13:23:53",
+		"code" : "F_ONLI",
+		"desc" : "",
+		"library_id" : 2,
+		"name" : "Online",
+		"urlparam" : "online",
+		"weight" : 20
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-27 13:24:19",
+		"code" : "F_VIRT",
+		"desc" : "",
+		"library_id" : 2,
+		"name" : "OnlinePlus",
+		"urlparam" : "onlineplus",
+		"weight" : 20
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-28 13:37:59",
+		"code" : "SO_AAS",
+		"desc" : "",
+		"library_id" : 6,
+		"name" : "School of Arts and Sciences",
+		"urlparam" : "school-arts-sciences",
+		"weight" : 91
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-28 13:40:17",
+		"code" : "SO_BUS",
+		"desc" : "",
+		"library_id" : 6,
+		"name" : "School of Business",
+		"urlparam" : "school-of-business",
+		"weight" : 91
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-28 13:40:45",
+		"code" : "SO_EDU",
+		"desc" : "",
+		"library_id" : 6,
+		"name" : "School of Education",
+		"urlparam" : "school-of-education",
+		"weight" : 91
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-28 14:09:34",
+		"code" : "SO_SBS",
+		"desc" : "",
+		"library_id" : 6,
+		"name" : "School of Social and Behavioral Sciences",
+		"urlparam" : "school-of-social-and-behavioral-sciences",
+		"weight" : 91
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-28 14:10:53",
+		"code" : "DP_THEO",
+		"desc" : "",
+		"library_id" : 7,
+		"name" : "Theology and Ministry",
+		"urlparam" : "theology-and-ministry",
+		"weight" : 92
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-28 17:00:21",
+		"code" : "DP_ONLI",
+		"desc" : "",
+		"library_id" : 7,
+		"name" : "Online Department",
+		"urlparam" : "online-dept",
+		"weight" : 92
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-28 17:00:47",
+		"code" : "DP_CAMP",
+		"desc" : "",
+		"library_id" : 7,
+		"name" : "Campus Department",
+		"urlparam" : "campus-dept",
+		"weight" : 92
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-28 17:02:35",
+		"code" : "DP_VERT",
+		"desc" : "",
+		"library_id" : 7,
+		"name" : "OnlinePlus Department",
+		"urlparam" : "onlineplus-dept",
+		"weight" : 92
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-28 18:20:29",
+		"code" : "DP_MUSC",
+		"desc" : "",
+		"library_id" : 7,
+		"name" : "Music Department",
+		"urlparam" : "music-dept",
+		"weight" : 92
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-28 18:24:54",
+		"code" : "DP_BUSI",
+		"desc" : "",
+		"library_id" : 7,
+		"name" : "Business Department",
+		"urlparam" : "business-dept",
+		"weight" : 92
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-28 19:40:44",
+		"code" : "DP_PSYC",
+		"desc" : "",
+		"library_id" : 7,
+		"name" : "Psychology Department",
+		"urlparam" : "psychology-dept",
+		"weight" : 92
+	},
+	{
+		"status" : "published",
+		"status_changed" : "2022-04-28 19:53:23",
+		"code" : "DP_TEDU",
+		"desc" : "",
+		"library_id" : 7,
+		"name" : "Teacher Education Department",
+		"urlparam" : "teacher-education-dept",
+		"weight" : 92
+	}
+]

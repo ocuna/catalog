@@ -1,0 +1,12 @@
+// @file
+
+// scss files brought in to demo a bootstrap color scheme
+// these should be imported from your django site to sync from your main theme
+// -----------------------------------------------------------------------------
+@import "demo_boostrap_vars/variables";
+@import "demo_boostrap_vars/mixins";
+
+
+// basic scss file for creating styles for this app:
+// -----------------------------------------------------------------------------
+@import "dmf_catalog_style";

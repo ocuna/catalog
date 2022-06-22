@@ -1,0 +1,977 @@
+[
+	{
+		"id" : 1,
+		"dpc_academicpage_id" : 1,
+		"dpc_taxonomyterm_id" : "FS_MINI"
+	},
+	{
+		"id" : 2,
+		"dpc_academicpage_id" : 1,
+		"dpc_taxonomyterm_id" : "FS_BIBL"
+	},
+	{
+		"id" : 3,
+		"dpc_academicpage_id" : 2,
+		"dpc_taxonomyterm_id" : "FS_LEMA"
+	},
+	{
+		"id" : 4,
+		"dpc_academicpage_id" : 2,
+		"dpc_taxonomyterm_id" : "FS_MINI"
+	},
+	{
+		"id" : 5,
+		"dpc_academicpage_id" : 2,
+		"dpc_taxonomyterm_id" : "FS_BIBL"
+	},
+	{
+		"id" : 6,
+		"dpc_academicpage_id" : 3,
+		"dpc_taxonomyterm_id" : "FS_MISS"
+	},
+	{
+		"id" : 7,
+		"dpc_academicpage_id" : 3,
+		"dpc_taxonomyterm_id" : "FS_ART"
+	},
+	{
+		"id" : 8,
+		"dpc_academicpage_id" : 4,
+		"dpc_taxonomyterm_id" : "FS_BIBL"
+	},
+	{
+		"id" : 9,
+		"dpc_academicpage_id" : 4,
+		"dpc_taxonomyterm_id" : "FS_THEO"
+	},
+	{
+		"id" : 10,
+		"dpc_academicpage_id" : 5,
+		"dpc_taxonomyterm_id" : "FS_SOCI"
+	},
+	{
+		"id" : 11,
+		"dpc_academicpage_id" : 6,
+		"dpc_taxonomyterm_id" : "FS_HUSER"
+	},
+	{
+		"id" : 12,
+		"dpc_academicpage_id" : 6,
+		"dpc_taxonomyterm_id" : "FS_SOCI"
+	},
+	{
+		"id" : 13,
+		"dpc_academicpage_id" : 7,
+		"dpc_taxonomyterm_id" : "FS_EMER"
+	},
+	{
+		"id" : 14,
+		"dpc_academicpage_id" : 7,
+		"dpc_taxonomyterm_id" : "FS_SOCI"
+	},
+	{
+		"id" : 15,
+		"dpc_academicpage_id" : 8,
+		"dpc_taxonomyterm_id" : "FS_SOCI"
+	},
+	{
+		"id" : 16,
+		"dpc_academicpage_id" : 8,
+		"dpc_taxonomyterm_id" : "FS_CJ"
+	},
+	{
+		"id" : 17,
+		"dpc_academicpage_id" : 9,
+		"dpc_taxonomyterm_id" : "FS_PSYC"
+	},
+	{
+		"id" : 18,
+		"dpc_academicpage_id" : 9,
+		"dpc_taxonomyterm_id" : "FS_SOCI"
+	},
+	{
+		"id" : 19,
+		"dpc_academicpage_id" : 10,
+		"dpc_taxonomyterm_id" : "FS_HUSER"
+	},
+	{
+		"id" : 20,
+		"dpc_academicpage_id" : 10,
+		"dpc_taxonomyterm_id" : "FS_PSYC"
+	},
+	{
+		"id" : 21,
+		"dpc_academicpage_id" : 10,
+		"dpc_taxonomyterm_id" : "FS_SOCI"
+	},
+	{
+		"id" : 22,
+		"dpc_academicpage_id" : 11,
+		"dpc_taxonomyterm_id" : "FS_SPOM"
+	},
+	{
+		"id" : 23,
+		"dpc_academicpage_id" : 11,
+		"dpc_taxonomyterm_id" : "FS_LEMA"
+	},
+	{
+		"id" : 24,
+		"dpc_academicpage_id" : 11,
+		"dpc_taxonomyterm_id" : "FS_BUSI"
+	},
+	{
+		"id" : 25,
+		"dpc_academicpage_id" : 12,
+		"dpc_taxonomyterm_id" : "FS_MINI"
+	},
+	{
+		"id" : 26,
+		"dpc_academicpage_id" : 12,
+		"dpc_taxonomyterm_id" : "FS_BIBL"
+	},
+	{
+		"id" : 27,
+		"dpc_academicpage_id" : 13,
+		"dpc_taxonomyterm_id" : "FS_ART"
+	},
+	{
+		"id" : 28,
+		"dpc_academicpage_id" : 14,
+		"dpc_taxonomyterm_id" : "FS_ART"
+	},
+	{
+		"id" : 29,
+		"dpc_academicpage_id" : 15,
+		"dpc_taxonomyterm_id" : "FS_ART"
+	},
+	{
+		"id" : 30,
+		"dpc_academicpage_id" : 16,
+		"dpc_taxonomyterm_id" : "FS_ART"
+	},
+	{
+		"id" : 31,
+		"dpc_academicpage_id" : 17,
+		"dpc_taxonomyterm_id" : "FS_ART"
+	},
+	{
+		"id" : 32,
+		"dpc_academicpage_id" : 18,
+		"dpc_taxonomyterm_id" : "FS_THEO"
+	},
+	{
+		"id" : 33,
+		"dpc_academicpage_id" : 18,
+		"dpc_taxonomyterm_id" : "FS_BIBL"
+	},
+	{
+		"id" : 34,
+		"dpc_academicpage_id" : 19,
+		"dpc_taxonomyterm_id" : "FS_BUSI"
+	},
+	{
+		"id" : 35,
+		"dpc_academicpage_id" : 20,
+		"dpc_taxonomyterm_id" : "FS_MARK"
+	},
+	{
+		"id" : 36,
+		"dpc_academicpage_id" : 20,
+		"dpc_taxonomyterm_id" : "FS_BUSI"
+	},
+	{
+		"id" : 37,
+		"dpc_academicpage_id" : 21,
+		"dpc_taxonomyterm_id" : "FS_FIAC"
+	},
+	{
+		"id" : 38,
+		"dpc_academicpage_id" : 21,
+		"dpc_taxonomyterm_id" : "FS_BUSI"
+	},
+	{
+		"id" : 39,
+		"dpc_academicpage_id" : 22,
+		"dpc_taxonomyterm_id" : "FS_BUSI"
+	},
+	{
+		"id" : 40,
+		"dpc_academicpage_id" : 22,
+		"dpc_taxonomyterm_id" : "FS_INFOT"
+	},
+	{
+		"id" : 41,
+		"dpc_academicpage_id" : 23,
+		"dpc_taxonomyterm_id" : "FS_BUSI"
+	},
+	{
+		"id" : 42,
+		"dpc_academicpage_id" : 23,
+		"dpc_taxonomyterm_id" : "FS_INFOT"
+	},
+	{
+		"id" : 43,
+		"dpc_academicpage_id" : 24,
+		"dpc_taxonomyterm_id" : "FS_MINI"
+	},
+	{
+		"id" : 44,
+		"dpc_academicpage_id" : 24,
+		"dpc_taxonomyterm_id" : "FS_BIBL"
+	},
+	{
+		"id" : 45,
+		"dpc_academicpage_id" : 25,
+		"dpc_taxonomyterm_id" : "FS_MISS"
+	},
+	{
+		"id" : 46,
+		"dpc_academicpage_id" : 25,
+		"dpc_taxonomyterm_id" : "FS_BIBL"
+	},
+	{
+		"id" : 47,
+		"dpc_academicpage_id" : 26,
+		"dpc_taxonomyterm_id" : "FS_MINI"
+	},
+	{
+		"id" : 48,
+		"dpc_academicpage_id" : 26,
+		"dpc_taxonomyterm_id" : "FS_BIBL"
+	},
+	{
+		"id" : 49,
+		"dpc_academicpage_id" : 27,
+		"dpc_taxonomyterm_id" : "FS_LEMA"
+	},
+	{
+		"id" : 50,
+		"dpc_academicpage_id" : 27,
+		"dpc_taxonomyterm_id" : "FS_SPOM"
+	},
+	{
+		"id" : 51,
+		"dpc_academicpage_id" : 27,
+		"dpc_taxonomyterm_id" : "FS_BUSI"
+	},
+	{
+		"id" : 52,
+		"dpc_academicpage_id" : 28,
+		"dpc_taxonomyterm_id" : "FS_ART"
+	},
+	{
+		"id" : 53,
+		"dpc_academicpage_id" : 29,
+		"dpc_taxonomyterm_id" : "FS_ART"
+	},
+	{
+		"id" : 54,
+		"dpc_academicpage_id" : 30,
+		"dpc_taxonomyterm_id" : "FS_CJ"
+	},
+	{
+		"id" : 55,
+		"dpc_academicpage_id" : 30,
+		"dpc_taxonomyterm_id" : "FS_SOCI"
+	},
+	{
+		"id" : 56,
+		"dpc_academicpage_id" : 31,
+		"dpc_taxonomyterm_id" : "FS_PSYC"
+	},
+	{
+		"id" : 57,
+		"dpc_academicpage_id" : 31,
+		"dpc_taxonomyterm_id" : "FS_SOCI"
+	},
+	{
+		"id" : 58,
+		"dpc_academicpage_id" : 32,
+		"dpc_taxonomyterm_id" : "FS_ART"
+	},
+	{
+		"id" : 59,
+		"dpc_academicpage_id" : 33,
+		"dpc_taxonomyterm_id" : "FS_ART"
+	},
+	{
+		"id" : 60,
+		"dpc_academicpage_id" : 34,
+		"dpc_taxonomyterm_id" : "FS_THEO"
+	},
+	{
+		"id" : 61,
+		"dpc_academicpage_id" : 34,
+		"dpc_taxonomyterm_id" : "FS_BIBL"
+	},
+	{
+		"id" : 62,
+		"dpc_academicpage_id" : 35,
+		"dpc_taxonomyterm_id" : "FS_BUSI"
+	},
+	{
+		"id" : 63,
+		"dpc_academicpage_id" : 35,
+		"dpc_taxonomyterm_id" : "FS_MARK"
+	},
+	{
+		"id" : 64,
+		"dpc_academicpage_id" : 36,
+		"dpc_taxonomyterm_id" : "FS_BUSI"
+	},
+	{
+		"id" : 65,
+		"dpc_academicpage_id" : 36,
+		"dpc_taxonomyterm_id" : "FS_INFOT"
+	},
+	{
+		"id" : 66,
+		"dpc_academicpage_id" : 37,
+		"dpc_taxonomyterm_id" : "FS_BUSI"
+	},
+	{
+		"id" : 67,
+		"dpc_academicpage_id" : 38,
+		"dpc_taxonomyterm_id" : "FS_FIAC"
+	},
+	{
+		"id" : 68,
+		"dpc_academicpage_id" : 38,
+		"dpc_taxonomyterm_id" : "FS_BUSI"
+	},
+	{
+		"id" : 69,
+		"dpc_academicpage_id" : 39,
+		"dpc_taxonomyterm_id" : "FS_MINI"
+	},
+	{
+		"id" : 70,
+		"dpc_academicpage_id" : 39,
+		"dpc_taxonomyterm_id" : "FS_BIBL"
+	},
+	{
+		"id" : 71,
+		"dpc_academicpage_id" : 40,
+		"dpc_taxonomyterm_id" : "FS_HUSER"
+	},
+	{
+		"id" : 72,
+		"dpc_academicpage_id" : 40,
+		"dpc_taxonomyterm_id" : "FS_SOCI"
+	},
+	{
+		"id" : 73,
+		"dpc_academicpage_id" : 41,
+		"dpc_taxonomyterm_id" : "FS_ART"
+	},
+	{
+		"id" : 74,
+		"dpc_academicpage_id" : 42,
+		"dpc_taxonomyterm_id" : "FS_ART"
+	},
+	{
+		"id" : 75,
+		"dpc_academicpage_id" : 43,
+		"dpc_taxonomyterm_id" : "FS_BUSI"
+	},
+	{
+		"id" : 76,
+		"dpc_academicpage_id" : 44,
+		"dpc_taxonomyterm_id" : "FS_TEAE"
+	},
+	{
+		"id" : 77,
+		"dpc_academicpage_id" : 45,
+		"dpc_taxonomyterm_id" : "FS_INFOT"
+	},
+	{
+		"id" : 78,
+		"dpc_academicpage_id" : 46,
+		"dpc_taxonomyterm_id" : "FS_FIAC"
+	},
+	{
+		"id" : 79,
+		"dpc_academicpage_id" : 46,
+		"dpc_taxonomyterm_id" : "FS_BUSI"
+	},
+	{
+		"id" : 80,
+		"dpc_academicpage_id" : 48,
+		"dpc_taxonomyterm_id" : "FS_INFOT"
+	},
+	{
+		"id" : 81,
+		"dpc_academicpage_id" : 49,
+		"dpc_taxonomyterm_id" : "FS_BUSI"
+	},
+	{
+		"id" : 82,
+		"dpc_academicpage_id" : 50,
+		"dpc_taxonomyterm_id" : "FS_HEAL"
+	},
+	{
+		"id" : 83,
+		"dpc_academicpage_id" : 50,
+		"dpc_taxonomyterm_id" : "FS_INFOT"
+	},
+	{
+		"id" : 84,
+		"dpc_academicpage_id" : 51,
+		"dpc_taxonomyterm_id" : "FS_TEAE"
+	},
+	{
+		"id" : 85,
+		"dpc_academicpage_id" : 52,
+		"dpc_taxonomyterm_id" : "FS_TEAE"
+	},
+	{
+		"id" : 86,
+		"dpc_academicpage_id" : 53,
+		"dpc_taxonomyterm_id" : "FS_TEAE"
+	},
+	{
+		"id" : 87,
+		"dpc_academicpage_id" : 54,
+		"dpc_taxonomyterm_id" : "FS_TEAE"
+	},
+	{
+		"id" : 88,
+		"dpc_academicpage_id" : 55,
+		"dpc_taxonomyterm_id" : "FS_TEAE"
+	},
+	{
+		"id" : 89,
+		"dpc_academicpage_id" : 56,
+		"dpc_taxonomyterm_id" : "FS_TEAE"
+	},
+	{
+		"id" : 90,
+		"dpc_academicpage_id" : 58,
+		"dpc_taxonomyterm_id" : "FS_EMER"
+	},
+	{
+		"id" : 91,
+		"dpc_academicpage_id" : 59,
+		"dpc_taxonomyterm_id" : "FS_INFOT"
+	},
+	{
+		"id" : 92,
+		"dpc_academicpage_id" : 60,
+		"dpc_taxonomyterm_id" : "FS_FIAC"
+	},
+	{
+		"id" : 93,
+		"dpc_academicpage_id" : 61,
+		"dpc_taxonomyterm_id" : "FS_SPOM"
+	},
+	{
+		"id" : 94,
+		"dpc_academicpage_id" : 62,
+		"dpc_taxonomyterm_id" : "FS_TEAE"
+	},
+	{
+		"id" : 95,
+		"dpc_academicpage_id" : 63,
+		"dpc_taxonomyterm_id" : "FS_EMER"
+	},
+	{
+		"id" : 96,
+		"dpc_academicpage_id" : 63,
+		"dpc_taxonomyterm_id" : "FS_SOCI"
+	},
+	{
+		"id" : 97,
+		"dpc_academicpage_id" : 64,
+		"dpc_taxonomyterm_id" : "FS_MARK"
+	},
+	{
+		"id" : 98,
+		"dpc_academicpage_id" : 64,
+		"dpc_taxonomyterm_id" : "FS_BUSI"
+	},
+	{
+		"id" : 99,
+		"dpc_academicpage_id" : 64,
+		"dpc_taxonomyterm_id" : "FS_INFOT"
+	},
+	{
+		"id" : 100,
+		"dpc_academicpage_id" : 65,
+		"dpc_taxonomyterm_id" : "FS_MARK"
+	},
+	{
+		"id" : 101,
+		"dpc_academicpage_id" : 65,
+		"dpc_taxonomyterm_id" : "FS_PSYC"
+	},
+	{
+		"id" : 102,
+		"dpc_academicpage_id" : 65,
+		"dpc_taxonomyterm_id" : "FS_SOCI"
+	},
+	{
+		"id" : 103,
+		"dpc_academicpage_id" : 65,
+		"dpc_taxonomyterm_id" : "FS_INFOT"
+	},
+	{
+		"id" : 104,
+		"dpc_academicpage_id" : 66,
+		"dpc_taxonomyterm_id" : "FS_BUSI"
+	},
+	{
+		"id" : 105,
+		"dpc_academicpage_id" : 66,
+		"dpc_taxonomyterm_id" : "FS_MINI"
+	},
+	{
+		"id" : 106,
+		"dpc_academicpage_id" : 66,
+		"dpc_taxonomyterm_id" : "FS_BIBL"
+	},
+	{
+		"id" : 107,
+		"dpc_academicpage_id" : 67,
+		"dpc_taxonomyterm_id" : "FS_HURS"
+	},
+	{
+		"id" : 108,
+		"dpc_academicpage_id" : 67,
+		"dpc_taxonomyterm_id" : "FS_BUSI"
+	},
+	{
+		"id" : 109,
+		"dpc_academicpage_id" : 68,
+		"dpc_taxonomyterm_id" : "FS_LEMA"
+	},
+	{
+		"id" : 110,
+		"dpc_academicpage_id" : 68,
+		"dpc_taxonomyterm_id" : "FS_BUSI"
+	},
+	{
+		"id" : 111,
+		"dpc_academicpage_id" : 68,
+		"dpc_taxonomyterm_id" : "FS_HEAL"
+	},
+	{
+		"id" : 112,
+		"dpc_academicpage_id" : 69,
+		"dpc_taxonomyterm_id" : "FS_LEMA"
+	},
+	{
+		"id" : 113,
+		"dpc_academicpage_id" : 69,
+		"dpc_taxonomyterm_id" : "FS_BUSI"
+	},
+	{
+		"id" : 114,
+		"dpc_academicpage_id" : 70,
+		"dpc_taxonomyterm_id" : "FS_LEMA"
+	},
+	{
+		"id" : 115,
+		"dpc_academicpage_id" : 70,
+		"dpc_taxonomyterm_id" : "FS_BUSI"
+	},
+	{
+		"id" : 116,
+		"dpc_academicpage_id" : 71,
+		"dpc_taxonomyterm_id" : "FS_LEMA"
+	},
+	{
+		"id" : 117,
+		"dpc_academicpage_id" : 71,
+		"dpc_taxonomyterm_id" : "FS_BUSI"
+	},
+	{
+		"id" : 118,
+		"dpc_academicpage_id" : 72,
+		"dpc_taxonomyterm_id" : "FS_LEMA"
+	},
+	{
+		"id" : 119,
+		"dpc_academicpage_id" : 72,
+		"dpc_taxonomyterm_id" : "FS_BUSI"
+	},
+	{
+		"id" : 120,
+		"dpc_academicpage_id" : 73,
+		"dpc_taxonomyterm_id" : "FS_LEMA"
+	},
+	{
+		"id" : 121,
+		"dpc_academicpage_id" : 73,
+		"dpc_taxonomyterm_id" : "FS_BUSI"
+	},
+	{
+		"id" : 122,
+		"dpc_academicpage_id" : 73,
+		"dpc_taxonomyterm_id" : "FS_HEAL"
+	},
+	{
+		"id" : 123,
+		"dpc_academicpage_id" : 74,
+		"dpc_taxonomyterm_id" : "FS_LEMA"
+	},
+	{
+		"id" : 124,
+		"dpc_academicpage_id" : 75,
+		"dpc_taxonomyterm_id" : "FS_LEMA"
+	},
+	{
+		"id" : 125,
+		"dpc_academicpage_id" : 75,
+		"dpc_taxonomyterm_id" : "FS_HURS"
+	},
+	{
+		"id" : 126,
+		"dpc_academicpage_id" : 76,
+		"dpc_taxonomyterm_id" : "FS_LEMA"
+	},
+	{
+		"id" : 127,
+		"dpc_academicpage_id" : 76,
+		"dpc_taxonomyterm_id" : "FS_BUSI"
+	},
+	{
+		"id" : 128,
+		"dpc_academicpage_id" : 77,
+		"dpc_taxonomyterm_id" : "FS_LEMA"
+	},
+	{
+		"id" : 129,
+		"dpc_academicpage_id" : 77,
+		"dpc_taxonomyterm_id" : "FS_BUSI"
+	},
+	{
+		"id" : 130,
+		"dpc_academicpage_id" : 77,
+		"dpc_taxonomyterm_id" : "FS_HEAL"
+	},
+	{
+		"id" : 131,
+		"dpc_academicpage_id" : 78,
+		"dpc_taxonomyterm_id" : "FS_LEMA"
+	},
+	{
+		"id" : 132,
+		"dpc_academicpage_id" : 78,
+		"dpc_taxonomyterm_id" : "FS_BUSI"
+	},
+	{
+		"id" : 133,
+		"dpc_academicpage_id" : 78,
+		"dpc_taxonomyterm_id" : "FS_INFOT"
+	},
+	{
+		"id" : 134,
+		"dpc_academicpage_id" : 79,
+		"dpc_taxonomyterm_id" : "FS_LEMA"
+	},
+	{
+		"id" : 135,
+		"dpc_academicpage_id" : 79,
+		"dpc_taxonomyterm_id" : "FS_HEAL"
+	},
+	{
+		"id" : 136,
+		"dpc_academicpage_id" : 80,
+		"dpc_taxonomyterm_id" : "FS_LEMA"
+	},
+	{
+		"id" : 137,
+		"dpc_academicpage_id" : 80,
+		"dpc_taxonomyterm_id" : "FS_BUSI"
+	},
+	{
+		"id" : 138,
+		"dpc_academicpage_id" : 81,
+		"dpc_taxonomyterm_id" : "FS_BUSI"
+	},
+	{
+		"id" : 139,
+		"dpc_academicpage_id" : 81,
+		"dpc_taxonomyterm_id" : "FS_LEMA"
+	},
+	{
+		"id" : 140,
+		"dpc_academicpage_id" : 82,
+		"dpc_taxonomyterm_id" : "FS_EMER"
+	},
+	{
+		"id" : 141,
+		"dpc_academicpage_id" : 82,
+		"dpc_taxonomyterm_id" : "FS_BUSI"
+	},
+	{
+		"id" : 142,
+		"dpc_academicpage_id" : 84,
+		"dpc_taxonomyterm_id" : "FS_BIBL"
+	},
+	{
+		"id" : 143,
+		"dpc_academicpage_id" : 84,
+		"dpc_taxonomyterm_id" : "FS_MINI"
+	},
+	{
+		"id" : 144,
+		"dpc_academicpage_id" : 85,
+		"dpc_taxonomyterm_id" : "FS_BIBL"
+	},
+	{
+		"id" : 145,
+		"dpc_academicpage_id" : 85,
+		"dpc_taxonomyterm_id" : "FS_MINI"
+	},
+	{
+		"id" : 146,
+		"dpc_academicpage_id" : 86,
+		"dpc_taxonomyterm_id" : "FS_MISS"
+	},
+	{
+		"id" : 147,
+		"dpc_academicpage_id" : 86,
+		"dpc_taxonomyterm_id" : "FS_BIBL"
+	},
+	{
+		"id" : 148,
+		"dpc_academicpage_id" : 86,
+		"dpc_taxonomyterm_id" : "FS_MINI"
+	},
+	{
+		"id" : 149,
+		"dpc_academicpage_id" : 87,
+		"dpc_taxonomyterm_id" : "FS_BIBL"
+	},
+	{
+		"id" : 150,
+		"dpc_academicpage_id" : 87,
+		"dpc_taxonomyterm_id" : "FS_MINI"
+	},
+	{
+		"id" : 151,
+		"dpc_academicpage_id" : 87,
+		"dpc_taxonomyterm_id" : "FS_LEMA"
+	},
+	{
+		"id" : 152,
+		"dpc_academicpage_id" : 88,
+		"dpc_taxonomyterm_id" : "FS_BIBL"
+	},
+	{
+		"id" : 153,
+		"dpc_academicpage_id" : 88,
+		"dpc_taxonomyterm_id" : "FS_MINI"
+	},
+	{
+		"id" : 154,
+		"dpc_academicpage_id" : 88,
+		"dpc_taxonomyterm_id" : "FS_SPOM"
+	},
+	{
+		"id" : 155,
+		"dpc_academicpage_id" : 89,
+		"dpc_taxonomyterm_id" : "FS_BIBL"
+	},
+	{
+		"id" : 156,
+		"dpc_academicpage_id" : 89,
+		"dpc_taxonomyterm_id" : "FS_MINI"
+	},
+	{
+		"id" : 157,
+		"dpc_academicpage_id" : 90,
+		"dpc_taxonomyterm_id" : "FS_INFOT"
+	},
+	{
+		"id" : 158,
+		"dpc_academicpage_id" : 90,
+		"dpc_taxonomyterm_id" : "FS_BUSI"
+	},
+	{
+		"id" : 159,
+		"dpc_academicpage_id" : 91,
+		"dpc_taxonomyterm_id" : "FS_ART"
+	},
+	{
+		"id" : 160,
+		"dpc_academicpage_id" : 91,
+		"dpc_taxonomyterm_id" : "FS_TEAE"
+	},
+	{
+		"id" : 161,
+		"dpc_academicpage_id" : 92,
+		"dpc_taxonomyterm_id" : "FS_ART"
+	},
+	{
+		"id" : 162,
+		"dpc_academicpage_id" : 93,
+		"dpc_taxonomyterm_id" : "FS_ART"
+	},
+	{
+		"id" : 163,
+		"dpc_academicpage_id" : 94,
+		"dpc_taxonomyterm_id" : "FS_MISS"
+	},
+	{
+		"id" : 164,
+		"dpc_academicpage_id" : 94,
+		"dpc_taxonomyterm_id" : "FS_BIBL"
+	},
+	{
+		"id" : 165,
+		"dpc_academicpage_id" : 95,
+		"dpc_taxonomyterm_id" : "FS_BIBL"
+	},
+	{
+		"id" : 166,
+		"dpc_academicpage_id" : 95,
+		"dpc_taxonomyterm_id" : "FS_THEO"
+	},
+	{
+		"id" : 167,
+		"dpc_academicpage_id" : 96,
+		"dpc_taxonomyterm_id" : "FS_BIBL"
+	},
+	{
+		"id" : 168,
+		"dpc_academicpage_id" : 96,
+		"dpc_taxonomyterm_id" : "FS_THEO"
+	},
+	{
+		"id" : 169,
+		"dpc_academicpage_id" : 97,
+		"dpc_taxonomyterm_id" : "FS_BIBL"
+	},
+	{
+		"id" : 170,
+		"dpc_academicpage_id" : 97,
+		"dpc_taxonomyterm_id" : "FS_THEO"
+	},
+	{
+		"id" : 171,
+		"dpc_academicpage_id" : 98,
+		"dpc_taxonomyterm_id" : "FS_BIBL"
+	},
+	{
+		"id" : 172,
+		"dpc_academicpage_id" : 98,
+		"dpc_taxonomyterm_id" : "FS_THEO"
+	},
+	{
+		"id" : 173,
+		"dpc_academicpage_id" : 99,
+		"dpc_taxonomyterm_id" : "FS_BUSI"
+	},
+	{
+		"id" : 174,
+		"dpc_academicpage_id" : 99,
+		"dpc_taxonomyterm_id" : "FS_THEO"
+	},
+	{
+		"id" : 175,
+		"dpc_academicpage_id" : 100,
+		"dpc_taxonomyterm_id" : "FS_BIBL"
+	},
+	{
+		"id" : 176,
+		"dpc_academicpage_id" : 101,
+		"dpc_taxonomyterm_id" : "FS_BIBL"
+	},
+	{
+		"id" : 177,
+		"dpc_academicpage_id" : 102,
+		"dpc_taxonomyterm_id" : "FS_TEAE"
+	},
+	{
+		"id" : 178,
+		"dpc_academicpage_id" : 103,
+		"dpc_taxonomyterm_id" : "FS_TEAE"
+	},
+	{
+		"id" : 179,
+		"dpc_academicpage_id" : 104,
+		"dpc_taxonomyterm_id" : "FS_TEAE"
+	},
+	{
+		"id" : 180,
+		"dpc_academicpage_id" : 105,
+		"dpc_taxonomyterm_id" : "FS_TEAE"
+	},
+	{
+		"id" : 181,
+		"dpc_academicpage_id" : 106,
+		"dpc_taxonomyterm_id" : "FS_TEAE"
+	},
+	{
+		"id" : 182,
+		"dpc_academicpage_id" : 107,
+		"dpc_taxonomyterm_id" : "FS_TEAE"
+	},
+	{
+		"id" : 183,
+		"dpc_academicpage_id" : 108,
+		"dpc_taxonomyterm_id" : "FS_TEAE"
+	},
+	{
+		"id" : 184,
+		"dpc_academicpage_id" : 109,
+		"dpc_taxonomyterm_id" : "FS_TEAE"
+	},
+	{
+		"id" : 185,
+		"dpc_academicpage_id" : 110,
+		"dpc_taxonomyterm_id" : "FS_TEAE"
+	},
+	{
+		"id" : 186,
+		"dpc_academicpage_id" : 111,
+		"dpc_taxonomyterm_id" : "FS_HURS"
+	},
+	{
+		"id" : 187,
+		"dpc_academicpage_id" : 111,
+		"dpc_taxonomyterm_id" : "FS_BUSI"
+	},
+	{
+		"id" : 188,
+		"dpc_academicpage_id" : 112,
+		"dpc_taxonomyterm_id" : "FS_TEAE"
+	},
+	{
+		"id" : 189,
+		"dpc_academicpage_id" : 113,
+		"dpc_taxonomyterm_id" : "FS_INFOT"
+	},
+	{
+		"id" : 190,
+		"dpc_academicpage_id" : 113,
+		"dpc_taxonomyterm_id" : "FS_BUSI"
+	},
+	{
+		"id" : 191,
+		"dpc_academicpage_id" : 113,
+		"dpc_taxonomyterm_id" : "FS_MARK"
+	},
+	{
+		"id" : 192,
+		"dpc_academicpage_id" : 114,
+		"dpc_taxonomyterm_id" : "FS_BUSI"
+	},
+	{
+		"id" : 193,
+		"dpc_academicpage_id" : 114,
+		"dpc_taxonomyterm_id" : "FS_FIAC"
+	},
+	{
+		"id" : 194,
+		"dpc_academicpage_id" : 57,
+		"dpc_taxonomyterm_id" : "FS_BUSI"
+	},
+	{
+		"id" : 195,
+		"dpc_academicpage_id" : 57,
+		"dpc_taxonomyterm_id" : "FS_HURS"
+	}
+]

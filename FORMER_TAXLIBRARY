@@ -1,0 +1,32 @@
+[
+	{
+		"id" : 2,
+		"name" : "Class Format",
+		"desc" : "The classroom format for an academic program offered"
+	},
+	{
+		"id" : 3,
+		"name" : "Degree Type",
+		"desc" : "The type of degree being offered for the academic program"
+	},
+	{
+		"id" : 4,
+		"name" : "Field of Study",
+		"desc" : "The generic field of study that is helpful in marketing an academic program offered - NOT the internal organizational department"
+	},
+	{
+		"id" : 5,
+		"name" : "Program Type",
+		"desc" : "The academic program type of the academic program offered"
+	},
+	{
+		"id" : 6,
+		"name" : "Faculty Department",
+		"desc" : "The \"schools-of\" groupings etc."
+	},
+	{
+		"id" : 7,
+		"name" : "University Department",
+		"desc" : "Can be faculty, but not related to \"schools-of\""
+	}
+]

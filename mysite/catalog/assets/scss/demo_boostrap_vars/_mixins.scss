@@ -1,0 +1,427 @@
+// Sass Mixins
+// --------------------------------------------------
+@mixin transparent($color, $alpha) {
+  $rgba: rgba($color, $alpha);
+  $ie-hex-str: ie-hex-str($rgba);
+  background-color: transparent;
+  background-color: $rgba;
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#{$ie-hex-str},endColorstr=#{$ie-hex-str});
+  zoom: 1;
+}
+
+@mixin well() {
+  min-height: 20px;
+  padding: 19px;
+  margin-bottom: 20px;
+  background-color: $well-bg;
+  border: 1px solid darken($well-bg, 7%);
+  @include border-radius(4px);
+  @include box-shadow(inset 0 1px 1px rgba(0,0,0,.05));
+  blockquote {
+    border-color: #ddd;
+    border-color: rgba(0,0,0,.15);
+  }
+}
+
+@mixin btn() {
+  display: inline-block;
+}
+
+// designed for fp-parallax
+// produces .fp-parallax-left-35{ left: 35%; }
+@each $percents in $parallax-width-percentages {
+  .fp-parallax-left-#{$percents}{
+      left: #{$percents}#{'%'};
+  }
+}
+
+// Override compass-mixins clearfix mixin.
+// See https://www.drupal.org/node/2636880#comment-10764772.
+@mixin clearfix() {
+  &:before,
+  &:after {
+    content: " "; // 1
+    display: table; // 2
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+
+
+// -----------------------------------------------------------------
+// Produces CSS such as:
+// 
+//  .w-25 {width: 25$ !important;}
+//   
+//  @media (min-width: 0px) and (max-width: 319px) {
+//    .w-xxs-25 {
+//      width: 25% !important;
+//   }
+
+@each $percents in $sizing-percentages {
+  .w-#{$percents}{
+    width: #{$percents}#{'% !important'};
+  }
+  .maxw-#{$percents}{
+    max-width: #{$percents}#{'% !important'};
+  }
+  .minw-#{$percents}{
+    min-width: #{$percents}#{'% !important'};
+  }      
+  .h-#{$percents}{
+    height: #{$percents}#{'% !important'};
+  }
+  .minh-#{$percents}{
+    min-height: #{$percents}#{'% !important'};
+  }      
+  .maxh-#{$percents}{
+    max-height: #{$percents}#{'% !important'};
+  } 
+}
+
+// -----------------------------------------------------------------
+// Produces CSS such as:
+//  .opacity-10 {opacity: 1;}
+//   
+@each $tenth in $tens {
+  .opacity-#{$tenth}{
+    opacity: #{'0.'}#{$tenth}#{' !important'};
+  }
+}
+
+.opacity-10{
+  opacity: 1.0 !important;
+}
+
+// -----------------------------------------------------------------
+// Produces CSS such as:
+//  .mbm-multiply {mix-blend-mode: multiply;}
+//   
+@each $mbm in $mix-blend-modes {
+  .mbm-#{$mbm}{
+    mix-blend-mode: #{$mbm}#{' !important'};
+  }
+}
+
+
+
+@each $breakpoint, $min, $max in $breakpoint-min-max-widths {
+  @media (min-width: $min) and (max-width: $max){
+    @each $percents in $sizing-percentages {
+      .w-#{$breakpoint}-#{$percents}{
+        width: #{$percents}#{'% !important'};
+      }
+      .maxw-#{$breakpoint}-#{$percents}{
+        max-width: #{$percents}#{'% !important'};
+      }
+      .minw-#{$breakpoint}-#{$percents}{
+        min-width: #{$percents}#{'% !important'};
+      }      
+      .h-#{$breakpoint}-#{$percents}{
+        height: #{$percents}#{'% !important'};
+      }
+      .minh-#{$breakpoint}-#{$percents}{
+        min-height: #{$percents}#{'% !important'};
+      }      
+      .maxh-#{$breakpoint}-#{$percents}{
+        max-height: #{$percents}#{'% !important'};
+      } 
+    }
+  }
+}
+
+
+
+
+// Breakpoint mixin.
+// Usage: @include breakpoint(sm) { ... }
+// -----------------------------------------------------------------------------
+
+
+@mixin breakpoint-up($class) {
+  @if $class == xxs {
+    @media (max-width: $screen-xxs) { @content; }
+  }
+  @else if $class == xs {
+    @media (min-width: $screen-xs) { @content; }
+  }
+  @else if $class == sm {
+    @media (min-width: $screen-sm) { @content; }
+  }
+  @else if $class == md {
+    @media (min-width: $screen-md) { @content; }
+  }
+  @else if $class == lg {
+    @media (min-width: $screen-lg) { @content; }
+  }
+  @else if $class == xl {
+    @media (min-width: $screen-xl) { @content; }
+  }
+  @else if $class == xxl {
+    @media (min-width: $screen-xxl) { @content; }
+  }
+  @else {
+    @warn "grid-breakpoints mixin supports: xxs, xs, sm, md, lg, xl, xxl";
+  }
+}
+
+@mixin breakpoint-down($class) {
+  @if $class == xxs {
+    @media (max-width: $screen-xs -1) { @content; }
+  }
+  @else if $class == xs {
+    @media (max-width: $screen-sm - 1) { @content; }
+  }
+  @else if $class == sm {
+    @media (max-width: $screen-md - 1) { @content; }
+  }
+  @else if $class == md {
+    @media (max-width: $screen-lg - 1) { @content; }
+  }
+  @else if $class == lg {
+    @media (max-width: $screen-xl - 1) { @content; }
+  }
+  @else if $class == xl {
+    @media (max-width: $screen-xxl - 1) { @content; }
+  }
+  @else {
+    @warn "grid-breakpoints mixin supports: xxs, xxs, xs, sm, md, lg, xl,";
+  }
+}
+
+
+@mixin breakpoint-min-max($min,$max){
+  @if $min == xxs{
+    @if $max == xxs{
+      @warn "incorrect configuration - use breakpoint-exclusive(xxs) instead";
+    }
+    @else if $max == xs {
+       @warn "incorrect configuration - use breakpoint-down(xs) instead";
+    }
+    @else if $max == sm {
+       @warn "incorrect configuration - use breakpoint-down(sm) instead";      
+    }
+    @else if $max == md {
+       @warn "incorrect configuration - use breakpoint-down(md) instead";      
+    }
+    @else if $max == lg {
+       @warn "incorrect configuration - use breakpoint-down(lg) instead";      
+    }
+    @else if $max == xl {
+       @warn "incorrect configuration - use breakpoint-down(xl) instead";      
+    }
+    @else if $max == xxl {
+       @warn "incorrect configuration - use breakpoint-down(xxl) instead";
+    }
+  }
+  @else if $min == xs{
+    @if $max == xxs{
+      @warn "incorrect configuration - max must be larger than min";
+    }
+    @else if $max == xs {
+       @warn "incorrect configuration - use breakpoint-exclusive(xs) instead";
+    }
+    @else if $max == sm {
+       @media only screen and (min-width: $screen-xs) and (max-width: $screen-md - 1) { @content; }
+    }
+    @else if $max == md {
+       @media only screen and (min-width: $screen-xs) and (max-width: $screen-lg - 1) { @content; }      
+    }
+    @else if $max == lg {
+       @media only screen and (min-width: $screen-xs) and (max-width: $screen-xl - 1) { @content; }        
+    }
+    @else if $max == xl {
+       @media only screen and (min-width: $screen-xs) and (max-width: $screen-xxl - 1) { @content; }       
+    }
+    @else if $max == xxl {
+       @warn "incorrect configuration - use breakpoint-up(xs) instead";
+    }
+  }
+  @else if $min == sm{
+    @if $max == xxs{
+      @warn "incorrect configuration - max must be larger than min";
+    }
+    @else if $max == xs {
+       @warn "incorrect configuration - max must be larger than min";
+    }
+    @else if $max == sm {
+       @warn "incorrect configuration - use breakpoint-exclusive(sm) instead";
+    }
+    @else if $max == md {
+       @media only screen and (min-width: $screen-sm) and (max-width: $screen-lg - 1) { @content; }      
+    }
+    @else if $max == lg {
+       @media only screen and (min-width: $screen-sm) and (max-width: $screen-xl - 1) { @content; }        
+    }
+    @else if $max == xl {
+       @media only screen and (min-width: $screen-sm) and (max-width: $screen-xxl - 1) { @content; }       
+    }
+    @else if $max == xxl {
+       @warn "incorrect configuration - use breakpoint-up(sm) instead";
+    }
+  }
+  @else if $min == md{
+    @if $max == xxs{
+      @warn "incorrect configuration - max must be larger than min";
+    }
+    @else if $max == xs {
+       @warn "incorrect configuration - max must be larger than min";
+    }
+    @else if $max == sm {
+       @warn "incorrect configuration - max must be larger than min";
+    }
+    @else if $max == md {
+       @warn "incorrect configuration - use breakpoint-exclusive(md) instead";
+    }
+    @else if $max == lg {
+       @media only screen and (min-width: $screen-md) and (max-width: $screen-xl - 1) { @content; }        
+    }
+    @else if $max == xl {
+       @media only screen and (min-width: $screen-md) and (max-width: $screen-xxl - 1) { @content; }       
+    }
+    @else if $max == xxl {
+       @warn "incorrect configuration - use breakpoint-up(md) instead";
+    }
+  }
+  @else if $min == lg{
+    @if $max == xxs{
+      @warn "incorrect configuration - max must be larger than min";
+    }
+    @else if $max == xs {
+       @warn "incorrect configuration - max must be larger than min";
+    }
+    @else if $max == sm {
+       @warn "incorrect configuration - max must be larger than min";
+    }
+    @else if $max == md {
+       @warn "incorrect configuration - max must be larger than min";
+    }
+    @else if $max == lg {
+       @warn "incorrect configuration - use breakpoint-exclusive(lg) instead";       
+    }
+    @else if $max == xl {
+       @media only screen and (min-width: $screen-lg) and (max-width: $screen-xxl - 1) { @content; }       
+    }
+    @else if $max == xxl {
+       @warn "incorrect configuration - use breakpoint-up(lg) instead";
+    }
+  }
+  @else if $min == xl{
+    @if $max == xxs{
+      @warn "incorrect configuration - max must be larger than min";
+    }
+    @else if $max == xs {
+       @warn "incorrect configuration - max must be larger than min";
+    }
+    @else if $max == sm {
+       @warn "incorrect configuration - max must be larger than min";
+    }
+    @else if $max == md {
+       @warn "incorrect configuration - max must be larger than min";
+    }
+    @else if $max == lg {
+       @warn "incorrect configuration - max must be larger than min";      
+    }
+    @else if $max == xl {
+       @warn "incorrect configuration - use breakpoint-exclusive(xl) instead";        
+    }
+    @else if $max == xxl {
+       @warn "incorrect configuration - use breakpoint-up(xl) instead";
+    }
+  }
+  @else if $min == xxl{
+    @warn "incorrect configuration - use breakpoint-exclusive(xxl) instead";
+  }
+  @else {
+    @warn "grid-breakpoints mixin supports: xxs, xs, sm, md, lg, xl, xxl";
+  }
+}
+ 
+@mixin breakpoint-exclusive($class) {
+  @if $class == xxs {
+    @media (max-width: $screen-xs - 1) { @content; }
+  }
+  @else if $class == xs {
+    @media only screen and (min-width: $screen-xs) and (max-width: $screen-sm - 1) { @content; }
+  }
+  @else if $class == sm {
+    @media only screen and (min-width: $screen-sm) and (max-width: $screen-md - 1 ) { @content; }
+  }
+  @else if $class == md {
+    @media only screen and (min-width: $screen-md) and (max-width: $screen-lg - 1 ) { @content; }
+  }
+  @else if $class == lg {
+    @media only screen and (min-width: $screen-lg) and (max-width: $screen-xl - 1 ) { @content; }
+  }
+  @else if $class == xl {
+    @media  only screen and (min-width: $screen-xl) and (max-width: $screen-xxl - 1 ) { @content; }
+  }
+  @else if $class == xxl {
+    @media (min-width: $screen-xxl) { @content; }
+  }
+  @else {
+    @warn "grid-breakpoints mixin supports: xxs, xs, sm, md, lg, xl, xxl";
+  }
+}
+
+// Font Awesome.
+// Usage: @include fa(bars) { ... }
+// -----------------------------------------------------------------------------
+@mixin fa($icon) {
+  @extend .fa;
+  @extend .fa-#{$icon}
+}
+
+// image sizing that forces portraits at specific breakpoints
+// -----------------------------------------------------------------------------
+@each $breakpoint, $px in $grid-breakpoints {
+  .force-portrait-150-#{$breakpoint}{
+    @include breakpoint-exclusive($breakpoint){
+      div.field-item{
+        overflow: hidden;
+        img{
+          width: 150%;
+          margin-left: -25%;
+        }
+      }
+    }
+  }
+  .force-portrait-140-#{$breakpoint}{
+    @include breakpoint-exclusive($breakpoint){
+      div.field-item{
+        overflow: hidden;
+        img{
+          width: 150%;
+          margin-left: -25%;
+        }
+      }
+    }
+  }
+  .force-portrait-130-#{$breakpoint}{
+    @include breakpoint-exclusive($breakpoint){
+      div.field-item{
+        overflow: hidden;
+        img{
+          width: 150%;
+          margin-left: -25%;
+        }
+      }
+    }
+  }
+  .force-portrait-120-#{$breakpoint}{
+    @include breakpoint-exclusive($breakpoint){
+      div.field-item{
+        overflow: hidden;
+        img{
+          width: 150%;
+          margin-left: -25%;
+        }
+      }
+    }
+  }
+}
+
+
+
